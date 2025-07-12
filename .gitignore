@@ -17,7 +17,6 @@
 /build
 
 # misc
-.DS_Store
 *.pem
 
 # debug
@@ -34,3 +33,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+
+# macOS用：フォルダの表示設定などを保存する不要なファイル
+.DS_Store
+
+# Windows用：画像や動画のサムネイルキャッシュファイル
+Thumbs.db
