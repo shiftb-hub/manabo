@@ -10,6 +10,171 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  supabaseUserId String   @unique @map("supabase_user_id")
+  roleId         Int      @map("role_id")
+  nickName       String   @map("nick_name")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  profile              Profile?
+  learningGoals        LearningGoal?
+  learningDailyRecords LearningDailyRecord[]
+  learningWeekRecords  LearningWeekRecord[]
+  learningMonthRecords LearningMonthRecord[]
+  learningRecords      LearningRecord[]
+  snsPostRecords       SnsPostRecord[]
+
+  @@map("users")
+}
+
+model Profile {
+  id             Int       @id @default(autoincrement())
+  userId         Int       @unique @map("user_id")
+  firstName      String?   @map("first_name")
+  lastName       String?   @map("last_name")
+  dateOfBirth    DateTime? @map("date_of_birth")
+  gender         String?   @default("other")
+  profilePicture String?   @map("profile_picture")
+  bio            String?
+  phoneNumber    String?   @map("phone_number")
+  socialLinks    String?   @map("social_links")
+  prefecture     Int?
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
+}
+
+model Prefecture {
+  id       Int          @id @default(autoincrement())
+  name     String       @unique
+  parentId Int?
+  parent   Prefecture?  @relation("PrefectureHierarchy", fields: [parentId], references: [id])
+  children Prefecture[] @relation("PrefectureHierarchy")
+
+  @@map("prefectures")
+}
+
+model LearningGoal {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @unique @map("user_id")
+  targetTime Float    @map("target_time")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@map("learning_goals")
+}
+
+model LearningDailyRecord {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  year      Int
+  day       DateTime?
+  totalTime Float     @map("total_time")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("learning_daily_records")
+}
+
+model LearningWeekRecord {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  year      Int
+  week      DateTime?
+  totalTime Float     @map("total_time")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("learning_week_records")
+}
+
+model LearningMonthRecord {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  year      Int
+  month     Int?
+  totalTime Float    @map("total_time")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("learning_month_records")
+}
+
+model LearningRecord {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @map("user_id")
+  categoryId   Int      @map("category_id")
+  title        String
+  content      String
+  startTime    DateTime @map("start_time")
+  endTime      DateTime @map("end_time")
+  duration     Float
+  learningDate DateTime @map("learning_date")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  learningRecordCategories LearningRecordCategory[]
+  users                    User                     @relation(fields: [userId], references: [id])
+
+  @@map("learning_records")
+}
+
+model LearningRecordCategory {
+  id               Int @id @default(autoincrement())
+  learningRecordId Int @map("learning_record_id")
+  categoryId       Int @map("category_id")
+
+  // Relations
+  learningRecords LearningRecord @relation(fields: [learningRecordId], references: [id])
+  category        Category       @relation(fields: [categoryId], references: [id])
+
+  @@map("learning_record_categories")
+}
+
+model Category {
+  id           Int    @id @default(autoincrement())
+  categoryName String @map("category_name")
+  parentId     Int?
+
+  // Relations
+  learningRecordCategories LearningRecordCategory[]
+
+  @@map("categories")
+}
+
+model SnsPostRecord {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  snsTitle  String   @map("sns_title")
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("sns_post_records")
+}
+
+model SnsPostsTone {
+  id          Int      @id @default(autoincrement())
+  tonePattern String   @map("tone_pattern")
+  description String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("sns_posts_tone")
 }
