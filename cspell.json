@@ -1,0 +1,21 @@
+{
+  "ignorePaths": [
+    "**/.env",
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/.gitignore",
+    "doc/**"
+  ],
+  "words": [
+    "autoincrement",
+    "supabase",
+    "Loading",
+    "NEXTAUTH",
+    "nums",
+    "temporarypassword"
+  ]
+}
