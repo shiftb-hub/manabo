@@ -37,7 +37,8 @@ export default function LoginScreen({
 
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const hasDisplayError = errors.email || errors.password;
+  // const [error, setError] = useState("")
 
   const onSubmit: SubmitHandler<loginForm> = (data) => {
     console.log(data);
@@ -83,9 +84,12 @@ export default function LoginScreen({
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              {error && (
+              {hasDisplayError && (
                 <Alert className="border-red-200 bg-red-50">
-                  <AlertDescription className="text-red-700">{error}</AlertDescription>
+                  <AlertDescription className="text-red-700">
+                    {errors.email?.message && <p>{errors.email.message}</p>}
+                    {errors.password?.message && <p>{errors.password.message}</p>}
+                  </AlertDescription>
                 </Alert>
               )}
 
@@ -101,7 +105,6 @@ export default function LoginScreen({
                     placeholder="example@email.com"
                     {...register("email", { required: "メールアドレスは必須です"})}
                     className="pl-10 border-green-200 focus:border-green-400 rounded-xl"
-                    required
                   />
                 </div>
               </div>
@@ -118,7 +121,6 @@ export default function LoginScreen({
                     placeholder="パスワードを入力"
                     {...register("password", { required: "パスワードは必須です"})}
                     className="pl-10 pr-10 border-green-200 focus:border-green-400 rounded-xl"
-                    required
                   />
                   <Button
                     type="button"
