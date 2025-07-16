@@ -1,7 +1,73 @@
 "use client";
-import React from "react";
+import { api } from "@/app/_utils/api";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
-const page = () => {
+interface learningRecord {
+  category: string;
+  timeSpent: number;
+  content: string;
+}
+interface CreateLearningRecordRequestBody {
+  userId: number;
+  category: string;
+  timeSpent: number;
+  content: string;
+}
+interface CreateLearningRecordResponseBody {
+  id: number;
+  userId: number;
+  category: string;
+  timeSpent: number;
+  content: string;
+}
+
+const Page = () => {
+  const [learningTime, setLearningTime] = useState<number | "">("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<learningRecord>();
+  //学習時間
+  const handleLearningTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const time = value && Number(value) > 0 ? Number(value) : "";
+    setLearningTime(time);
+  };
+
+  //学習時間（分）を時間と分で表示
+  const formatLearningTime = (time: number | "") => {
+    if (time === "") return;
+    const hours = Math.floor(time / 60);
+    const minutes = time % 60;
+    return `${hours}時間${minutes}分`;
+  };
+
+  //学習記録の送信
+  const onSubmit = async (data: learningRecord) => {
+    try {
+      const { category, timeSpent, content } = data;
+
+      const userId = 1; // 例　要修正
+
+      const res = await api.post<
+        CreateLearningRecordRequestBody,
+        CreateLearningRecordResponseBody
+      >("/api/learning-records", { id, userId, category, timeSpent, content });
+      // 成功時の処理をかく！
+      console.log("学習記録が保存されました:", res);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error submitting form:", error.message);
+        //  toast(error.message, { icon: "😭" });
+      } else {
+        console.error("Unexpected error:", error);
+        // toast("予期しないエラーが発生しました。", { icon: "😭" });
+      }
+    }
+  };
+
   return (
     <div>
       <div className="container mx-auto px-4 py-6 max-w-md pb-24">
@@ -25,7 +91,7 @@ const page = () => {
           </button>
           <h2 className="text-xl font-bold text-gray-800">学習記録</h2>
         </section>
-        <div className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="rounded-lg border text-card-foreground bg-white/80 backdrop-blur-sm border-green-100 shadow-sm">
             <div className="flex flex-col space-y-1.5 p-6 pb-4">
               <h3 className="font-semibold tracking-tight text-lg text-gray-800 flex items-center">
@@ -55,36 +121,30 @@ const page = () => {
                 >
                   学習カテゴリ
                 </label>
-                <button
-                  type="button"
-                  role="combobox"
-                  aria-controls="radix-«r0»"
-                  aria-expanded="false"
-                  aria-autocomplete="none"
-                  dir="ltr"
-                  data-state="closed"
-                  data-placeholder=""
-                  className="flex h-10 w-full items-center justify-between border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;&gt;span]:line-clamp-1 mt-1 border-green-200 focus:border-green-400 rounded-2xl"
+                <select
+                  id="category"
+                  {...register("category", {
+                    required: "カテゴリーを選択してください",
+                  })}
+                  className="h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl"
+                  defaultValue=""
                 >
-                  <span className="pointer-events-none">
+                  <option value="" disabled>
                     カテゴリを選択してください
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="lucide lucide-chevron-down h-4 w-4 opacity-50"
-                    aria-hidden="true"
-                  >
-                    <path d="m6 9 6 6 6-6"></path>
-                  </svg>
-                </button>
+                  </option>
+                  <option value="漢字">漢字</option>
+                  <option value="英語">英語</option>
+                  <option value="数学">マーケティング</option>
+                  <option value="歴史">統計</option>
+                  <option value="科学">法律</option>
+                  <option value="プログラミング">プログラミング</option>
+                  <option value="その他">その他</option>
+                </select>
+                {errors.category ? (
+                  <p className="text-red-500 pt-1 pl-4 text-sm">{`※${errors.category.message}`}</p>
+                ) : (
+                  ""
+                )}
               </div>
               <div>
                 <label
@@ -98,24 +158,69 @@ const page = () => {
                   id="timeSpent"
                   placeholder="30"
                   type="number"
-                  value=""
+                  value={learningTime}
+                  {...register("timeSpent", {
+                    required: "学習時間は必須です",
+                    min: 1,
+                    onChange: handleLearningTime,
+                  })}
                 />
+                {errors.timeSpent ? (
+                  <p className="text-red-500 pt-1 pl-4 text-sm">{`※${errors.timeSpent.message}`}</p>
+                ) : (
+                  ""
+                )}
               </div>
               <div>
                 <label
                   className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium text-gray-700"
-                  htmlFor="memo"
+                  htmlFor="content"
                 >
                   学習メモ
                 </label>
                 <textarea
+                  {...register("content", { required: "学習メモは必須です" })}
                   className="flex w-full border bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl min-h-[120px]"
-                  id="memo"
+                  id="content"
                   placeholder="今日学んだことや感想を記録しましょう 例：新しい漢字を10個覚えました。読み方が難しかったですが、繰り返し練習して覚えることができました。"
                 ></textarea>
+                {errors.content ? (
+                  <p className="text-red-500 pt-1 pl-4 text-sm">{`※${errors.content.message}`}</p>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
+          {
+            <div className="p-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="lucide lucide-clock w-6 h-6 text-emerald-600"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">今日の学習時間</p>
+                  <p className="text-2xl font-bold text-gray-800">
+                    {formatLearningTime(learningTime)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
           <div className="space-y-3">
             <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary hover:bg-primary/90 h-10 px-4 w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-6 rounded-2xl shadow-lg">
               <svg
@@ -171,10 +276,10 @@ const page = () => {
               </ul>
             </section>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;
