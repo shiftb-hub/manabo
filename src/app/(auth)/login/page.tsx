@@ -6,8 +6,8 @@ import { Button } from "@/app/_components/ui/Button"
 import { Input } from "@/app/_components/ui/Input"
 import { Label } from "@/app/_components/ui/Label"
 import { Alert, AlertDescription } from "@/app/_components/ui/Alert"
-// import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react"
-// import { ManaboIcon } from "@/app/_components/ui/ManaboIcon"
+import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react"
+import { ManaboIcon } from "@/app/_components/ui/ManaboIcon"
 import { useForm, SubmitHandler } from "react-hook-form"
 
 interface LoginScreenProps {
@@ -28,7 +28,6 @@ export default function LoginScreen({
   onNavigateToPasswordReset,
   onBack,
 }: LoginScreenProps) {
-  // const [form, setForm] = useState({ email: "", password: "" })
   const { 
     register, 
     handleSubmit,
@@ -70,10 +69,10 @@ export default function LoginScreen({
         {/* Header */}
         <div className="flex items-center mb-8">
           <Button variant="ghost" size="icon" onClick={onBack} className="mr-4 hover:bg-green-100">
-            {/* <ArrowLeft className="w-5 h-5 text-green-600" /> */}
+            <ArrowLeft className="w-5 h-5 text-green-600" />
           </Button>
           <div className="flex items-center">
-            {/* <ManaboIcon size="sm" className="mr-3" /> */}
+            <ManaboIcon size="sm" className="mr-3" />
             <h1 className="text-2xl font-bold text-gray-800">ログイン</h1>
           </div>
         </div>
@@ -98,7 +97,7 @@ export default function LoginScreen({
                   メールアドレス
                 </Label>
                 <div className="relative">
-                  {/* <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" /> */}
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <Input
                     id="email"
                     type="email"
@@ -114,7 +113,7 @@ export default function LoginScreen({
                   パスワード
                 </Label>
                 <div className="relative">
-                  {/* <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" /> */}
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
@@ -129,13 +128,11 @@ export default function LoginScreen({
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 hover:bg-transparent"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {/* パスワード表示・非表示の目のアイコンを配置 */}
-                    {/* {showPassword ? (
-                      // <EyeOff className="w-4 h-4 text-gray-400" />
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4 text-gray-400" />
                     ) : (
-                      // <Eye className="w-4 h-4 text-gray-400" />
-                    )} */}
-                    {/* パスワード表示・非表示の目のアイコンを配置 */}
+                      <Eye className="w-4 h-4 text-gray-400" />
+                    )}
                   </Button>
                 </div>
               </div>
