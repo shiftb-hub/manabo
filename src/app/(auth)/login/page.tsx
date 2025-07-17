@@ -23,7 +23,7 @@ const schema = z.object({
   email: z
     .string()
     .min(1, { error: "メールアドレスは必須です" })
-    .refine((val: string) => {val.includes("@")}, {
+    .refine((val: string) => val.includes("@"), {
       error: "有効なメールアドレスを入力してください"
     }),
   password: z
@@ -49,13 +49,13 @@ export default function LoginScreen({
   
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [loginError, setLoginError] = useState("")
   const router = useRouter();
-  const hasDisplayError = errors.email || errors.password || error;
+  const hasDisplayError = errors.email || errors.password || loginError;
 
   const onSubmit: SubmitHandler<loginForm> = async(data) => {
     setIsLoading(true);
-    setError("");
+    setLoginError("");
 
     try {
       const response = await fetch('/api/login', {
@@ -71,16 +71,15 @@ export default function LoginScreen({
 
       if (!response.ok) {
         const { error } = await response.json();
-        console.log(error)
         throw new Error(error);
       }
 
       router.push('/dashboard'); 
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setError(err.message);
+        setLoginError(err.message);
       } else {
-        setError("ログインに失敗しました");
+        setLoginError("ログインに失敗しました");
       }
     } finally {
       setIsLoading(false)
@@ -112,7 +111,7 @@ export default function LoginScreen({
                   <AlertDescription className="text-red-700">
                     {errors.email?.message && <p>{errors.email.message}</p>}
                     {errors.password?.message && <p>{errors.password.message}</p>}
-                    {error && <p>{error}</p>}
+                    {loginError && <p>{loginError}</p>}
                   </AlertDescription>
                 </Alert>
               )}
