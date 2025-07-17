@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/Card"
@@ -9,9 +9,9 @@ import { Alert, AlertDescription } from "@/app/_components/ui/Alert"
 import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react"
 import { ManaboIcon } from "@/app/_components/ui/ManaboIcon"
 import { useForm, SubmitHandler } from "react-hook-form"
+import { useRouter } from "next/router";
 
 interface LoginScreenProps {
-  onLogin: (email: string, password: string) => void
   onNavigateToSignup: () => void
   onNavigateToPasswordReset: () => void
   onBack: () => void
@@ -23,7 +23,6 @@ interface loginForm {
 }
 
 export default function LoginScreen({
-  onLogin,
   onNavigateToSignup,
   onNavigateToPasswordReset,
   onBack,
@@ -34,34 +33,45 @@ export default function LoginScreen({
     formState: { errors },
    } = useForm<loginForm>();
 
+  
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const hasDisplayError = errors.email || errors.password;
-  // const [error, setError] = useState("")
+  const [error, setError] = useState("")
+  const router = useRouter();
+  const hasDisplayError = errors.email || errors.password || error;
 
-  const onSubmit: SubmitHandler<loginForm> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<loginForm> = async(data) => {
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch('/api/login', {
+        method: "POST",
+        headers: {
+          "Content-TYpe": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "ログインに失敗しました");
+      }
+
+      router.push('/dashboard'); // ログイン成功後のリダイレクト
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("ログインに失敗しました");
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault()
-  //   setIsLoading(true)
-  //   setError("")
-
-  //   try {
-  //     // バリデーション
-  //     if (!form.email || !form.password) {
-  //       throw new Error("メールアドレスとパスワードを入力してください")
-  //     }
-
-  //     // ログイン処理をシミュレート
-  //     await new Promise((resolve) => setTimeout(resolve, 1000))
-  //     onLogin(form.email, form.password)
-  //   } catch (err) {
-  //     setError(err instanceof Error ? err.message : "ログインに失敗しました")
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 flex items-center justify-center p-4">
@@ -88,6 +98,7 @@ export default function LoginScreen({
                   <AlertDescription className="text-red-700">
                     {errors.email?.message && <p>{errors.email.message}</p>}
                     {errors.password?.message && <p>{errors.password.message}</p>}
+                    {error && <p>{error}</p>}
                   </AlertDescription>
                 </Alert>
               )}
