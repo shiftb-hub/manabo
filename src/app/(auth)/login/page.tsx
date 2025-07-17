@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import React, { useState } from "react"
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/Card"
 import { Button } from "@/app/_components/ui/Button"
 import { Input } from "@/app/_components/ui/Input"
@@ -9,7 +10,6 @@ import { Alert, AlertDescription } from "@/app/_components/ui/Alert"
 import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react"
 import { ManaboIcon } from "@/app/_components/ui/ManaboIcon"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { useRouter } from "next/router";
 
 interface LoginScreenProps {
   onNavigateToSignup: () => void
@@ -48,7 +48,7 @@ export default function LoginScreen({
       const response = await fetch('/api/login', {
         method: "POST",
         headers: {
-          "Content-TYpe": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: data.email,
@@ -57,11 +57,12 @@ export default function LoginScreen({
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "ログインに失敗しました");
+        const { error } = await response.json();
+        console.log(error)
+        throw new Error(error);
       }
 
-      router.push('/dashboard'); // ログイン成功後のリダイレクト
+      router.push('/dashboard'); 
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
