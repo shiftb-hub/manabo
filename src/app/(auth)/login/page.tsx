@@ -10,6 +10,8 @@ import { Alert, AlertDescription } from "@/app/_components/ui/Alert"
 import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react"
 import { ManaboIcon } from "@/app/_components/ui/ManaboIcon"
 import { useForm, SubmitHandler } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 interface LoginScreenProps {
   onNavigateToSignup: () => void
@@ -17,10 +19,19 @@ interface LoginScreenProps {
   onBack: () => void
 }
 
-interface loginForm {
-  email: string
-  password: string
-}
+const schema = z.object({
+  email: z
+    .string()
+    .min(1, { error: "メールアドレスは必須です" })
+    .refine((val: string) => {val.includes("@")}, {
+      error: "有効なメールアドレスを入力してください"
+    }),
+  password: z
+    .string()
+    .min(8, { error: "パスワードは8文字以上で入力してください" }),
+});
+
+type loginForm = z.infer<typeof schema>;
 
 export default function LoginScreen({
   onNavigateToSignup,
@@ -31,7 +42,9 @@ export default function LoginScreen({
     register, 
     handleSubmit,
     formState: { errors },
-   } = useForm<loginForm>();
+  } = useForm<loginForm>({ 
+    resolver: zodResolver(schema),
+  });
 
   
   const [showPassword, setShowPassword] = useState(false)
@@ -114,7 +127,7 @@ export default function LoginScreen({
                     id="email"
                     type="email"
                     placeholder="example@email.com"
-                    {...register("email", { required: "メールアドレスは必須です"})}
+                    {...register("email")}
                     className="pl-10 border-green-200 focus:border-green-400 rounded-xl"
                   />
                 </div>
@@ -130,7 +143,7 @@ export default function LoginScreen({
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="パスワードを入力"
-                    {...register("password", { required: "パスワードは必須です"})}
+                    {...register("password")}
                     className="pl-10 pr-10 border-green-200 focus:border-green-400 rounded-xl"
                   />
                   <Button
