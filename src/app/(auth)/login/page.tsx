@@ -12,12 +12,7 @@ import { ManaboIcon } from "@/app/_components/ui/ManaboIcon"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-
-interface LoginScreenProps {
-  onNavigateToSignup: () => void
-  onNavigateToPasswordReset: () => void
-  onBack: () => void
-}
+import { useNavigation } from "@/app/_hooks/useNavigation";
 
 const schema = z.object({
   email: z
@@ -33,11 +28,8 @@ const schema = z.object({
 
 type loginForm = z.infer<typeof schema>;
 
-export default function LoginScreen({
-  onNavigateToSignup,
-  onNavigateToPasswordReset,
-  onBack,
-}: LoginScreenProps) {
+
+export default function LoginScreen() {
   const { 
     register, 
     handleSubmit,
@@ -52,6 +44,7 @@ export default function LoginScreen({
   const [loginError, setLoginError] = useState("")
   const router = useRouter();
   const hasDisplayError = errors.email || errors.password || loginError;
+  const { onNavigateToPasswordReset, onNavigateToSignup, onBack } = useNavigation();
 
   const onSubmit: SubmitHandler<loginForm> = async(data) => {
     setIsLoading(true);
