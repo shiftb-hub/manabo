@@ -31,7 +31,6 @@ export default function BottomNavigation() {
             <button
               key={href}
               onClick={() => {
-                setActivePath(href);
                 router.push(href);
               }}
               className={`group flex flex-col items-center justify-center gap-1 rounded-md px-3 py-2 text-xs transform transition-all duration-300 ease-out
