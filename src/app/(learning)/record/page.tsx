@@ -1,46 +1,68 @@
 "use client";
 import { api } from "@/app/_utils/api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
-interface learningRecord {
-  category: string;
-  timeSpent: number;
-  content: string;
-}
-interface CreateLearningRecordRequestBody {
-  userId: number;
-  category: string;
-  timeSpent: number;
-  content: string;
-}
-interface CreateLearningRecordResponseBody {
-  id: number;
-  userId: number;
-  category: string;
-  timeSpent: number;
-  content: string;
-}
+import { zodResolver } from "@hookform/resolvers/zod";
+// import { LearningRecord } from "@prisma/client";
+import {
+  LearningRecordSchema,
+  learningRecordSchema,
+} from "../_utils/learningRecordSchema.ts";
+import {
+  CreateLearningRecordRequestBody,
+  CreateLearningRecordResponseBody,
+  learningRecord,
+} from "../_types/learningRecords.js";
 
 const Page = () => {
   const [learningTime, setLearningTime] = useState<number | "">("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<learningRecord>();
+    watch,
+  } = useForm<LearningRecordSchema>({
+    resolver: zodResolver(learningRecordSchema),
+    defaultValues: {
+      learningDate: "",
+      startHour: "9",
+      startMinute: "0",
+      endHour: "10",
+      endMinute: "0",
+    },
+  });
+
   //学習時間
-  const handleLearningTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const time = value && Number(value) > 0 ? Number(value) : "";
-    setLearningTime(time);
-  };
+  const watchedFields = watch([
+    "startHour",
+    "startMinute",
+    "endHour",
+    "endMinute",
+  ]);
 
   //学習時間（分）を時間と分で表示
-  const formatLearningTime = (time: number | "") => {
-    if (time === "") return;
-    const hours = Math.floor(time / 60);
-    const minutes = time % 60;
+  useEffect(() => {
+    const [startHour, startMinute, endHour, endMinute] = watchedFields;
+    const sh = parseInt(startHour, 10);
+    const sm = parseInt(startMinute, 10);
+    const eh = parseInt(endHour, 10);
+    const em = parseInt(endMinute, 10);
+    if ([sh, sm, eh, em].some(isNaN)) {
+      setLearningTime(0);
+      return;
+    }
+    const startTimeInMinutes = sh * 60 + sm;
+    const endTimeInMinutes = eh * 60 + em;
+    const durationInMinutes = endTimeInMinutes - startTimeInMinutes;
+    setLearningTime(durationInMinutes > 0 ? durationInMinutes : 0);
+  }, [watchedFields]);
+  const formatLearningTime = (totalMinutes: number): string => {
+    if (totalMinutes < 0) return "0時間0分";
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
     return `${hours}時間${minutes}分`;
   };
 
@@ -54,7 +76,7 @@ const Page = () => {
       const res = await api.post<
         CreateLearningRecordRequestBody,
         CreateLearningRecordResponseBody
-      >("/api/learning-records", { id, userId, category, timeSpent, content });
+      >("/api/learning_records", { userId, category, timeSpent, content });
       // 成功時の処理をかく！
       console.log("学習記録が保存されました:", res);
     } catch (error) {
@@ -123,9 +145,7 @@ const Page = () => {
                 </label>
                 <select
                   id="category"
-                  {...register("category", {
-                    required: "カテゴリーを選択してください",
-                  })}
+                  {...register("categoryId", {})}
                   className="h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl"
                   defaultValue=""
                 >
@@ -140,37 +160,76 @@ const Page = () => {
                   <option value="プログラミング">プログラミング</option>
                   <option value="その他">その他</option>
                 </select>
-                {errors.category ? (
-                  <p className="text-red-500 pt-1 pl-4 text-sm">{`※${errors.category.message}`}</p>
-                ) : (
-                  ""
-                )}
+                <p className="text-red-500 pt-1 pl-4 text-sm">
+                  {errors.categoryId?.message as React.ReactNode}
+                </p>
               </div>
               <div>
-                <label
-                  className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium text-gray-700"
-                  htmlFor="timeSpent"
-                >
-                  学習時間（分）
-                </label>
+                <label htmlFor="">タイトル</label>
                 <input
-                  className="flex h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl"
-                  id="timeSpent"
-                  placeholder="30"
-                  type="number"
-                  value={learningTime}
-                  {...register("timeSpent", {
-                    required: "学習時間は必須です",
-                    min: 1,
-                    onChange: handleLearningTime,
-                  })}
+                  type="text"
+                  {...register("title", {})}
+                  className="h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl"
                 />
-                {errors.timeSpent ? (
-                  <p className="text-red-500 pt-1 pl-4 text-sm">{`※${errors.timeSpent.message}`}</p>
-                ) : (
-                  ""
-                )}
+                <p className="text-red-500 pt-1 pl-4 text-sm">
+                  {errors.title?.message as React.ReactNode}
+                </p>
               </div>
+              <div>
+                <label htmlFor="">学習日</label>
+                <input
+                  type="date"
+                  {...register("learningDate")}
+                  className="h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl"
+                />
+                <p className="text-red-500 pt-1 pl-4 text-sm">
+                  {errors.learningDate?.message as React.ReactNode}
+                </p>
+              </div>
+
+              <div className="w-[80%] m-auto flex justify-between">
+                <div>
+                  <label>開始時間</label>
+                  <div className="flex gap-2">
+                    <select {...register("startHour")}>
+                      {Array.from({ length: 24 }).map((_, i) => (
+                        <option key={i} value={i}>
+                          {i}時
+                        </option>
+                      ))}
+                    </select>
+                    <select {...register("startMinute")}>
+                      {[0, 15, 30, 45].map((m) => (
+                        <option key={m} value={m}>
+                          {m}分
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label>終了時間</label>
+                  <div className="flex gap-2">
+                    <select {...register("endHour")}>
+                      {Array.from({ length: 24 }).map((_, i) => (
+                        <option key={i} value={i}>
+                          {i}時
+                        </option>
+                      ))}
+                    </select>
+                    <select {...register("endMinute")}>
+                      {[0, 15, 30, 45].map((m) => (
+                        <option key={m} value={m}>
+                          {m}分
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <p className="text-red-500 pt-1 pl-4 text-sm">
+                {errors.endHour && errors.endHour.message}
+              </p>
               <div>
                 <label
                   className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium text-gray-700"
@@ -184,11 +243,9 @@ const Page = () => {
                   id="content"
                   placeholder="今日学んだことや感想を記録しましょう 例：新しい漢字を10個覚えました。読み方が難しかったですが、繰り返し練習して覚えることができました。"
                 ></textarea>
-                {errors.content ? (
-                  <p className="text-red-500 pt-1 pl-4 text-sm">{`※${errors.content.message}`}</p>
-                ) : (
-                  ""
-                )}
+                <p className="text-red-500 pt-1 pl-4 text-sm">
+                  {errors.content?.message as React.ReactNode}
+                </p>
               </div>
             </div>
           </div>
@@ -215,7 +272,7 @@ const Page = () => {
                 <div>
                   <p className="text-sm text-gray-600">今日の学習時間</p>
                   <p className="text-2xl font-bold text-gray-800">
-                    {formatLearningTime(learningTime)}
+                    {learningTime !== "" && formatLearningTime(learningTime)}
                   </p>
                 </div>
               </div>
