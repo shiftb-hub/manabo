@@ -40,31 +40,133 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ```mermaid
 erDiagram
-  USER {
-    INT id
-    STRING supabaseUserId
-    INT roleId
-    STRING nickName
-    DATETIME createdAt
-    DATETIME updatedAt
-  }
+    USER {
+        INT id
+        STRING supabaseUserId
+        INT roleId
+        STRING nickName
+        DATETIME createdAt
+        DATETIME updatedAt
+    }
 
-  PROFILE {
-    INT id
-    INT userId
-    STRING firstName
-    STRING lastName
-    DATETIME dateOfBirth
-    STRING gender
-    STRING profilePicture
-    STRING bio
-    STRING phoneNumber
-    STRING socialLinks
-    INT prefecture
-    DATETIME createdAt
-    DATETIME updatedAt
-  }
+    PROFILE {
+        INT id
+        INT userId
+        STRING firstName
+        STRING lastName
+        DATETIME dateOfBirth
+        STRING gender
+        STRING profilePicture
+        STRING bio
+        STRING phoneNumber
+        STRING socialLinks
+        INT prefectureId  // PREFECTUREへの外部キー
+        DATETIME createdAt
+        DATETIME updatedAt
+    }
 
-  USER ||--|| PROFILE : has
+    PREFECTURE {
+        INT id
+        STRING name
+        INT parentId // 自己参照用、NULL許容
+    }
+
+    LEARNINGGOAL {
+        INT id
+        INT userId
+        FLOAT targetTime
+        DATETIME createdAt
+        DATETIME updatedAt
+    }
+
+    LEARNINGDAILYRECORD {
+        INT id
+        INT userId
+        INT year
+        DATETIME day
+        FLOAT totalTime
+        DATETIME createdAt
+        DATETIME updatedAt
+    }
+
+    LEARNINGWEEKRECORD {
+        INT id
+        INT userId
+        INT year
+        DATETIME week
+        FLOAT totalTime
+        DATETIME createdAt
+        DATETIME updatedAt
+    }
+
+    LEARNINGMONTHRECORD {
+        INT id
+        INT userId
+        INT year
+        INT month
+        FLOAT totalTime
+        DATETIME createdAt
+        DATETIME updatedAt
+    }
+
+    LEARNINGRECORD {
+        INT id
+        INT userId
+        STRING title
+        STRING content
+        DATETIME startTime
+        DATETIME endTime
+        FLOAT duration
+        DATETIME learningDate
+        DATETIME createdAt
+        DATETIME updatedAt
+    }
+
+    LEARNINGRECORDCATEGORY {
+        INT id
+        INT learningRecordId
+        INT categoryId
+    }
+
+    CATEGORY {
+        INT id
+        STRING categoryName
+        INT parentId // 自己参照用、NULL許容
+    }
+
+    SNSPOSTRECORD {
+        INT id
+        INT userId
+        INT snsPostToneId // SNSPOSTSTONEへの外部キー
+        STRING snsTitle
+        STRING content
+        DATETIME createdAt
+        DATETIME updatedAt
+    }
+
+    SNSPOSTSTONE {
+        INT id
+        STRING tonePattern
+        STRING description
+        DATETIME createdAt
+        DATETIME updatedAt
+    }
+
+    USER ||--|| PROFILE : has
+    USER ||--|| LEARNINGGOAL : sets
+    USER ||--o{ LEARNINGDAILYRECORD : records
+    USER ||--o{ LEARNINGWEEKRECORD : records
+    USER ||--o{ LEARNINGMONTHRECORD : records
+    USER ||--o{ LEARNINGRECORD : creates
+    USER ||--o{ SNSPOSTRECORD : posts
+
+    PROFILE }|--|| PREFECTURE : lives_in
+
+    LEARNINGRECORD }|--o{ LEARNINGRECORDCATEGORY : categorizes
+    CATEGORY }|--o{ LEARNINGRECORDCATEGORY : has_records
+
+    SNSPOSTRECORD }|--|| SNSPOSTSTONE : uses_tone
+
+    PREFECTURE ||--o{ PREFECTURE : parent_
 
 ```
