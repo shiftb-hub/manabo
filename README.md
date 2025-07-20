@@ -41,8 +41,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ```mermaid
 erDiagram
   USER {
-    INT id PK
-    STRING supabaseUserId UNIQUE
+    INT id
+    STRING supabaseUserId
     INT roleId
     STRING nickName
     DATETIME createdAt
@@ -50,8 +50,8 @@ erDiagram
   }
 
   PROFILE {
-    INT id PK
-    INT userId UNIQUE FK
+    INT id
+    INT userId
     STRING firstName
     STRING lastName
     DATETIME dateOfBirth
@@ -65,105 +65,6 @@ erDiagram
     DATETIME updatedAt
   }
 
-  PREFECTURE {
-    INT id PK
-    STRING name UNIQUE
-    INT parentId FK
-  }
-
-  LEARNINGGOAL {
-    INT id PK
-    INT userId UNIQUE FK
-    FLOAT targetTime
-    DATETIME createdAt
-    DATETIME updatedAt
-  }
-
-  LEARNINGDAILYRECORD {
-    INT id PK
-    INT userId FK
-    INT year
-    DATETIME day
-    FLOAT totalTime
-    DATETIME createdAt
-    DATETIME updatedAt
-  }
-
-  LEARNINGWEEKRECORD {
-    INT id PK
-    INT userId FK
-    INT year
-    DATETIME week
-    FLOAT totalTime
-    DATETIME createdAt
-    DATETIME updatedAt
-  }
-
-  LEARNINGMONTHRECORD {
-    INT id PK
-    INT userId FK
-    INT year
-    INT month
-    FLOAT totalTime
-    DATETIME createdAt
-    DATETIME updatedAt
-  }
-
-  LEARNINGRECORD {
-    INT id PK
-    INT userId FK
-    INT categoryId
-    STRING title
-    STRING content
-    DATETIME startTime
-    DATETIME endTime
-    FLOAT duration
-    DATETIME learningDate
-    DATETIME createdAt
-    DATETIME updatedAt
-  }
-
-  LEARNINGRECORDCATEGORY {
-    INT id PK
-    INT learningRecordId FK
-    INT categoryId FK
-  }
-
-  CATEGORY {
-    INT id PK
-    STRING categoryName
-    INT parentId
-  }
-
-  SNSPOSTRECORD {
-    INT id PK
-    INT userId FK
-    STRING snsTitle
-    STRING content
-    DATETIME createdAt
-    DATETIME updatedAt
-  }
-
-  SNSPOSTSTONE {
-    INT id PK
-    STRING tonePattern
-    STRING description
-    DATETIME createdAt
-    DATETIME updatedAt
-  }
-
-  USER ||--o{ PROFILE : has
-  USER ||--o{ LEARNINGGOAL : has
-  USER ||--o{ LEARNINGDAILYRECORD : has
-  USER ||--o{ LEARNINGWEEKRECORD : has
-  USER ||--o{ LEARNINGMONTHRECORD : has
-  USER ||--o{ LEARNINGRECORD : has
-  USER ||--o{ SNSPOSTRECORD : has
-
-  PREFECTURE ||--o{ PREFECTURE : parent_of
-
-  LEARNINGRECORD ||--o{ LEARNINGRECORDCATEGORY : has
-  CATEGORY ||--o{ LEARNINGRECORDCATEGORY : has
-
+  USER ||--|| PROFILE : has
 
 ```
