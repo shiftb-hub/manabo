@@ -60,7 +60,7 @@ erDiagram
         STRING bio
         STRING phoneNumber
         STRING socialLinks
-        INT prefectureId  // PREFECTUREへの外部キー
+        INT prefectureId
         DATETIME createdAt
         DATETIME updatedAt
     }
@@ -68,7 +68,7 @@ erDiagram
     PREFECTURE {
         INT id
         STRING name
-        INT parentId // 自己参照用、NULL許容
+        INT parentId
     }
 
     LEARNINGGOAL {
@@ -131,13 +131,13 @@ erDiagram
     CATEGORY {
         INT id
         STRING categoryName
-        INT parentId // 自己参照用、NULL許容
+        INT parentId 
     }
 
     SNSPOSTRECORD {
         INT id
         INT userId
-        INT snsPostToneId // SNSPOSTSTONEへの外部キー
+        INT snsPostToneId
         STRING snsTitle
         STRING content
         DATETIME createdAt
