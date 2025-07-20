@@ -34,3 +34,136 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+## ER
+
+```mermaid
+erDiagram
+  USER {
+    INT id PK
+    STRING supabaseUserId UNIQUE
+    INT roleId
+    STRING nickName
+    DATETIME createdAt
+    DATETIME updatedAt
+  }
+
+  PROFILE {
+    INT id PK
+    INT userId UNIQUE FK
+    STRING firstName
+    STRING lastName
+    DATETIME dateOfBirth
+    STRING gender
+    STRING profilePicture
+    STRING bio
+    STRING phoneNumber
+    STRING socialLinks
+    INT prefecture
+    DATETIME createdAt
+    DATETIME updatedAt
+  }
+
+  PREFECTURE {
+    INT id PK
+    STRING name UNIQUE
+    INT parentId FK
+  }
+
+  LEARNINGGOAL {
+    INT id PK
+    INT userId UNIQUE FK
+    FLOAT targetTime
+    DATETIME createdAt
+    DATETIME updatedAt
+  }
+
+  LEARNINGDAILYRECORD {
+    INT id PK
+    INT userId FK
+    INT year
+    DATETIME day
+    FLOAT totalTime
+    DATETIME createdAt
+    DATETIME updatedAt
+  }
+
+  LEARNINGWEEKRECORD {
+    INT id PK
+    INT userId FK
+    INT year
+    DATETIME week
+    FLOAT totalTime
+    DATETIME createdAt
+    DATETIME updatedAt
+  }
+
+  LEARNINGMONTHRECORD {
+    INT id PK
+    INT userId FK
+    INT year
+    INT month
+    FLOAT totalTime
+    DATETIME createdAt
+    DATETIME updatedAt
+  }
+
+  LEARNINGRECORD {
+    INT id PK
+    INT userId FK
+    INT categoryId
+    STRING title
+    STRING content
+    DATETIME startTime
+    DATETIME endTime
+    FLOAT duration
+    DATETIME learningDate
+    DATETIME createdAt
+    DATETIME updatedAt
+  }
+
+  LEARNINGRECORDCATEGORY {
+    INT id PK
+    INT learningRecordId FK
+    INT categoryId FK
+  }
+
+  CATEGORY {
+    INT id PK
+    STRING categoryName
+    INT parentId
+  }
+
+  SNSPOSTRECORD {
+    INT id PK
+    INT userId FK
+    STRING snsTitle
+    STRING content
+    DATETIME createdAt
+    DATETIME updatedAt
+  }
+
+  SNSPOSTSTONE {
+    INT id PK
+    STRING tonePattern
+    STRING description
+    DATETIME createdAt
+    DATETIME updatedAt
+  }
+
+  USER ||--o{ PROFILE : has
+  USER ||--o{ LEARNINGGOAL : has
+  USER ||--o{ LEARNINGDAILYRECORD : has
+  USER ||--o{ LEARNINGWEEKRECORD : has
+  USER ||--o{ LEARNINGMONTHRECORD : has
+  USER ||--o{ LEARNINGRECORD : has
+  USER ||--o{ SNSPOSTRECORD : has
+
+  PREFECTURE ||--o{ PREFECTURE : parent_of
+
+  LEARNINGRECORD ||--o{ LEARNINGRECORDCATEGORY : has
+  CATEGORY ||--o{ LEARNINGRECORDCATEGORY : has
+
+
+```
