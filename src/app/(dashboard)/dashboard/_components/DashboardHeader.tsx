@@ -1,0 +1,20 @@
+import ManaboIcon from '@/app/_components/manabo-icon'
+import { Settings } from 'lucide-react'
+import { Button } from '@/app/_components/ui/button'
+
+export const DashboardHeader = () => {
+  return (
+    <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center space-x-3">
+        <ManaboIcon size="md" />
+        <div>
+          <h1 className="text-xl font-bold text-gray-800">おはよう、田中さん！</h1>
+          <p className="text-sm text-gray-600">今日も学習を頑張りましょう</p>
+        </div>
+      </div>
+      <Button variant="ghost" size="sm" className="text-gray-400">
+        <Settings className="w-5 h-5" />
+      </Button>
+    </div>
+  )
+}
