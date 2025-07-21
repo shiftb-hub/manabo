@@ -1,14 +1,15 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { mypageMenuItems } from "@/app/(mypage)/mypage/_constants/mypageMenuItems";
-import type { MenuItem } from "@/app/(mypage)/mypage/_types/mypageTypes";
+import Link from 'next/link'
 
-export default function MyPageMenu() {
+import { mypageMenuItems } from '@/app/(mypage)/mypage/_constants/mypageMenuItems'
+import type { MenuItem } from '@/app/(mypage)/mypage/_types/mypageTypes'
+
+export function MyPageMenu() {
   return (
     <div className="grid grid-cols-1 gap-4">
       {mypageMenuItems.map((item: MenuItem) => {
-        const Icon = item.icon;
+        const Icon = item.icon
         return (
           <Link
             key={item.href}
@@ -18,8 +19,8 @@ export default function MyPageMenu() {
             <Icon className="w-4 h-4 mr-2" />
             {item.label}
           </Link>
-        );
+        )
       })}
     </div>
-  );
+  )
 }

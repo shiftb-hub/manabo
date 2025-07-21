@@ -1,25 +1,26 @@
-import { Edit, MessageCircle, Bookmark, Award } from "lucide-react";
-import type { MenuItem } from "../_types/mypageTypes";
+import { Award, Bookmark, Edit, MessageCircle } from 'lucide-react'
+
+import type { MenuItem } from '../_types/mypageTypes'
 
 export const mypageMenuItems: MenuItem[] = [
   {
-    label: "プロフィール編集",
+    label: 'プロフィール編集',
     icon: Edit,
-    href: "/mypage/profile",
+    href: '/mypage/profile',
   },
   {
-    label: "メッセージ",
+    label: 'メッセージ',
     icon: MessageCircle,
-    href: "/mypage/messages",
+    href: '/mypage/messages',
   },
   {
-    label: "ブックマーク",
+    label: 'ブックマーク',
     icon: Bookmark,
-    href: "/mypage/bookmarks",
+    href: '/mypage/bookmarks',
   },
   {
-    label: "実績",
+    label: '実績',
     icon: Award,
-    href: "/mypage/achievements",
+    href: '/mypage/achievements',
   },
-];
+]
