@@ -1,7 +1,5 @@
-export default function MyPage() {
-  return (
-    <main className="p-6">
-      <h1 className="text-2xl font-bold">マイページ</h1>
-    </main>
-  );
+import MyPageLayout from "./_components/MyPageLayout";
+
+export default function MypagePage() {
+  return <MyPageLayout />;
 }
