@@ -1,5 +1,6 @@
-import ManaboIcon from '@/app/_components/manabo-icon'
 import { Settings } from 'lucide-react'
+
+import { ManaboIcon } from '@/app/_components/manabo-icon'
 import { Button } from '@/app/_components/ui/button'
 
 export const DashboardHeader = () => {
