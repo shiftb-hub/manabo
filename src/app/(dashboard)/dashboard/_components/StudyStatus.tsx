@@ -1,5 +1,6 @@
+import { BookOpen, Clock, Sparkles, Target, TrendingUp, Users } from 'lucide-react'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/_components/ui/card'
-import { BookOpen, Clock, TrendingUp, Sparkles, Users, Target } from 'lucide-react'
 import { Progress } from '@/app/_components/ui/progress'
 
 interface StudyStatusProps {
@@ -12,13 +13,13 @@ interface StudyStatusProps {
 }
 
 export const StudyStatus = ({ 
-    studyStreak, 
-    todayStudyTime,
-    weeklyGoal,
-    matchingGroup,
-    onlineGroupMembers,
-    currentMessage
-  } : StudyStatusProps ) => {
+  studyStreak, 
+  todayStudyTime,
+  weeklyGoal,
+  matchingGroup,
+  onlineGroupMembers,
+  currentMessage
+} : StudyStatusProps ) => {
 
   return(
     <>
@@ -40,7 +41,6 @@ export const StudyStatus = ({
         </CardContent>
       </Card>
 
-      {/* Today's Progress */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <Card className="bg-white/80 backdrop-blur-sm border-green-100 shadow-sm">
           <CardContent className="p-4">
@@ -71,7 +71,6 @@ export const StudyStatus = ({
         </Card>
       </div>
 
-      {/* Weekly Progress */}
       <Card className="mb-6 bg-white/80 backdrop-blur-sm border-green-100 shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-gray-800">今週の進捗</CardTitle>
