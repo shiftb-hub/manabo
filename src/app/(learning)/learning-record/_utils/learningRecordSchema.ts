@@ -1,43 +1,47 @@
-import z from "zod";
+import { z } from 'zod'
 
 export const learningRecordSchema = z
   .object({
-    categoryId:z.string()
-      .min(1, "カテゴリを選択してください。"), // カテゴリが
+    categoryId: z.string().min(1, 'カテゴリを選択してください。'), // カテゴリが
 
-    title: z.string().min(1, "タイトルは入力必須です。").max(40, "タイトルは40文字以下で入力してください。"),
-    content: z.string().min(3, "学習メモは入力必須です。").max(40, "学習内容は200文字以下で入力してください。"),
+    title: z
+      .string()
+      .min(1, 'タイトルは入力必須です。')
+      .max(40, 'タイトルは40文字以下で入力してください。'),
+    content: z
+      .string()
+      .min(3, '学習メモは入力必須です。')
+      .max(40, '学習内容は200文字以下で入力してください。'),
     learningStartDate: z
       .string()
-      .min(1, "開始日を入力してください。")
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "日付はYYYY-MM-DD形式で入力してください。"),
-    
+      .min(1, '開始日を入力してください。')
+      .regex(/^\d{4}-\d{2}-\d{2}$/, '日付はYYYY-MM-DD形式で入力してください。'),
+
     // ✅ learningEndDateのバリデーションを有効にする
     learningEndDate: z
       .string()
-      .min(1, "終了日を入力してください。") 
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "日付はYYYY-MM-DD形式で入力してください。"),
+      .min(1, '終了日を入力してください。')
+      .regex(/^\d{4}-\d{2}-\d{2}$/, '日付はYYYY-MM-DD形式で入力してください。'),
 
     startTime: z
       .string()
-      .min(1, "開始時間を入力してください。")
+      .min(1, '開始時間を入力してください。')
       .regex(
         /^([01]\d|2[0-3]):[0-5]\d$/, // input[type=time]は秒を返さないため、秒部分を削除
-        "時刻はHH:mm形式で入力してください。"
+        '時刻はHH:mm形式で入力してください。'
       ),
 
     endTime: z
       .string()
-      .min(1, "終了時間を入力してください。")
+      .min(1, '終了時間を入力してください。')
       .regex(
         /^([01]\d|2[0-3]):[0-5]\d$/, // input[type=time]は秒を返さないため、秒部分を削除
-        "時刻はHH:mm形式で入力してください。"
+        '時刻はHH:mm形式で入力してください。'
       ),
   })
-   .refine(({ startTime, endTime }) => startTime <= endTime, {
+  .refine(({ startTime, endTime }) => startTime <= endTime, {
     message: '終了時間は開始時間より後の時間を入力してください',
     path: ['endTime'],
-  });
+  })
 
-
-export type LearningRecordSchema = z.infer<typeof learningRecordSchema>;
+export type LearningRecordSchema = z.infer<typeof learningRecordSchema>
