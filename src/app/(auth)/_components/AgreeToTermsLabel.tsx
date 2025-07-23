@@ -1,10 +1,11 @@
-import Link from "next/link";
-import { Label } from "@/app/_components/ui/label";
+import Link from 'next/link'
+
+import { Label } from '@/app/_components/ui/label'
 
 export default function AgreeToTermsLabel() {
   return (
     <Label htmlFor="terms" className="text-sm text-gray-600">
-      以下の{" "}
+      以下の{' '}
       <Link
         href="/terms"
         target="_blank"
@@ -13,7 +14,7 @@ export default function AgreeToTermsLabel() {
       >
         利用規約
       </Link>
-      と{" "}
+      と{' '}
       <Link
         href="/privacy"
         target="_blank"
@@ -24,5 +25,5 @@ export default function AgreeToTermsLabel() {
       </Link>
       に同意します
     </Label>
-  );
+  )
 }

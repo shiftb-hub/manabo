@@ -1,31 +1,32 @@
-"use client";
+'use client'
 
-import React, { useState } from "react"
-import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/Card"
-import { Button } from "@/app/_components/ui/Button"
-import { Input } from "@/app/_components/ui/Input"
-import { Label } from "@/app/_components/ui/Label"
-import { Alert, AlertDescription } from "@/app/_components/ui/Alert"
-import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react"
-import { ManaboIcon } from "@/app/_components/ui/ManaboIcon"
-import { useForm, SubmitHandler } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useNavigation } from "@/app/_hooks/useNavigation";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ArrowLeft, Eye, EyeOff, Lock, Mail } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+import { Alert, AlertDescription } from '@/app/_components/ui/Alert'
+import { Button } from '@/app/_components/ui/Button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/_components/ui/Card'
+import { Input } from '@/app/_components/ui/Input'
+import { Label } from '@/app/_components/ui/Label'
+import { ManaboIcon } from '@/app/_components/ui/ManaboIcon'
+import { useNavigation } from '@/app/_hooks/useNavigation'
 
 const schema = z.object({
   email: z
     .string()
-    .nonempty({ error: "メールアドレスは必須です" })
-    .refine((val: string) => val.includes("@"), {
-      error: "有効なメールアドレスを入力してください"
+    .nonempty({ error: 'メールアドレスは必須です' })
+    .refine((val: string) => val.includes('@'), {
+      error: '有効なメールアドレスを入力してください'
     }),
   password: z
     .string()
-    .nonempty({ error: "パスワードは必須です" })
-    .min(8, { error: "パスワードは8文字以上で入力してください" }),
-});
+    .nonempty({ error: 'パスワードは必須です' })
+    .min(8, { error: 'パスワードは8文字以上で入力してください' }),
+})
 
 type loginForm = z.infer<typeof schema>;
 
@@ -37,43 +38,43 @@ export default function LoginScreen() {
     formState: { errors },
   } = useForm<loginForm>({ 
     resolver: zodResolver(schema),
-  });
+  })
 
   
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [loginError, setLoginError] = useState("")
-  const router = useRouter();
-  const hasDisplayError = errors.email || errors.password || loginError;
-  const { onNavigateToPasswordReset, onNavigateToSignup, onBack } = useNavigation();
+  const [loginError, setLoginError] = useState('')
+  const router = useRouter()
+  const hasDisplayError = errors.email || errors.password || loginError
+  const { onNavigateToPasswordReset, onNavigateToSignup, onBack } = useNavigation()
 
   const onSubmit: SubmitHandler<loginForm> = async(data) => {
-    setIsLoading(true);
-    setLoginError("");
+    setIsLoading(true)
+    setLoginError('')
 
     try {
       const response = await fetch('/api/login', {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: data.email,
           password: data.password,
         }),
-      });
+      })
 
       if (!response.ok) {
-        const { error } = await response.json();
-        throw new Error(error);
+        const { error } = await response.json()
+        throw new Error(error)
       }
 
-      router.push('/dashboard'); 
+      router.push('/dashboard') 
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setLoginError(err.message);
+        setLoginError(err.message)
       } else {
-        setLoginError("ログインに失敗しました");
+        setLoginError('ログインに失敗しました')
       }
     } finally {
       setIsLoading(false)
@@ -120,7 +121,7 @@ export default function LoginScreen() {
                     id="email"
                     type="email"
                     placeholder="example@email.com"
-                    {...register("email")}
+                    {...register('email')}
                     className="pl-10 border-green-200 focus:border-green-400 rounded-xl"
                   />
                 </div>
@@ -134,9 +135,9 @@ export default function LoginScreen() {
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <Input
                     id="password"
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="パスワードを入力"
-                    {...register("password")}
+                    {...register('password')}
                     className="pl-10 pr-10 border-green-200 focus:border-green-400 rounded-xl"
                   />
                   <Button
@@ -171,13 +172,13 @@ export default function LoginScreen() {
                 disabled={isLoading}
                 className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-6 rounded-2xl shadow-lg"
               >
-                {isLoading ? "ログイン中..." : "ログイン"}
+                {isLoading ? 'ログイン中...' : 'ログイン'}
               </Button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                アカウントをお持ちでない方は{" "}
+                アカウントをお持ちでない方は{' '}
                 <Button
                   variant="link"
                   onClick={onNavigateToSignup}

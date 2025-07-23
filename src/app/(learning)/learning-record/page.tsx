@@ -1,5 +1,6 @@
-import { prisma } from "@/app/_lib/prisma";
-import{ LearningRecordForm }from "./_components/LearningRecordForm";
+import { prisma } from '@/app/_lib/prisma'
+
+import{ LearningRecordForm }from './_components/LearningRecordForm'
 
 type Category = {
   id: number;
@@ -13,7 +14,7 @@ const Page = async() => {
     orderBy: {
       id: 'asc'
     }
-  });
-  return <LearningRecordForm categories={categories} />;
+  })
+  return <LearningRecordForm categories={categories} />
 }
-export default Page;
+export default Page

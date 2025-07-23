@@ -26,5 +26,5 @@ export default function TermsPage() {
         本規約は、日本法に準拠し、日本国内の裁判所を第一審の専属的合意管轄とします。
       </p>
     </main>
-  );
+  )
 }
