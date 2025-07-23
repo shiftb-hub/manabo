@@ -83,7 +83,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
 
       const requestBody: CreateLearningRecordRequestBody = {
         userId: 1, // TODO:要修正
-        categoryId: data.categoryId,
+        categoryId: parseInt(data.categoryId),
         title: data.title,
         content: data.content,
         startTime: new Date(`${data.learningStartDate}T${startTime}`),
@@ -205,10 +205,10 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                     {...register("startTime")}
                     className="h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl"
                   />
-                  <p className="text-red-500 pt-1 pl-4 text-sm">
-                    {errors.startTime?.message}
-                  </p>
-                </div>
+                </div>{" "}
+                <p className="text-red-500 pt-1 pl-4 text-sm">
+                  {errors.startTime?.message}
+                </p>
               </div>
               <div>
                 <label htmlFor="learningDate">学習終了日</label>
@@ -228,9 +228,6 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                     {...register("endTime")}
                     className="h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl"
                   />
-                  <p className="text-red-500 pt-1 pl-4 text-sm">
-                    {errors.endTime?.message}
-                  </p>
                 </div>
                 <p className="text-red-500 pt-1 pl-4 text-sm">
                   {errors.endTime?.message}
