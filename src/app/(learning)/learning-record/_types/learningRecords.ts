@@ -4,7 +4,7 @@ export interface learningRecord {
   content: string;
 }
 export interface CreateLearningRecordRequestBody {
-  userId: number;
+  userId: string;
   categoryId: number;
   title: string;
   content: string;
@@ -14,7 +14,7 @@ export interface CreateLearningRecordRequestBody {
   learningDate: Date;
 }
 export interface CreateLearningRecordResponseBody {
-  userId: number;
+  userId: string;
   categoryId: number;
   title: string;
   content: string;
