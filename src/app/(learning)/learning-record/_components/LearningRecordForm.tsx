@@ -1,9 +1,11 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Category } from '@prisma/client'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { supabase } from '@/app/_lib/supabaseClient'
 import { api } from '@/app/_utils/api'
 
 import { CategorySelect } from './CategorySelect'
@@ -23,6 +25,7 @@ interface LearningRecordFormProps {
 export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
   categories,
 }) => {
+  const router = useRouter()
   const [learningTime, setLearningTime] = useState<number>(0)
 
   const {
@@ -30,12 +33,13 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
     handleSubmit,
     formState: { errors, isSubmitting },
     watch,
+    reset,
   } = useForm<LearningRecordSchema>({
     resolver: zodResolver(learningRecordSchema),
   })
 
   //学習時間
-  const watchedFields = watch(['startTime', 'endTime'])
+  const { startTime, endTime, learningStartDate, learningEndDate } = watch()
   const calculateDurationInMinutes = (
     learningStartDate: string,
     startTime: string,
@@ -55,9 +59,9 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
 
   //学習時間（分）を時間と分で表示
   useEffect(() => {
-    const [startTime, endTime] = watchedFields
-    const learningStartDate = watch('learningStartDate')
-    const learningEndDate = watch('learningEndDate')
+    // const [startTime, endTime] = watchedFields
+    // const learningStartDate = watch('learningStartDate')
+    // const learningEndDate = watch('learningEndDate')
 
     if (!learningStartDate || !learningEndDate || !startTime || !endTime) {
       setLearningTime(0)
@@ -71,7 +75,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
       endTime
     )
     setLearningTime(duration)
-  }, [watchedFields, watch])
+  }, [learningStartDate, startTime, learningEndDate, endTime])
 
   const formatLearningTime = (minutes: number) => {
     const hours = Math.floor(minutes / 60)
@@ -80,11 +84,20 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
   }
 
   const onSubmit: SubmitHandler<LearningRecordSchema> = async data => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      // toast.error('ログインが必要です。')
+      router.push('/login')
+      return
+    }
     try {
       const { startTime, endTime } = data
 
       const requestBody: CreateLearningRecordRequestBody = {
-        userId: 1, // TODO:要修正
+        userId:user.id, // TODO: ユーザーIDを適切に取得設定
         categoryId: parseInt(data.categoryId),
         title: data.title,
         content: data.content,
@@ -94,17 +107,17 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
         learningDate: new Date(data.learningStartDate),
       }
 
-      const res = await api.post<
+      await api.post<
         CreateLearningRecordRequestBody,
         CreateLearningRecordResponseBody
       >('/api/learning_records', requestBody)
-      // eslint-disable-next-line no-console
-      console.log('学習記録が保存されました:', res)
-      // 成功時の処理modal?
+      // toast.success('学習記録を保存しました！🎉')
+      reset()
+      // router.push('/dashboard')
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`学習記録の保存に失敗しました: ${error.message}`)
-        //  toast.error(error.message);どのtoast使うか確認
+        //  toast.error(error.message);TODO:どのtoast使うか確認
       } else {
         throw new Error('予期しないエラーが発生しました。')
         // toast.error("予期しないエラーが発生しました。");
@@ -113,7 +126,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
   }
 
   return (
-    <div>
+    <div className=' bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50'>
       <div className='container mx-auto px-4 py-6 max-w-md pb-24'>
         <section className='flex items-center mb-6'>
           <button
@@ -199,15 +212,11 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                   <input
                     id='startTime'
                     type='time'
-                    value={
-                      typeof watchedFields[0] === 'string'
-                        ? watchedFields[0]
-                        : ''
-                    }
+
                     {...register('startTime')}
                     className='h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl'
                   />
-                </div>{' '}
+                </div>
                 <p className='text-red-500 pt-1 pl-4 text-sm'>
                   {errors.startTime?.message}
                 </p>
