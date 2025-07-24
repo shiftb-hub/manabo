@@ -16,7 +16,7 @@ export function RankingHeader({ onBack }: RankingHeaderProps) {
         variant='ghost'
         size='sm'
         onClick={onBack}
-        className='mr-3 p-2'
+        className='mr-3 p-2 text-black '
       >
         <ArrowLeft className='w-5 h-5' />
       </Button>
