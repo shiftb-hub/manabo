@@ -1,9 +1,9 @@
 const getTokenFromCookie = () => {
   const cookies = document.cookie.split('; ')
-  const token = cookies.find((row) => row.startsWith('access_token='))
+  const token = cookies.find(row => row.startsWith('access_token='))
   return token?.split('=')[1] || ''
 }
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 export const api = {
   get: async <ResponseType>(endpoint: string) => {
     try {
@@ -20,13 +20,18 @@ export const api = {
       const data: ResponseType = await res.json()
       return data
     } catch (e) {
+      console.error(e)
+
       throw e
     }
   },
 
-  post: async <ResponseType, RequestType>(endpoint: string, payload: RequestType) => {
+  post: async <ResponseType, RequestType>(
+    endpoint: string,
+    payload: RequestType
+  ) => {
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(`${BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,20 +39,22 @@ export const api = {
         },
         body: JSON.stringify(payload),
       })
-      if (res.status !== 200) {
-        const errorData = await res.json()
-        const errorMessage = errorData.message || '登録に失敗しました。'
+      const responseData = await res.json()
+      if (res.ok) {
+        const errorMessage = responseData.message || '登録に失敗しました。'
         throw new Error(errorMessage)
       }
-      const data: ResponseType = await res.json()
-      return data
+      return responseData as ResponseType
     } catch (e) {
       console.error(e)
       throw e
     }
   },
 
-  put: async <RequestType, ResponseType>(endpoint: string, payload: RequestType) => {
+  put: async <RequestType, ResponseType>(
+    endpoint: string,
+    payload: RequestType
+  ) => {
     try {
       const res = await fetch(endpoint, {
         method: 'PUT',
@@ -61,6 +68,8 @@ export const api = {
       const data: ResponseType = await res.json()
       return data
     } catch (e) {
+      console.error(e)
+
       throw e
     }
   },
@@ -78,6 +87,8 @@ export const api = {
       const data: ResponseType = await res.json()
       return data
     } catch (e) {
+      console.error(e)
+
       throw e
     }
   },

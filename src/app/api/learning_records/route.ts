@@ -1,24 +1,28 @@
+// import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+// import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { learningRecordSchema } from '@/app/(learning)/learning-record/_utils/learningRecordSchema'
+// import { learningRecordSchema } from '@/app/(learning)/learning-record/_utils/learningRecordSchema'
 import { prisma } from '@/app/_lib/prisma' // ← Prismaクライアントのインスタンス
-
-
+import { supabase } from '@/app/_lib/supabaseClient'
 export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json()
+  // const cookieStore = cookies()
+  // const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
 
-    // バリデーション（zod）
-    const parsed = learningRecordSchema.safeParse(body)
-    if (!parsed.success) {
-      return NextResponse.json(
-        { message: 'バリデーションエラー', errors: parsed.error },
-        { status: 400 }
-      )
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    if (!session || !session.user) {
+      return NextResponse.json({ error: '認証されていません' }, { status: 401 })
     }
 
+    const userId = session.user.id
+
+    const body = await req.json()
+    console.log('受け取ったbody:', body)
     const {
-      userId,
       categoryId,
       title,
       content,
@@ -28,27 +32,25 @@ export async function POST(req: NextRequest) {
       learningDate,
     } = body
 
-    const learningRecord = await prisma.learningRecord.create({
+    // Prismaを使ってデータベースに学習記録を作成
+    await prisma.learningRecord.create({
       data: {
-        userId,
-        categoryId,
-        title,
-        content,
+        userId: Number(userId),
+        categoryId: categoryId,
+        title: title,
+        content: content,
         startTime: new Date(startTime),
         endTime: new Date(endTime),
-        duration,
+        duration: duration,
         learningDate: new Date(learningDate),
       },
     })
 
-    return NextResponse.json(
-      { message: '学習記録が作成されました', record: learningRecord },
-      { status: 201 }
-    )
+    return NextResponse.json({ message: 'success' }, { status: 200 })
   } catch (error) {
-    console.error('学習記録の作成中にエラー:', error)
+    console.error('学習記録の作成中にエラーが発生しました:', error)
     return NextResponse.json(
-      { message: 'サーバーエラー', error },
+      { error: 'サーバー内部でエラーが発生しました' },
       { status: 500 }
     )
   }
