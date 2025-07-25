@@ -54,6 +54,7 @@ export const NavigatorContent = () => {
           </h2>
           {searchQuery && (
             <Button
+              type='button'
               variant='ghost'
               size='sm'
               onClick={() => setSearchQuery('')}
