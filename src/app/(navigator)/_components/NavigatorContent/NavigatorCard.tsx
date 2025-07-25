@@ -15,13 +15,12 @@ export const NavigatorCard = ({ screen }: Props) => {
   const Icon = screen.icon
 
   return (
-    <Link href={screen.href} className='block'>
-      <Card
-        className='bg-white/80 backdrop-blur-sm border-green-100 shadow-sm hover:shadow-md transition-all cursor-pointer hover:scale-[1.02]'
-        tabIndex={0}
-        role='button'
-        aria-label={`${screen.title}画面に移動`}
-      >
+    <Link
+      href={screen.href}
+      className='block'
+      aria-label={`${screen.title}画面に移動`}
+    >
+      <Card className='bg-white/80 backdrop-blur-sm border-green-100 shadow-sm hover:shadow-md transition-all cursor-pointer hover:scale-[1.02]'>
         <CardContent className='p-4'>
           <div className='flex items-start space-x-4'>
             <div
