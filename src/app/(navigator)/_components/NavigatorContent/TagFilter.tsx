@@ -23,6 +23,7 @@ export const TagFilter = ({
           const isActive = selectedCategory === category.id
           return (
             <Button
+              type='button'
               key={category.id}
               variant={isActive ? 'default' : 'outline'}
               size='sm'
