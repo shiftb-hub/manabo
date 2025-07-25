@@ -1,6 +1,8 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Category } from '@prisma/client'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -37,6 +39,14 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
   } = useForm<LearningRecordSchema>({
     resolver: zodResolver(learningRecordSchema),
   })
+
+  useEffect(() => {
+    const supabase = createClientComponentClient()
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Client-side session:', session)
+    })
+  }, [])
 
   //学習時間
   const { startTime, endTime, learningStartDate, learningEndDate } = watch()
@@ -97,7 +107,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
       const { startTime, endTime } = data
 
       const requestBody: CreateLearningRecordRequestBody = {
-        userId:user.id, // TODO: ユーザーIDを適切に取得設定
+        userId: user.id, // TODO: ユーザーIDを適切に取得設定
         categoryId: parseInt(data.categoryId),
         title: data.title,
         content: data.content,
@@ -212,7 +222,6 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                   <input
                     id='startTime'
                     type='time'
-
                     {...register('startTime')}
                     className='h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl'
                   />

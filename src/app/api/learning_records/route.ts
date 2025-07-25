@@ -1,24 +1,24 @@
-// import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-// import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
-// import { learningRecordSchema } from '@/app/(learning)/learning-record/_utils/learningRecordSchema'
-import { prisma } from '@/app/_lib/prisma' // ← Prismaクライアントのインスタンス
-import { supabase } from '@/app/_lib/supabaseClient'
-export async function POST(req: NextRequest) {
-  // const cookieStore = cookies()
-  // const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+import { prisma } from '@/app/_lib/prisma'
+import { error } from 'console'
 
+export async function POST(req: NextRequest) {
+  const supabase = createRouteHandlerClient({ cookies })
   try {
     const {
-      data: { session },
-    } = await supabase.auth.getSession()
+      data: { user },
+    } = await supabase.auth.getUser()
 
-    if (!session || !session.user) {
-      return NextResponse.json({ error: '認証されていません' }, { status: 401 })
+    if (error || !user) {
+      return new Response(JSON.stringify({ error: error }), {
+        status: 401,
+      })
     }
 
-    const userId = session.user.id
+    // const userId = session.user.id
 
     const body = await req.json()
     console.log('受け取ったbody:', body)
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     // Prismaを使ってデータベースに学習記録を作成
     await prisma.learningRecord.create({
       data: {
-        userId: Number(userId),
+        userId: Number(user.id),
         categoryId: categoryId,
         title: title,
         content: content,
@@ -55,4 +55,3 @@ export async function POST(req: NextRequest) {
     )
   }
 }
-
