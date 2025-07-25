@@ -23,6 +23,7 @@ export const NoResultsCard = ({ onResetFilters }: Props) => {
         </p>
 
         <Button
+          type='button'
           onClick={onResetFilters}
           variant='outline'
           className='border-green-200 text-green-700 hover:bg-green-50'
