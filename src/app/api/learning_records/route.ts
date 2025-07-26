@@ -1,27 +1,36 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+
 import { NextRequest, NextResponse } from 'next/server'
 
 import { prisma } from '@/app/_lib/prisma'
-import { error } from 'console'
+import { createClient } from '@/app/_utils/supabase/server'
 
 export async function POST(req: NextRequest) {
-  const supabase = createRouteHandlerClient({ cookies })
+  const supabase = await createClient()// Supabaseクライアントを作成
+
   try {
     const {
       data: { user },
+      error: authError,
     } = await supabase.auth.getUser()
 
-    if (error || !user) {
-      return new Response(JSON.stringify({ error: error }), {
-        status: 401,
-      })
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: authError?.message || 'Unauthorized' },
+        { status: 401 }
+      )
     }
 
-    // const userId = session.user.id
+    const userRecord = await prisma.user.findUnique({
+      where: { supabaseUserId: user.id },
+    })
 
+    if (!userRecord) {
+      return NextResponse.json(
+        { error: 'ユーザー情報が見つかりません' },
+        { status: 404 }
+      )
+    }
     const body = await req.json()
-    console.log('受け取ったbody:', body)
     const {
       categoryId,
       title,
@@ -35,10 +44,10 @@ export async function POST(req: NextRequest) {
     // Prismaを使ってデータベースに学習記録を作成
     await prisma.learningRecord.create({
       data: {
-        userId: Number(user.id),
-        categoryId: categoryId,
-        title: title,
-        content: content,
+        userId: userRecord.id,
+        categoryId,
+        title,
+        content,
         startTime: new Date(startTime),
         endTime: new Date(endTime),
         duration: duration,

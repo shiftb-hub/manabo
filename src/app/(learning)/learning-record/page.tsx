@@ -1,8 +1,8 @@
 // import React from 'react'
-import { redirect } from 'next/navigation'
+// import { redirect } from 'next/navigation'
 
 import { prisma } from '@/app/_lib/prisma'
-import { createClient } from '@/app/_utils/supabase/server'
+// import { createClient } from '@/app/_utils/supabase/server'
 
 import{ LearningRecordForm }from './_components/LearningRecordForm'
 
@@ -15,11 +15,11 @@ type Category = {
 
 const Page = async() => {
   // サインインしているか確認
-  const supabase = await createClient()
-  const { data, error } = await supabase.auth.getUser()
-  if (error || !data?.user) {
-    redirect('/login')
-  }
+  // const supabase = await createClient()
+  // const { data, error } = await supabase.auth.getUser()
+  // if (error || !data?.user) {
+  //   redirect('/login')
+  // }
   
   
   // カテゴリを取得

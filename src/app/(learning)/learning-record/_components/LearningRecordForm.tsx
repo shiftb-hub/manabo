@@ -1,8 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Category } from '@prisma/client'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -11,10 +9,7 @@ import { supabase } from '@/app/_lib/supabaseClient'
 import { api } from '@/app/_utils/api'
 
 import { CategorySelect } from './CategorySelect'
-import {
-  CreateLearningRecordRequestBody,
-  CreateLearningRecordResponseBody,
-} from '../_types/learningRecords'
+import { CreateLearningRecordRequestBody, CreateLearningRecordResponseBody } from '../_types/learningRecords'
 import {
   LearningRecordSchema,
   learningRecordSchema,
@@ -40,13 +35,6 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
     resolver: zodResolver(learningRecordSchema),
   })
 
-  useEffect(() => {
-    const supabase = createClientComponentClient()
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('Client-side session:', session)
-    })
-  }, [])
 
   //学習時間
   const { startTime, endTime, learningStartDate, learningEndDate } = watch()
@@ -69,10 +57,6 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
 
   //学習時間（分）を時間と分で表示
   useEffect(() => {
-    // const [startTime, endTime] = watchedFields
-    // const learningStartDate = watch('learningStartDate')
-    // const learningEndDate = watch('learningEndDate')
-
     if (!learningStartDate || !learningEndDate || !startTime || !endTime) {
       setLearningTime(0)
       return
@@ -107,7 +91,6 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
       const { startTime, endTime } = data
 
       const requestBody: CreateLearningRecordRequestBody = {
-        userId: user.id, // TODO: ユーザーIDを適切に取得設定
         categoryId: parseInt(data.categoryId),
         title: data.title,
         content: data.content,
@@ -117,17 +100,27 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
         learningDate: new Date(data.learningStartDate),
       }
 
+      // const res = await fetch('/api/learning_records', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+
+      //   body: JSON.stringify(requestBody),
+      // })
       await api.post<
         CreateLearningRecordRequestBody,
         CreateLearningRecordResponseBody
       >('/api/learning_records', requestBody)
       // toast.success('学習記録を保存しました！🎉')
+
+
       reset()
-      // router.push('/dashboard')
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`学習記録の保存に失敗しました: ${error.message}`)
         //  toast.error(error.message);TODO:どのtoast使うか確認
+        // https://www.npmjs.com/package/react-toastify
       } else {
         throw new Error('予期しないエラーが発生しました。')
         // toast.error("予期しないエラーが発生しました。");
