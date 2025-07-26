@@ -39,9 +39,16 @@ export const learningRecordSchema = z
         '時刻はHH:mm形式で入力してください。'
       ),
   })
-  .refine(({ startTime, endTime }) => startTime <= endTime, {
-    message: '終了時間は開始時間より後の時間を入力してください',
-    path: ['endTime'],
-  })
+  .refine(
+    ({ learningStartDate, learningEndDate, startTime, endTime }) => {
+      const start = new Date(`${learningStartDate}T${startTime}`)
+      const end = new Date(`${learningEndDate}T${endTime}`)
+      return start <= end
+    },
+    {
+      message: '終了日時は開始日時より後の時間を入力してください',
+      path: ['endTime'],
+    }
+  )
 
 export type LearningRecordSchema = z.infer<typeof learningRecordSchema>
