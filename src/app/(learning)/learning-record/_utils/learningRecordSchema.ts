@@ -2,8 +2,8 @@ import { z } from 'zod'
 
 export const learningRecordSchema = z
   .object({
-    categoryId: z.string().min(1, 'カテゴリを選択してください。'), // カテゴリが
-
+    categoryId: z.string().min(1, 'カテゴリを選択してください。'),
+    //<select> の value は文字列（string）として送られるため、Zod スキーマを string にして対応
     title: z
       .string()
       .min(1, 'タイトルは入力必須です。')
@@ -17,7 +17,6 @@ export const learningRecordSchema = z
       .min(1, '開始日を入力してください。')
       .regex(/^\d{4}-\d{2}-\d{2}$/, '日付はYYYY-MM-DD形式で入力してください。'),
 
-    // ✅ learningEndDateのバリデーションを有効にする
     learningEndDate: z
       .string()
       .min(1, '終了日を入力してください。')
