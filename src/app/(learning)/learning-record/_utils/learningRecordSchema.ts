@@ -51,3 +51,15 @@ export const learningRecordSchema = z
   )
 
 export type LearningRecordSchema = z.infer<typeof learningRecordSchema>
+
+//保存時の型
+export const learningRecordDbSchema = z.object({
+  categoryId: z.number(),
+  title: z.string(),
+  content: z.string(),
+  startTime: z.coerce.date(),
+  endTime: z.coerce.date(),
+  duration: z.number(),
+  learningDate: z.coerce.date(),
+})
+export type LearningRecordDbSchemaType = z.infer<typeof learningRecordDbSchema>
