@@ -4,6 +4,7 @@ import { Category } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { ToastContainer, toast } from 'react-toastify'
 
 import { supabase } from '@/app/_lib/supabaseClient'
 import { api } from '@/app/_utils/api'
@@ -85,7 +86,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
     } = await supabase.auth.getUser()
 
     if (!user) {
-      // toast.error('ログインが必要です。')
+      toast.error('ログインが必要です。')
       router.push('/login')
       return
     }
@@ -114,17 +115,16 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
         CreateLearningRecordRequestBody,
         CreateLearningRecordResponseBody
       >('/api/learning_records', requestBody)
-      // toast.success('学習記録を保存しました！🎉')
+      toast.success('学習記録を保存しました！🎉')
 
       reset()
     } catch (error) {
       if (error instanceof Error) {
+        toast.error(`学習記録の保存に失敗しました: ${error.message}`)
         throw new Error(`学習記録の保存に失敗しました: ${error.message}`)
-        //  toast.error(error.message);TODO:どのtoast使うか確認
-        // https://www.npmjs.com/package/react-toastify
       } else {
+        toast.error('予期しないエラーが発生しました。')
         throw new Error('予期しないエラーが発生しました。')
-        // toast.error("予期しないエラーが発生しました。");
       }
     }
   }
@@ -359,6 +359,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
             </section>
           </div>
         </form>
+        <ToastContainer closeOnClick />
       </div>
     </div>
   )
