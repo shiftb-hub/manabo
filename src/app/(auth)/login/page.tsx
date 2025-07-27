@@ -2,11 +2,11 @@
 
 import React, { useState } from "react"
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/Card"
-import { Button } from "@/app/_components/ui/Button"
-import { Input } from "@/app/_components/ui/Input"
-import { Label } from "@/app/_components/ui/Label"
-import { Alert, AlertDescription } from "@/app/_components/ui/Alert"
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card"
+import { Button } from "@/app/_components/ui/button"
+import { Input } from "@/app/_components/ui/input"
+import { Label } from "@/app/_components/ui/label"
+import { Alert, AlertDescription } from "@/app/_components/ui/alert"
 import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react"
 import { ManaboIcon } from "@/app/_components/ui/ManaboIcon"
 import { useForm, SubmitHandler } from "react-hook-form"
