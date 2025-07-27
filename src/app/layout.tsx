@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-
 import './globals.css'
+import { ToastContainer } from 'react-toastify'
+
 import BottomNavigation from './_components/bottom-navigation'
+
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -24,14 +26,15 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <ToastContainer closeOnClick />
         <BottomNavigation />
       </body>
     </html>

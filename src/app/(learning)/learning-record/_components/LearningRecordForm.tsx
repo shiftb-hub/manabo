@@ -4,7 +4,7 @@ import { Category } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 import { supabase } from '@/app/_lib/supabaseClient'
 import { api } from '@/app/_utils/api'
@@ -103,21 +103,16 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
         learningDate: new Date(data.learningStartDate),
       }
 
-      // const res = await fetch('/api/learning_records', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-
-      //   body: JSON.stringify(requestBody),
-      // })
       await api.post<
         CreateLearningRecordRequestBody,
         CreateLearningRecordResponseBody
       >('/api/learning_records', requestBody)
       toast.success('学習記録を保存しました！🎉')
-
       reset()
+
+      setTimeout(() => {
+        router.push('/dashboard')
+      }, 1000)
     } catch (error) {
       if (error instanceof Error) {
         toast.error(`学習記録の保存に失敗しました: ${error.message}`)
@@ -359,7 +354,6 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
             </section>
           </div>
         </form>
-        <ToastContainer closeOnClick />
       </div>
     </div>
   )
