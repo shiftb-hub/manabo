@@ -198,9 +198,9 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                 </p>
               </div>
               <div>
-                <label htmlFor='learningDate'>学習開始日</label>
+                <label htmlFor='learningStartDate'>学習開始日</label>
                 <input
-                  id='learningDate'
+                  id='learningStartDate'
                   type='date'
                   {...register('learningStartDate')}
                   className='h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl'
@@ -225,9 +225,9 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                 </p>
               </div>
               <div>
-                <label htmlFor='learningDate'>学習終了日</label>
+                <label htmlFor='learningEndDate '>学習終了日</label>
                 <input
-                  id='learningDate'
+                  id='learningEndDate '
                   type='date'
                   {...register('learningEndDate')}
                   className='h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl'
