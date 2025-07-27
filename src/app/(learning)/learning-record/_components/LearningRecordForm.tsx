@@ -9,7 +9,10 @@ import { supabase } from '@/app/_lib/supabaseClient'
 import { api } from '@/app/_utils/api'
 
 import { CategorySelect } from './CategorySelect'
-import { CreateLearningRecordRequestBody, CreateLearningRecordResponseBody } from '../_types/learningRecords'
+import {
+  CreateLearningRecordRequestBody,
+  CreateLearningRecordResponseBody,
+} from '../_types/learningRecords'
 import {
   LearningRecordSchema,
   learningRecordSchema,
@@ -34,7 +37,6 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
   } = useForm<LearningRecordSchema>({
     resolver: zodResolver(learningRecordSchema),
   })
-
 
   //学習時間
   const { startTime, endTime, learningStartDate, learningEndDate } = watch()
@@ -113,7 +115,6 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
         CreateLearningRecordResponseBody
       >('/api/learning_records', requestBody)
       // toast.success('学習記録を保存しました！🎉')
-
 
       reset()
     } catch (error) {
@@ -231,7 +232,11 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                   {...register('learningEndDate')}
                   className='h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl'
                 />
+                <p className='text-red-500 pt-1 pl-4 text-sm'>
+                  {errors.learningEndDate?.message}
+                </p>
               </div>
+
               <div>
                 <label htmlFor='endTime'>終了時間</label>
                 <div className='flex gap-2'>
