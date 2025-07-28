@@ -94,7 +94,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
       const { startTime, endTime } = data
 
       const requestBody: CreateLearningRecordRequestBody = {
-        categoryId: parseInt(data.categoryId),
+        categoryId: data.categoryId,
         title: data.title,
         content: data.content,
         startTime: new Date(`${data.learningStartDate}T${startTime}`),

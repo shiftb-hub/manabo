@@ -1,11 +1,11 @@
-
 import { NextRequest, NextResponse } from 'next/server'
 
+import { learningRecordDbSchema } from '@/app/(learning)/learning-record/_utils/learningRecordSchema'
 import { prisma } from '@/app/_lib/prisma'
 import { createClient } from '@/app/_utils/supabase/server'
 
 export async function POST(req: NextRequest) {
-  const supabase = await createClient()// Supabaseクライアントを作成
+  const supabase = await createClient() // Supabaseクライアントを作成
 
   try {
     const {
@@ -30,7 +30,17 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       )
     }
-    const body = await req.json()
+    const  body  = await req.json()
+    const parseResult = learningRecordDbSchema.safeParse(body)
+
+    if (!parseResult.success) {
+      const formattedErrors = parseResult.error.message
+      return NextResponse.json(
+        { error: 'バリデーションエラー', formattedErrors },
+        { status: 400 }
+      )
+    }
+
     const {
       categoryId,
       title,
@@ -39,7 +49,7 @@ export async function POST(req: NextRequest) {
       endTime,
       duration,
       learningDate,
-    } = body
+    } = parseResult.data
 
     // Prismaを使ってデータベースに学習記録を作成
     await prisma.learningRecord.create({
@@ -48,10 +58,10 @@ export async function POST(req: NextRequest) {
         categoryId,
         title,
         content,
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
-        duration: duration,
-        learningDate: new Date(learningDate),
+        startTime,
+        endTime,
+        duration,
+        learningDate,
       },
     })
 

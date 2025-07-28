@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const learningRecordSchema = z
   .object({
-    categoryId: z.string().min(1, 'カテゴリを選択してください。'),
+    categoryId: z.number().min(1, 'カテゴリを選択してください。'),
     //<select> の value は文字列（string）として送られるため、Zod スキーマを string にして対応
     title: z
       .string()
