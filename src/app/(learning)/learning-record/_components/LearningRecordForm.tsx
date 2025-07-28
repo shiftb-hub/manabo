@@ -15,7 +15,7 @@ import {
   CreateLearningRecordResponseBody,
 } from '../_types/learningRecords'
 import {
-  LearningRecordSchema,
+  LearningRecord,
   learningRecordSchema,
 } from '../_utils/learningRecordSchema'
 
@@ -35,7 +35,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
     formState: { errors, isSubmitting },
     watch,
     reset,
-  } = useForm<LearningRecordSchema>({
+  } = useForm<LearningRecord>({
     resolver: zodResolver(learningRecordSchema),
   })
 
@@ -80,7 +80,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
     return `${hours}時間${mins}分`
   }
 
-  const onSubmit: SubmitHandler<LearningRecordSchema> = async data => {
+  const onSubmit: SubmitHandler<LearningRecord> = async data => {
     const {
       data: { user },
     } = await supabase.auth.getUser()

@@ -3,12 +3,12 @@ import { Category } from '@prisma/client'
 import React from 'react'
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
 
-import { LearningRecordSchema } from '../_utils/learningRecordSchema'
+import { LearningRecord } from '../_utils/learningRecordSchema'
 
 interface CategorySelectProps {
   categories: Category[]
-  register: UseFormRegister<LearningRecordSchema>
-  errors: FieldErrors<LearningRecordSchema>
+  register: UseFormRegister<LearningRecord>
+  errors: FieldErrors<LearningRecord>
 }
 
 export const CategorySelect: React.FC<CategorySelectProps> = ({

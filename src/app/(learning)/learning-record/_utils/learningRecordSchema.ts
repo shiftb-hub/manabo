@@ -50,7 +50,7 @@ export const learningRecordSchema = z
     }
   )
 
-export type LearningRecordSchema = z.infer<typeof learningRecordSchema>
+export type LearningRecord = z.infer<typeof learningRecordSchema>
 
 //保存時の型
 export const learningRecordDbSchema = z.object({
