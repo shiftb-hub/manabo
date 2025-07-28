@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { CreateLearningRecordRequestBody } from '@/app/(learning)/learning-record/_types/learningRecords'
 import { learningRecordDbSchema } from '@/app/(learning)/learning-record/_utils/learningRecordSchema'
 import { prisma } from '@/app/_lib/prisma'
 import { createClient } from '@/app/_utils/supabase/server'
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       )
     }
-    const  body  = await req.json()
+    const body = await req.json()
     const parseResult = learningRecordDbSchema.safeParse(body)
 
     if (!parseResult.success) {
@@ -49,7 +50,7 @@ export async function POST(req: NextRequest) {
       endTime,
       duration,
       learningDate,
-    } = parseResult.data
+    } = parseResult.data as CreateLearningRecordRequestBody
 
     // Prismaを使ってデータベースに学習記録を作成
     await prisma.learningRecord.create({
