@@ -131,6 +131,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
           <button
             type='button'
             className='inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md mr-3 p-2'
+            onClick={() => router.push('/dashboard')}
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -257,7 +258,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                 <textarea
                   {...register('content')}
                   id='content'
-                  className='flex w-full border bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl min-h-[120px]'
+                  className='flex w-full border bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl min-h-[120px] placeholder:text-gray-400'
                   placeholder='今日学んだことや感想を記録しましょう 例：新しい漢字を10個覚えました。読み方が難しかったですが、繰り返し練習して覚えることができました。'
                 ></textarea>
                 <p className='text-red-500 pt-1 pl-4 text-sm'>
