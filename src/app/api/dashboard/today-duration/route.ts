@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 
+import { StudyTimeResponse } from '@/app/(dashboard)/dashboard/_types/todayStudyTime'
 import { prisma } from '@/app/_lib/prisma'
 import { createClient } from '@/app/_utils/supabase/server'
 
 type todayStudyRecords = {
-  duration: number | null
+  duration: number
 }
 
 export const GET = async () => {
@@ -15,9 +16,15 @@ export const GET = async () => {
     error,
   } = await supabase.auth.getUser()
 
-  if (error || !user ) {
-    return NextResponse.json({ status: 'Unauthorized' }, { status: 401 })
-  }
+  if (error || !user ) return NextResponse.json({ status: 'Unauthorized' }, { status: 401 })
+  
+  const targetUser = await prisma.user.findUnique({
+    where: {
+      supabaseUserId: user.id
+    }
+  })
+
+  if (!targetUser) return NextResponse.json({ status: 'User not found' }, { status: 404 })
 
   // 今日の日本時間の取得
   const today = new Date()
@@ -31,7 +38,7 @@ export const GET = async () => {
   try {
     const todayStudyRecords:todayStudyRecords[] = await prisma.learningRecord.findMany({
       where: {
-        userId: Number(user.id),
+        userId: targetUser.id,
         learningDate: targetDate
       },
       select: {
@@ -44,8 +51,9 @@ export const GET = async () => {
 
     // 時間に変換
     const totalStudyHours = Number((totalStudyTime / 60).toFixed(1))
+    const responseBody: StudyTimeResponse = { totalStudyHours } 
       
-    return NextResponse.json({ status: 'OK', totalStudyHours: totalStudyHours})
+    return NextResponse.json(responseBody, { status: 200 })
   } catch(error) {
     if (error instanceof Error) 
       return NextResponse.json({ status: error.message }, { status: 400 })
