@@ -10,7 +10,7 @@ export const ActionButton = ({ onNavigate } :ActionButtonProps) => {
   return(
     <div className="space-y-3 mb-6">
       <Button
-        onClick={() => onNavigate('/')}  // 学習投稿機能の実装後に正しいパスを指定する
+        onClick={() => onNavigate('/learning-record')}  // 学習投稿機能の実装後に正しいパスを指定する
         className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-6 rounded-2xl shadow-lg"
       >
         <Plus className="w-5 h-5 mr-2" />

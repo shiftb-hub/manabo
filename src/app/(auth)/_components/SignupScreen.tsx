@@ -1,24 +1,27 @@
-"use client";
+'use client'
 
-import { FormProvider, Controller } from "react-hook-form";
-import { useSignupForm } from "@/app/(auth)/_hooks/useSignupForm";
+import { ArrowLeft } from 'lucide-react'
+import { useEffect } from 'react'
+import { Controller, FormProvider } from 'react-hook-form'
+
+import PasswordInput from '@/app/(auth)/_components/PasswordInput'
+import PasswordPolicyIndicator from '@/app/(auth)/_components/PasswordPolicyIndicator'
+import { useSignupForm } from '@/app/(auth)/_hooks/useSignupForm'
+import { ManaboIcon } from '@/app/_components/manabo-icon'
+import { Alert, AlertDescription } from '@/app/_components/ui/alert'
+import { Button } from '@/app/_components/ui/button'
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/app/_components/ui/card";
-import { Button } from "@/app/_components/ui/button";
-import { Input } from "@/app/_components/ui/input";
-import { Label } from "@/app/_components/ui/label";
-import { Alert, AlertDescription } from "@/app/_components/ui/alert";
-import { Checkbox } from "@/app/_components/ui/checkbox";
-import { ArrowLeft } from "lucide-react";
-import { ManaboIcon } from "@/app/_components/manabo-icon";
-import PasswordInput from "@/app/(auth)/_components/PasswordInput";
-import PasswordPolicyIndicator from "@/app/(auth)/_components/PasswordPolicyIndicator";
-import { useEffect } from "react";
-import AgreeToTermsLabel from "./AgreeToTermsLabel";
+} from '@/app/_components/ui/card'
+import { Checkbox } from '@/app/_components/ui/checkbox'
+import { Input } from '@/app/_components/ui/input'
+import { Label } from '@/app/_components/ui/label'
+
+
+import AgreeToTermsLabel from './AgreeToTermsLabel'
 
 interface SignupScreenProps {
   onNavigateToLogin: () => void;
@@ -42,9 +45,9 @@ export default function SignupScreen({
     setShowPassword,
     showConfirmPassword,
     setShowConfirmPassword,
-  } = useSignupForm(onNavigateToEmailVerification);
+  } = useSignupForm(onNavigateToEmailVerification)
 
-  useEffect(() => {}, [methods.formState.isValid]);
+  useEffect(() => {}, [methods.formState.isValid])
 
   return (
     <div className="min-h-screen bg-[#f4fbf7] flex items-center justify-center p-4">
@@ -73,7 +76,7 @@ export default function SignupScreen({
               >
                 <fieldset
                   disabled={isLoading}
-                  className={isLoading ? "opacity-50" : ""}
+                  className={isLoading ? 'opacity-50' : ''}
                 >
                   {error && (
                     <Alert className="border-red-200 bg-red-50">
@@ -85,7 +88,7 @@ export default function SignupScreen({
 
                   <div>
                     <Label htmlFor="nickname">ニックネーム</Label>
-                    <Input id="nickname" {...methods.register("nickname")} />
+                    <Input id="nickname" {...methods.register('nickname')} />
                   </div>
 
                   <div>
@@ -93,7 +96,7 @@ export default function SignupScreen({
                     <Input
                       id="email"
                       type="email"
-                      {...methods.register("email")}
+                      {...methods.register('email')}
                     />
                   </div>
 
@@ -103,7 +106,7 @@ export default function SignupScreen({
                       id="password"
                       show={showPassword}
                       setShow={setShowPassword}
-                      {...methods.register("password")}
+                      {...methods.register('password')}
                     />
                     <PasswordPolicyIndicator
                       score={passwordStrength.score}
@@ -119,7 +122,7 @@ export default function SignupScreen({
                       id="confirmPassword"
                       show={showConfirmPassword}
                       setShow={setShowConfirmPassword}
-                      {...methods.register("confirmPassword")}
+                      {...methods.register('confirmPassword')}
                     />
                   </div>
 
@@ -149,7 +152,7 @@ export default function SignupScreen({
                       }
                       className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-6 rounded-2xl shadow-lg"
                     >
-                      {isLoading ? "登録中..." : "アカウントを作成"}
+                      {isLoading ? '登録中...' : 'アカウントを作成'}
                     </Button>
                   </div>
                 </fieldset>
@@ -158,7 +161,7 @@ export default function SignupScreen({
 
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                すでにアカウントをお持ちの方は{" "}
+                すでにアカウントをお持ちの方は{' '}
                 <Button
                   variant="link"
                   onClick={onNavigateToLogin}
@@ -172,5 +175,5 @@ export default function SignupScreen({
         </Card>
       </div>
     </div>
-  );
+  )
 }

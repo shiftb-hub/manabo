@@ -1,8 +1,9 @@
-"use client";
+'use client'
 
-import React from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { cn } from "@/app/_lib/utils";
+import { Eye, EyeOff } from 'lucide-react'
+import React from 'react'
+
+import { cn } from '@/app/_lib/utils'
 
 interface PasswordInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -15,9 +16,9 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     return (
       <div className="relative">
         <input
-          type={show ? "text" : "password"}
+          type={show ? 'text' : 'password'}
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+            'flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
             className
           )}
           ref={ref}
@@ -32,10 +33,10 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
           {show ? <EyeOff size={18} /> : <Eye size={18} />}
         </button>
       </div>
-    );
+    )
   }
-);
+)
 
-PasswordInput.displayName = "PasswordInput";
+PasswordInput.displayName = 'PasswordInput'
 
-export default PasswordInput;
+export default PasswordInput

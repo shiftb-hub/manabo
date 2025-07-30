@@ -1,9 +1,10 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { Input } from "@/app/_components/ui/input";
-import { Button } from "@/app/_components/ui/button";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from 'lucide-react'
+import { useState } from 'react'
+
+import { Button } from '@/app/_components/ui/button'
+import { Input } from '@/app/_components/ui/input'
 
 interface PasswordInputProps {
   id: string;
@@ -17,16 +18,16 @@ export const PasswordInput = ({
   id,
   value,
   onChange,
-  placeholder = "パスワードを入力",
-  className = "",
+  placeholder = 'パスワードを入力',
+  className = '',
 }: PasswordInputProps) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
 
   return (
     <div className="relative">
       <Input
         id={id}
-        type={showPassword ? "text" : "password"}
+        type={showPassword ? 'text' : 'password'}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -47,5 +48,5 @@ export const PasswordInput = ({
         )}
       </Button>
     </div>
-  );
-};
+  )
+}

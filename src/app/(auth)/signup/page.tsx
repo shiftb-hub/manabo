@@ -1,22 +1,23 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
-import SignupScreen from "@/app/(auth)/_components/SignupScreen";
+import { useRouter } from 'next/navigation'
+
+import SignupScreen from '@/app/(auth)/_components/SignupScreen'
 
 export default function SignupPage() {
-  const router = useRouter();
+  const router = useRouter()
 
   const handleNavigateToLogin = () => {
-    router.push("/login");
-  };
+    router.push('/login')
+  }
 
   const handleNavigateToEmailVerification = (email: string) => {
-    router.push(`/verify-email?email=${encodeURIComponent(email)}`);
-  };
+    router.push(`/verify-email?email=${encodeURIComponent(email)}`)
+  }
 
   const handleBack = () => {
-    router.back();
-  };
+    router.back()
+  }
 
   return (
     <SignupScreen
@@ -24,5 +25,5 @@ export default function SignupPage() {
       onNavigateToEmailVerification={handleNavigateToEmailVerification}
       onBack={handleBack}
     />
-  );
+  )
 }

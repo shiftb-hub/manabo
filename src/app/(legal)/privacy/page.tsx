@@ -26,5 +26,5 @@ export default function PrivacyPolicyPage() {
         までご連絡ください。
       </p>
     </main>
-  );
+  )
 }

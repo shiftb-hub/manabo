@@ -1,13 +1,14 @@
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
-import { Button } from "@/app/_components/ui/button";
-import { motion } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
+import { motion } from 'framer-motion'
+import { CheckCircle2 } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
+
+import { Button } from '@/app/_components/ui/button'
 
 export default function VerifyEmailPage() {
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email");
+  const searchParams = useSearchParams()
+  const email = searchParams.get('email')
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f4fbf7] p-6">
@@ -21,7 +22,7 @@ export default function VerifyEmailPage() {
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 100, damping: 8 }}
+            transition={{ type: 'spring', stiffness: 100, damping: 8 }}
           >
             <CheckCircle2 className="text-green-500 w-16 h-16" />
           </motion.div>
@@ -32,8 +33,8 @@ export default function VerifyEmailPage() {
 
           <p className="text-gray-700 leading-relaxed">
             <span className="font-semibold text-black bg-gray-100 px-2 py-1 rounded">
-              {email ?? "ご登録のメールアドレス"}
-            </span>{" "}
+              {email ?? 'ご登録のメールアドレス'}
+            </span>{' '}
             宛に、確認メールをお送りしました。
           </p>
 
@@ -52,7 +53,7 @@ export default function VerifyEmailPage() {
           </p>
 
           <Button
-            onClick={() => alert("この画面は閉じていただいて大丈夫です")}
+            onClick={() => alert('この画面は閉じていただいて大丈夫です')}
             className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700 rounded-xl"
           >
             はい、確認しました
@@ -60,5 +61,5 @@ export default function VerifyEmailPage() {
         </div>
       </motion.div>
     </div>
-  );
+  )
 }

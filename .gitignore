@@ -41,3 +41,5 @@ next-env.d.ts
 
 # Windows用：画像や動画のサムネイルキャッシュファイル
 Thumbs.db
+
+.idea/
