@@ -1,9 +1,9 @@
 import React from 'react'
 
 interface ManaboIconProps {
-  size?: 'sm' | 'md' | 'lg' | 'xl';
-  showBadge?: boolean;
-  className?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl'
+  showBadge?: boolean
+  className?: string
 }
 export function ManaboIcon({ size = 'md', showBadge = true, className = '' }: ManaboIconProps) {
   const sizeClasses = {
