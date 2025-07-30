@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 type NavigationFunctions = {
   onNavigateToSignup: () => void;
@@ -8,23 +8,23 @@ type NavigationFunctions = {
 
 
 export const useNavigation = (): NavigationFunctions => {
-  const router = useRouter();
+  const router = useRouter()
 
   const onNavigateToSignup = () => {
-    router.push("/signup"); // サインアップページに遷移
-  };
+    router.push('/signup') // サインアップページに遷移
+  }
 
   const onNavigateToPasswordReset = () => {
     // パスワードリセットのページに遷移
-  };
+  }
 
   const onBack = () => {
-    router.back(); // 前のページに戻る
-  };
+    router.back() // 前のページに戻る
+  }
 
   return {
     onNavigateToSignup,
     onNavigateToPasswordReset,
     onBack
-  };
+  }
 }

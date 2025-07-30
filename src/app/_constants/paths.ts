@@ -25,7 +25,7 @@ export const PATHS = {
 
   // 学習関連
   LEARNING: {
-    RECORDS: '/learningRecords',
+    RECORDS: '/learning-record',
     STYLE: '/learning-style',
   },
 

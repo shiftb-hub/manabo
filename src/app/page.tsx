@@ -3,5 +3,5 @@ export default function Home() {
     <div>
       TopPage
     </div>
-  );
+  )
 }

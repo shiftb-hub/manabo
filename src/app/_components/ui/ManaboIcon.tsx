@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react'
 
 interface ManaboIconProps {
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   showBadge?: boolean;
   className?: string;
 }
-export function ManaboIcon({ size = "md", showBadge = true, className = "" }: ManaboIconProps) {
+export function ManaboIcon({ size = 'md', showBadge = true, className = '' }: ManaboIconProps) {
   const sizeClasses = {
-    sm: "w-8 h-8",
-    md: "w-12 h-12",
-    lg: "w-16 h-16",
-    xl: "w-20 h-20",
+    sm: 'w-8 h-8',
+    md: 'w-12 h-12',
+    lg: 'w-16 h-16',
+    xl: 'w-20 h-20',
   }
 
   return (
