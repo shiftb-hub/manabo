@@ -50,7 +50,7 @@ export const GET = async () => {
     const totalStudyTime = todayStudyRecords.reduce((sum, record) => sum + (record.duration ?? 0), 0)
 
     // 時間に変換
-    const totalStudyHours = Number((totalStudyTime / 60).toFixed(1))
+    const totalStudyHours = Number((totalStudyTime / 60).toFixed(2))
     const responseBody: StudyTimeResponse = { totalStudyHours } 
       
     return NextResponse.json(responseBody, { status: 200 })
