@@ -4,7 +4,7 @@ import { StudyTimeResponse } from '@/app/(dashboard)/dashboard/_types/todayStudy
 import { prisma } from '@/app/_lib/prisma'
 import { createClient } from '@/app/_utils/supabase/server'
 
-type todayStudyRecords = {
+type TodayStudyRecord = {
   duration: number
 }
 
@@ -36,7 +36,7 @@ export const GET = async () => {
   const targetDate = new Date(Date.UTC(jstYear, jstMonth, jstDate, 0, 0, 0))
 
   try {
-    const todayStudyRecords:todayStudyRecords[] = await prisma.learningRecord.findMany({
+    const todayStudyRecords:TodayStudyRecord[] = await prisma.learningRecord.findMany({
       where: {
         userId: targetUser.id,
         learningDate: targetDate
