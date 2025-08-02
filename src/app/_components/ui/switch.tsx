@@ -17,7 +17,7 @@ const Switch = React.forwardRef<
       // 明示的に表示を固定
       'data-[state=checked]:bg-[#10b981]', // ✅ アクティブ時：green-500
       'data-[state=unchecked]:bg-[#e5e7eb]', // ✅ 非アクティブ時：gray-200相当
-      className
+      className,
     )}
     {...props}
   >
@@ -27,7 +27,7 @@ const Switch = React.forwardRef<
         'pointer-events-none block h-5 w-5 rounded-full transition-transform shadow-md',
         'bg-white', // ✅ 常に白
         'data-[state=checked]:translate-x-5',
-        'data-[state=unchecked]:translate-x-0'
+        'data-[state=unchecked]:translate-x-0',
       )}
     />
   </SwitchPrimitives.Root>
