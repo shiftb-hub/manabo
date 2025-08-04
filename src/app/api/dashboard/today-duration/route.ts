@@ -1,3 +1,5 @@
+import { TZDate } from '@date-fns/tz'
+import { endOfDay, startOfDay } from 'date-fns'
 import { NextResponse } from 'next/server'
 
 import { StudyTimeResponse } from '@/app/(dashboard)/dashboard/_types/todayStudyTime'
@@ -26,20 +28,25 @@ export const GET = async () => {
 
   if (!targetUser) return NextResponse.json({ status: 'User not found' }, { status: 404 })
 
-  // 今日の日本時間の取得
-  const today = new Date()
-  const jstYear = today.getFullYear()
-  const jstMonth = today.getMonth()
-  const jstDate = today.getDate()
+  // 現在の日付を算出
+  const jstNow = new TZDate(new Date(), 'Asia/Tokyo')
 
-  // UTC時間(00:00:00)に変換
-  const targetDate = new Date(Date.UTC(jstYear, jstMonth, jstDate, 0, 0, 0))
+  // 今日の日付から、開始時間(JST)と終了時間(JST)を変数化
+  const jstStart = startOfDay(jstNow)
+  const jstEnd = endOfDay(jstNow)
+
+  // utc時間に変更
+  const utcStart = new Date(jstStart)
+  const utcEnd = new Date(jstEnd)
 
   try {
     const todayStudyRecords:TodayStudyRecord[] = await prisma.learningRecord.findMany({
-      where: {
+      where : {
         userId: targetUser.id,
-        learningDate: targetDate
+        startTime: {
+          gte: utcStart,
+          lt: utcEnd,
+        },
       },
       select: {
         duration: true,
@@ -48,7 +55,7 @@ export const GET = async () => {
 
     // 合計値の計算
     const totalStudyTime = todayStudyRecords.reduce((sum, record) => sum + (record.duration ?? 0), 0)
-
+    
     // 時間に変換
     const totalStudyHours = Number((totalStudyTime / 60).toFixed(2))
     const responseBody: StudyTimeResponse = { totalStudyHours } 
