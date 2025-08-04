@@ -1,6 +1,6 @@
 import { Question } from '../_types/question'
 
-export const learningTypeQuestions: Question[] = [
+export const learningStyleQuestions: Question[] = [
   {
     id: 1,
     text: '理想的な学習環境はどれですか？',
