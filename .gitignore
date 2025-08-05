@@ -43,6 +43,3 @@ next-env.d.ts
 Thumbs.db
 
 .idea/
-
-# .kiroファイルを無視
-*.kiro
