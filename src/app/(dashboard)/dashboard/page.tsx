@@ -7,11 +7,12 @@ import { ActionButton } from './_components/ActionButton'
 import { DashboardHeader } from './_components/DashboardHeader'
 import { StudyStatus } from './_components/StudyStatus'
 import { SummaryBoard } from './_components/SummaryBoard'
+import { useTodayStudyTime } from './_hooks/useTodayStudyTime'
 
 export default function Dashboard() {
   // 仮の値をuseStateで管理。setterは別ブランチでdata fetchする時に追記する。
   const [studyStreak] = useState(12)
-  const [todayStudyTime] = useState(2.5)
+  const { todayStudyTime } = useTodayStudyTime()
   const [weeklyGoal] = useState(15)
   const [matchingGroup] = useState('朝活学習者')
   const [onlineGroupMembers] = useState(3)
