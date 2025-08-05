@@ -1,4 +1,9 @@
-// デフォルトエクスポートと名前付きエクスポートの両方に対応
+type ManaboIconProps = {
+  size?: 'sm' | 'md' | 'lg' | 'xl'
+  showBadge?: boolean
+  className?: string
+}
+
 export function ManaboIcon({ size = 'md', showBadge = true, className = '' }: ManaboIconProps) {
   const sizeClasses = {
     sm: 'w-8 h-8',
