@@ -3,8 +3,9 @@ import { BookOpen, Clock, Sparkles, Target, TrendingUp, Users } from 'lucide-rea
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/_components/ui/card'
 import { Progress } from '@/app/_components/ui/progress'
 
+import { useStreak } from '../_hooks/useStreak'
+
 interface StudyStatusProps {
-  studyStreak: number
   todayStudyTime: number
   weeklyGoal: number
   matchingGroup: string
@@ -12,26 +13,34 @@ interface StudyStatusProps {
   currentMessage: string
 }
 
-export const StudyStatus = ({ 
-  studyStreak, 
+export const StudyStatus = ({
   todayStudyTime,
   weeklyGoal,
   matchingGroup,
   onlineGroupMembers,
-  currentMessage
-} : StudyStatusProps ) => {
-
-  return(
+  currentMessage,
+}: StudyStatusProps) => {
+  const { streakCount, isLoading: isStreakLoading } = useStreak()
+  return (
     <>
       <Card className="mb-6 bg-gradient-to-r from-green-500 to-emerald-600 border-0 text-white shadow-lg">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-green-100 text-sm">連続学習日数</p>
-              <p className="text-4xl font-bold mb-2">{studyStreak}日</p>
+              {isStreakLoading ? (
+                <div className="text-4xl font-bold mb-2 flex items-center">
+                  <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                  <span className="text-white/50">日</span>
+                </div>
+              ) : (
+                <p className="text-4xl font-bold mb-2">{streakCount}日</p>
+              )}
               <div className="flex items-center">
                 <TrendingUp className="w-4 h-4 mr-1" />
-                <p className="text-sm text-green-100">素晴らしい継続力！</p>
+                <p className="text-sm text-green-100">
+                  {isStreakLoading ? '読み込み中...' : '素晴らしい継続力！'}
+                </p>
               </div>
             </div>
             <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center">
@@ -64,7 +73,9 @@ export const StudyStatus = ({
               </div>
               <div>
                 <p className="text-xs text-gray-600">週間目標</p>
-                <p className="text-xl font-bold text-gray-800">{Math.round((todayStudyTime / weeklyGoal) * 100)}%</p>
+                <p className="text-xl font-bold text-gray-800">
+                  {Math.round((todayStudyTime / weeklyGoal) * 100)}%
+                </p>
               </div>
             </div>
           </CardContent>
@@ -84,7 +95,9 @@ export const StudyStatus = ({
               </span>
             </div>
             <Progress value={(todayStudyTime / weeklyGoal) * 100} className="h-3 bg-green-100" />
-            <p className="text-xs text-gray-500">目標まであと{weeklyGoal - todayStudyTime}時間です</p>
+            <p className="text-xs text-gray-500">
+              目標まであと{weeklyGoal - todayStudyTime}時間です
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -125,6 +138,5 @@ export const StudyStatus = ({
         </CardContent>
       </Card>
     </>
-
   )
 }
