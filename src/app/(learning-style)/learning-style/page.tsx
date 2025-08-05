@@ -1,5 +1,5 @@
 'use client'
-import { ArrowLeft, Brain } from 'lucide-react'
+import { Brain } from 'lucide-react'
 import React, { useState } from 'react'
 
 import { Button } from '@/app/_components/ui/button'
@@ -12,7 +12,8 @@ import {
 } from '@/app/_components/ui/card'
 import { Progress } from '@/app/_components/ui/progress'
 
-import { learningStyleQuestions } from '../learning-style-check/_constants/learningStyleQuestions'
+import { LearningTypeHeader } from '../_components/StyleCheckHeader'
+import { learningStyleQuestions } from '../_contents/learningStyleQuestions'
 
 const Page = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -26,15 +27,7 @@ const Page = () => {
     <>
       <div className="min-h-screen bg-green-50 p-4 flex flex-col items-center">
         <div className="container max-auto px-4 py-3 max-w-md pb-24">
-          <div className="flex items-center mb-6">
-            <Button className="w-fit pl-0.5 bg-transparent text-green-600 hover:bg-transparent hover:text-green-800">
-              <ArrowLeft className="w-8 h-8" />
-              戻る
-            </Button>
-            <h1 className="w-8/12 text-center text-lg font-bold text-green-700">
-              学習スタイル診断
-            </h1>
-          </div>
+          <LearningTypeHeader />
 
           {/* 質問番号 + プログレスバー */}
           <div className="mb-6">
@@ -44,13 +37,11 @@ const Page = () => {
               </span>
               <span className="text-sm text-green-600">{(currentIndex + 1) * 10} %</span>
             </div>
-
             <Progress
               value={progress}
               className="relative overflow-hidden bg-green-100 rounded-full w-full h-2"
             ></Progress>
           </div>
-          {/* ここから */}
           {/* 質問カード */}
           <Card className="bg-white/80 backdrop-blur-sm border-green-100 rounded-xl">
             <CardHeader className="pt-2 pb-6">
@@ -67,16 +58,16 @@ const Page = () => {
 
             <CardContent>
               <div className="space-y-3">
-                {current.options.map((options) => (
+                {current.options.map((option: { id: string; label: string }) => (
                   <Button
-                    key={options.id}
+                    key={option.id}
                     onClick={() => handleAnswer()}
                     className="w-full justify-start gap-6 text-left border border-green-300 bg-white rounded-xl px-6 py-7 hover:bg-green-100 transition-colors text-gray-700"
                   >
                     <div className="flex items-center justify-center bg-green-100 py-1 px-2 aspect-square rounded-full">
-                      <span className="font-bold text-green-600">{options.id}</span>
+                      <span className="font-bold text-green-600">{option.id}</span>
                     </div>
-                    {options.label}
+                    {option.label}
                   </Button>
                 ))}
               </div>
