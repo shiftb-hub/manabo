@@ -9,15 +9,11 @@ type StreakResponse = {
 }
 
 export const useStreak = () => {
-  const { data, error, isLoading, mutate } = useSWR<StreakResponse>(
-    '/api/dashboard/streak',
-    fetcher,
-  )
+  const { data, error, isLoading } = useSWR<StreakResponse>('/api/dashboard/streak', fetcher)
 
   return {
     streakCount: data?.streakCount ?? 0,
     isLoading,
     error,
-    mutate,
   }
 }
