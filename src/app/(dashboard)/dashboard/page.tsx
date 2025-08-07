@@ -10,8 +10,6 @@ import { SummaryBoard } from './_components/SummaryBoard'
 import { useTodayStudyTime } from './_hooks/useTodayStudyTime'
 
 export default function Dashboard() {
-  // 仮の値をuseStateで管理。setterは別ブランチでdata fetchする時に追記する。
-  const [studyStreak] = useState(12)
   const { todayStudyTime } = useTodayStudyTime()
   const [weeklyGoal] = useState(15)
   const [matchingGroup] = useState('朝活学習者')
@@ -28,16 +26,15 @@ export default function Dashboard() {
   const [currentMessage] = useState(motivationalMessages[1])
 
   const router = useRouter()
-  const onNavigate = (path: string ) => {
+  const onNavigate = (path: string) => {
     router.push(path)
   }
 
-  return(
+  return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <div className="container mx-auto px-4 py-6 max-w-md pb-24">
         <DashboardHeader />
         <StudyStatus
-          studyStreak={studyStreak}
           todayStudyTime={todayStudyTime}
           weeklyGoal={weeklyGoal}
           matchingGroup={matchingGroup}
@@ -45,7 +42,7 @@ export default function Dashboard() {
           currentMessage={currentMessage}
         />
         <ActionButton onNavigate={onNavigate} />
-        <SummaryBoard 
+        <SummaryBoard
           weeklyDaysCount={weeklyDaysCount}
           followingCount={followingCount}
           newNotificationsCount={newNotificationsCount}
