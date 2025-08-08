@@ -8,8 +8,8 @@ export function getWeekUtcRange() {
 
 export function getStartOfWeek(date = new Date()): Date {
   const d = new Date(date)
-  const day = d.getUTCDay()
-  const diff = d.getUTCDate() - day + (day === 0 ? -6 : 1)
+  const day = d.getUTCDay() // 0(日)〜6(土)
+  const diff = d.getUTCDate() - day
   d.setUTCDate(diff)
   d.setUTCHours(0, 0, 0, 0)
   return d
