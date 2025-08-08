@@ -12,7 +12,7 @@ import { useWeeklyStudyTime } from './_hooks/useWeeklyStudyTime'
 
 export default function Dashboard() {
   const { todayStudyTime } = useTodayStudyTime()
-  const { weeklyStudyTime, weeklyGoal, weeklyPercentage } = useWeeklyStudyTime()
+  const { weeklyStudyTime, weeklyGoal, weeklyPercentage, remaining } = useWeeklyStudyTime()
   const [matchingGroup] = useState('朝活学習者')
   const [onlineGroupMembers] = useState(3)
   const [weeklyDaysCount] = useState(7)
@@ -40,6 +40,7 @@ export default function Dashboard() {
           weeklyGoal={weeklyGoal}
           weeklyStudyTime={weeklyStudyTime}
           weeklyPercentage={weeklyPercentage}
+          remaining={remaining}
           matchingGroup={matchingGroup}
           onlineGroupMembers={onlineGroupMembers}
           currentMessage={currentMessage}

@@ -10,6 +10,7 @@ interface StudyStatusProps {
   weeklyStudyTime: number
   weeklyPercentage: number
   weeklyGoal: number
+  remaining: number
   matchingGroup: string
   onlineGroupMembers: number
   currentMessage: string
@@ -20,12 +21,12 @@ export const StudyStatus = ({
   weeklyGoal,
   weeklyStudyTime,
   weeklyPercentage,
+  remaining,
   matchingGroup,
   onlineGroupMembers,
   currentMessage,
 }: StudyStatusProps) => {
   const { streakCount, isLoading: isStreakLoading } = useStreak()
-  const remaining = Math.max(weeklyGoal - weeklyStudyTime, 0)
 
   return (
     <>
