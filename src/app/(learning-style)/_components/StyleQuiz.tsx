@@ -12,12 +12,12 @@ import {
 
 import { Question } from '../_types/question'
 
-interface Props{
-current:Question,
-handleAnswer:()=>void,
+interface Props {
+  current: Question
+  handleAnswer: () => void
 }
 
-export const StyleQuiz:React.FC<Props> = ({current,handleAnswer}) => {
+export const StyleQuiz: React.FC<Props> = ({ current, handleAnswer }) => {
   return (
     <Card className="bg-white/80 backdrop-blur-sm border-green-100 rounded-xl">
       <CardHeader className="pt-2 pb-6">
@@ -34,8 +34,9 @@ export const StyleQuiz:React.FC<Props> = ({current,handleAnswer}) => {
 
       <CardContent>
         <div className="space-y-3">
-          {current.options.map((option: { id: string; label: string }) => (
+          {current.options.map((option) => (
             <Button
+              type="button"
               key={option.id}
               onClick={() => handleAnswer()}
               className="w-full justify-start gap-6 text-left border border-green-300 bg-white rounded-xl px-6 py-7 hover:bg-green-100 transition-colors text-gray-700"
