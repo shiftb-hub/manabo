@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import type { ReactNode } from 'react'
 import './globals.css'
 import { ToastContainer } from 'react-toastify'
 
-import BottomNavigation from './_components/bottom-navigation'
+import { getCurrentUser } from '@/app/_utils/user/getCurrentUser'
+import { UserProvider } from '@/app/_utils/user/UserProvider'
 
+import BottomNavigation from './_components/bottom-navigation'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -23,19 +26,17 @@ export const metadata: Metadata = {
     'manaboは、学習の記録・可視化・共有を通じて、あなたのモチベーション維持と成長をサポートします。',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const user = await getCurrentUser()
+
   return (
-    <html lang='en'>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-        <ToastContainer closeOnClick />
-        <BottomNavigation />
+    <html lang="ja">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <UserProvider initialUser={user}>
+          {children}
+          <ToastContainer closeOnClick />
+          <BottomNavigation />
+        </UserProvider>
       </body>
     </html>
   )
