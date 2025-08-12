@@ -9,8 +9,9 @@ import { requireUser } from '@/app/_utils/api/requireUser'
 type TodayStudyRecord = { duration: number }
 
 export const GET = async () => {
-  const { user, errorResponse } = await requireUser()
-  if (!user) return errorResponse
+  const guard = await requireUser()
+  if (!guard.ok) return guard.response
+  const user = guard.user
 
   const jstNow = new TZDate(new Date(), 'Asia/Tokyo')
   const jstStart = startOfDay(jstNow)
