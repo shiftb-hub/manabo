@@ -8,14 +8,14 @@ import { createClient } from '@/app/_utils/supabase/server'
  * - Prismaで自アプリのUser/Profileを引く
  * - 画面で使う最小セット(AppUser)に射影
  */
-export async function getCurrentUser(): Promise<AppUser | null> {
+export const getCurrentUser = async (): Promise<AppUser | null> => {
   const supabase = await createClient()
   const { data, error } = await supabase.auth.getUser()
 
   if (error || !data?.user) return null
 
   const u = await prisma.user.findUnique({
-    where: { supabaseUserId: data.user.id }, // スキーマに合わせる
+    where: { supabaseUserId: data.user.id },
     select: {
       id: true,
       nickName: true,
