@@ -1,20 +1,19 @@
+// src/app/_utils/api/requireUser.ts
 import type { AppUser } from '@/app/_types/user'
 import { getCurrentUser } from '@/app/_utils/user/getCurrentUser'
 
-type RequireUserResult =
-  | { user: AppUser; errorResponse: null }
-  | { user: null; errorResponse: Response }
+export type RequireUserResult = { ok: true; user: AppUser } | { ok: false; response: Response }
 
 export async function requireUser(): Promise<RequireUserResult> {
   const user = await getCurrentUser()
   if (!user) {
     return {
-      user: null,
-      errorResponse: new Response(JSON.stringify({ status: 'Unauthorized' }), {
+      ok: false,
+      response: new Response(JSON.stringify({ status: 'Unauthorized' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' },
       }),
     }
   }
-  return { user, errorResponse: null }
+  return { ok: true, user }
 }

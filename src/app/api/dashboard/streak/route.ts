@@ -1,3 +1,4 @@
+// 例: src/app/api/streak/route.ts
 import { NextResponse } from 'next/server'
 
 import { prisma } from '@/app/_lib/prisma'
@@ -5,8 +6,9 @@ import { requireUser } from '@/app/_utils/api/requireUser'
 import { calculateStreak } from '@/app/_utils/streakCalculator'
 
 export const GET = async () => {
-  const { user, errorResponse } = await requireUser()
-  if (!user) return errorResponse
+  const guard = await requireUser()
+  if (!guard.ok) return guard.response
+  const user = guard.user
 
   try {
     const learningRecords = await prisma.learningRecord.findMany({
