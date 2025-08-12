@@ -5,7 +5,7 @@ import { getCurrentUser } from '@/app/_utils/user/getCurrentUser'
 
 export type RequireUserResult = { ok: true; user: AppUser } | { ok: false; response: NextResponse }
 
-export async function requireUser(): Promise<RequireUserResult> {
+export const requireUser = async (): Promise<RequireUserResult> => {
   const user = await getCurrentUser()
   if (!user) {
     return {
