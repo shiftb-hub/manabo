@@ -53,7 +53,6 @@ export const GET = async () => {
         currentHours,
         goalHours,
         percentage,
-        debug: `Current: ${currentHours}, Goal: ${goalHours}, %: ${percentage}`,
       },
       { status: 200 },
     )
