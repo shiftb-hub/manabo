@@ -2,13 +2,13 @@ import { Settings } from 'lucide-react'
 
 import { ManaboIcon } from '@/app/_components/manabo-icon'
 import { Button } from '@/app/_components/ui/button'
-import { useUser } from '@/app/_hooks/useUser'
+import { useSession } from '@/app/_hooks/useSession'
 // interface Props{
 //   nickname?: string
 // }
 
 export const DashboardHeader = () => {
-  const { user, isLoading } = useUser()
+  const { user, isLoading } = useSession()
   if (isLoading) {
     return 'loading...'
   }
