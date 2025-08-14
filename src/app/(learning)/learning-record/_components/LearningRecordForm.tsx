@@ -83,7 +83,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
   const onSubmit: SubmitHandler<LearningRecord> = async data => {
     const {
       data: { user },
-    } = await supabase.auth.getUser()
+    } = await supabase().auth.getUser()
 
     if (!user) {
       toast.error('ログインが必要です。')
