@@ -1,3 +1,4 @@
+// src/app/(ranking)/ranking/_utils/rankingUtils.tsx
 'use client'
 
 import { Award, Crown, Medal } from 'lucide-react'
@@ -9,14 +10,14 @@ import type { JSX } from 'react'
  */
 export const getRankIcon = (rank: number): JSX.Element => {
   switch (rank) {
-    case 1:
-      return <Crown className='w-6 h-6 text-yellow-500' />
-    case 2:
-      return <Medal className='w-6 h-6 text-gray-400' />
-    case 3:
-      return <Award className='w-6 h-6 text-amber-600' />
-    default:
-      return <span className='text-lg font-bold text-gray-600'>#{rank}</span>
+  case 1:
+    return <Crown className="w-6 h-6 text-yellow-500" />
+  case 2:
+    return <Medal className="w-6 h-6 text-gray-400" />
+  case 3:
+    return <Award className="w-6 h-6 text-amber-600" />
+  default:
+    return <span className="text-lg font-bold text-gray-600">#{rank}</span>
   }
 }
 
@@ -34,21 +35,19 @@ export const getChangeColor = (change: string): string => {
  */
 export const getPeriodLabel = (period: 'day' | 'week' | 'month'): string => {
   switch (period) {
-    case 'day':
-      return '今日'
-    case 'week':
-      return '今週'
-    case 'month':
-      return '今月'
-    default:
-      return ''
+  case 'day':
+    return '今日'
+  case 'week':
+    return '今週'
+  case 'month':
+    return '今月'
+  default:
+    return ''
   }
 }
 
-export const getMotivationMessage = (
-  period: 'day' | 'week' | 'month'
-): string => {
-  const messages: Record<typeof period, string> = {
+export const getMotivationMessage = (period: 'day' | 'week' | 'month'): string => {
+  const messages: Record<'day' | 'week' | 'month', string> = {
     day: '今日は3位にランクイン！この調子で頑張りましょう。',
     week: '今週は3位をキープ中！継続的な努力が実を結んでいます。',
     month: '今月は4位！上位を目指して頑張りましょう。',
