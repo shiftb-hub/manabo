@@ -69,7 +69,7 @@ export default function LoginScreen() {
         throw new Error(error)
       }
 
-      router.push('/learning-record') 
+      router.push('/dashboard') 
     } catch (err: unknown) {
       if (err instanceof Error) {
         setLoginError(err.message)
