@@ -17,7 +17,9 @@ export const DashboardHeader = () => {
       <div className="flex items-center space-x-3">
         <ManaboIcon size="md" />
         <div>
-          <h1 className="text-xl font-bold text-gray-800">{user && `おはよう、${user}さん！`}</h1>
+          <h1 className="text-xl font-bold text-gray-800">
+            {user && `おはよう、${user.nickName}さん！`}
+          </h1>
           <p className="text-sm text-gray-600">今日も学習を頑張りましょう</p>
         </div>
       </div>
