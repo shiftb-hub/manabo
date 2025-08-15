@@ -1,7 +1,8 @@
+// src/app/(ranking)/ranking/page.tsx
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { MotivationCard } from './_components/MotivationCard'
 import { PeriodTabs } from './_components/PeriodTabs'
@@ -12,19 +13,29 @@ import { YourRankCard } from './_components/YourRankCard'
 import { useRanking } from './_hooks/useRanking'
 import type { RankingPeriod } from './_types/rankingTypes'
 
+// ← 連続日数フックを取り込み
+import { useStreak } from '../../(dashboard)/dashboard/_hooks/useStreak'
+
 export default function RankingPage() {
   const router = useRouter()
   const [showRanking, setShowRanking] = useState(true)
   const [selectedPeriod, setSelectedPeriod] = useState<RankingPeriod>('week')
 
   const { items, currentUser, loading, error } = useRanking(selectedPeriod)
-  // eslint-disable-next-line no-console
-  console.log('RankingPage', {
-    itemsLen: items.length,
-    hasCurrent: Boolean(currentUser),
-    loading,
-    error,
-  })
+  const { streakCount } = useStreak()
+
+  // 自分の行の streak を上書き（name で同定／必要なら rank 等に変更）
+  const usersForList = useMemo(() => {
+    if (!currentUser || !streakCount) return items
+    return items.map((u) =>
+      u.name === currentUser.name ? { ...u, streak: streakCount, isCurrentUser: true as const } : u,
+    )
+  }, [items, currentUser, streakCount])
+
+  const currentUserForCard = useMemo(
+    () => (currentUser ? { ...currentUser, streak: streakCount || currentUser.streak } : null),
+    [currentUser, streakCount],
+  )
 
   return (
     <RankingLayout
@@ -42,13 +53,12 @@ export default function RankingPage() {
 
           {loading && <div className="mb-4 text-sm text-gray-500">読み込み中...</div>}
           {error && <div className="mb-4 text-sm text-red-600">{error}</div>}
-
           {!loading && items.length === 0 && (
             <div className="mb-4 text-sm text-gray-500">ランキングデータがありません</div>
           )}
 
-          {currentUser && <YourRankCard user={currentUser} />}
-          {items.length > 0 && <RankingList users={items} period={selectedPeriod} />}
+          {currentUserForCard && <YourRankCard user={currentUserForCard} />}
+          {usersForList.length > 0 && <RankingList users={usersForList} period={selectedPeriod} />}
           <MotivationCard period={selectedPeriod} />
         </>
       ) : (
