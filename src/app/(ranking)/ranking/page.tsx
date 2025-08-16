@@ -1,4 +1,3 @@
-// src/app/(ranking)/ranking/page.tsx
 'use client'
 
 import { useRouter } from 'next/navigation'
@@ -12,8 +11,6 @@ import { RankingList } from './_components/RankingList'
 import { YourRankCard } from './_components/YourRankCard'
 import { useRanking } from './_hooks/useRanking'
 import type { RankingPeriod } from './_types/rankingTypes'
-
-// ← 連続日数フックを取り込み
 import { useStreak } from '../../(dashboard)/dashboard/_hooks/useStreak'
 
 export default function RankingPage() {
@@ -26,14 +23,16 @@ export default function RankingPage() {
 
   // 自分の行の streak を上書き（name で同定／必要なら rank 等に変更）
   const usersForList = useMemo(() => {
-    if (!currentUser || !streakCount) return items
+    // 変更前: if (!currentUser || !streakCount) return items
+    if (!currentUser || streakCount == null) return items
     return items.map((u) =>
       u.name === currentUser.name ? { ...u, streak: streakCount, isCurrentUser: true as const } : u,
     )
   }, [items, currentUser, streakCount])
 
   const currentUserForCard = useMemo(
-    () => (currentUser ? { ...currentUser, streak: streakCount || currentUser.streak } : null),
+    // 変更前: streak: streakCount || currentUser.streak
+    () => (currentUser ? { ...currentUser, streak: streakCount ?? currentUser.streak } : null),
     [currentUser, streakCount],
   )
 
