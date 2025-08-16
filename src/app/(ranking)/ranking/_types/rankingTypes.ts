@@ -9,3 +9,9 @@ export interface RankingUser {
   change: string
   isCurrentUser?: boolean
 }
+
+export type MotivationMessages = {
+  day: string
+  week: string
+  month: string
+}
