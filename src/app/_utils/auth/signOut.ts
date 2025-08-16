@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify'
-
 import { supabase } from '@/app/_lib/supabaseClient'
 
 export const signOut = async (): Promise<string | null> => {
@@ -10,7 +8,6 @@ export const signOut = async (): Promise<string | null> => {
       throw new Error(error.message)
     }
 
-    toast.success('ログアウトしました')
     return null
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : '予期しないエラーです'

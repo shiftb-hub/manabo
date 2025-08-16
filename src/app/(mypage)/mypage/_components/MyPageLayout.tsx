@@ -1,5 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 import { signOut } from '@/app/_utils/auth/signOut'
 
@@ -7,7 +8,7 @@ import { MyPageHeader } from './MyPageHeader'
 import { MyPageMenu } from './MyPageMenu'
 import { MyProfileHeader } from './MyProfileHeader'
 
-export default function MyPageLayout() {
+export const MyPageLayout = () => {
   const router = useRouter()
 
   // ナビゲーションの処理（仮）
@@ -20,7 +21,10 @@ export default function MyPageLayout() {
   const handleLogout = async () => {
     const result = await signOut()
     if (result === null) {
+      toast.success('ログアウトしました')
       router.replace('/login')
+    } else {
+      toast.error(`ログアウトエラー: ${result}`)
     }
   }
 
