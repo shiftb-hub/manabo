@@ -1,10 +1,9 @@
-import { TZDate } from '@date-fns/tz'
-import { endOfDay, startOfDay } from 'date-fns'
 import { NextResponse } from 'next/server'
 
 import type { StudyTimeResponse } from '@/app/(dashboard)/dashboard/_types/todayStudyTime'
 import { prisma } from '@/app/_lib/prisma'
 import { requireUser } from '@/app/_utils/api/requireUser'
+import { jstToUtcRange } from '@/app/_utils/jstToUtcRange'
 
 type TodayStudyRecord = { duration: number }
 
@@ -13,12 +12,7 @@ export const GET = async () => {
   if (!guard.ok) return guard.response
   const user = guard.user
 
-  const jstNow = new TZDate(new Date(), 'Asia/Tokyo')
-  const jstStart = startOfDay(jstNow)
-  const jstEnd = endOfDay(jstNow)
-
-  const utcStart = new Date(jstStart)
-  const utcEnd = new Date(jstEnd)
+  const { utcStart, utcEnd } = jstToUtcRange(new Date(), 'day')
 
   try {
     const todayStudyRecords: TodayStudyRecord[] = await prisma.learningRecord.findMany({
