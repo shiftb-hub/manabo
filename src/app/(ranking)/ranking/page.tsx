@@ -46,14 +46,14 @@ export default function RankingPage() {
     >
       {showRanking ? (
         <>
-          <div className="mb-6">
+          <div className='mb-6'>
             <PeriodTabs value={selectedPeriod} onChange={setSelectedPeriod} />
           </div>
 
-          {loading && <div className="mb-4 text-sm text-gray-500">読み込み中...</div>}
-          {error && <div className="mb-4 text-sm text-red-600">{error}</div>}
+          {loading && <div className='mb-4 text-sm text-gray-500'>読み込み中...</div>}
+          {error && <div className='mb-4 text-sm text-red-600'>{error}</div>}
           {!loading && items.length === 0 && (
-            <div className="mb-4 text-sm text-gray-500">ランキングデータがありません</div>
+            <div className='mb-4 text-sm text-gray-500'>ランキングデータがありません</div>
           )}
 
           {currentUserForCard && <YourRankCard user={currentUserForCard} />}

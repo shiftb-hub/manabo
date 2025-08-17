@@ -1,4 +1,3 @@
-// src/app/(ranking)/ranking/_utils/rankingUtils.tsx
 'use client'
 
 import { Award, Crown, Medal } from 'lucide-react'
@@ -10,14 +9,14 @@ import type { JSX } from 'react'
  */
 export const getRankIcon = (rank: number): JSX.Element => {
   switch (rank) {
-  case 1:
-    return <Crown className="w-6 h-6 text-yellow-500" />
-  case 2:
-    return <Medal className="w-6 h-6 text-gray-400" />
-  case 3:
-    return <Award className="w-6 h-6 text-amber-600" />
-  default:
-    return <span className="text-lg font-bold text-gray-600">#{rank}</span>
+    case 1:
+      return <Crown className='w-6 h-6 text-yellow-500' />
+    case 2:
+      return <Medal className='w-6 h-6 text-gray-400' />
+    case 3:
+      return <Award className='w-6 h-6 text-amber-600' />
+    default:
+      return <span className='text-lg font-bold text-gray-600'>#{rank}</span>
   }
 }
 
@@ -35,14 +34,14 @@ export const getChangeColor = (change: string): string => {
  */
 export const getPeriodLabel = (period: 'day' | 'week' | 'month'): string => {
   switch (period) {
-  case 'day':
-    return '今日'
-  case 'week':
-    return '今週'
-  case 'month':
-    return '今月'
-  default:
-    return ''
+    case 'day':
+      return '今日'
+    case 'week':
+      return '今週'
+    case 'month':
+      return '今月'
+    default:
+      return ''
   }
 }
 
