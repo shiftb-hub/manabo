@@ -1,17 +1,17 @@
+import React from 'react'
 import { Settings } from 'lucide-react'
 
 import { ManaboIcon } from '@/app/_components/manabo-icon'
 import { Button } from '@/app/_components/ui/button'
-import { useSession } from '@/app/_hooks/useSession'
-// interface Props{
-//   nickname?: string
-// }
 
-export const DashboardHeader = () => {
-  const { user, isLoading } = useSession()
-  if (isLoading) {
-    return 'loading...'
-  }
+interface Props{
+  user: {
+    nickName?: string
+  } | null
+}
+
+export const DashboardHeader:React.FC<Props> = ({user}) => {
+  
   return (
     <div className="flex items-center justify-between mb-8">
       <div className="flex items-center space-x-3">

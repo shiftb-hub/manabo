@@ -3,6 +3,8 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { useSessionSWR } from '@/app/_hooks/useSessionSWR'
+
 import { ActionButton } from './_components/ActionButton'
 import { DashboardHeader } from './_components/DashboardHeader'
 import { StudyStatus } from './_components/StudyStatus'
@@ -10,6 +12,7 @@ import { SummaryBoard } from './_components/SummaryBoard'
 import { useTodayStudyTime } from './_hooks/useTodayStudyTime'
 
 export default function Dashboard() {
+  const { user, isLoading } = useSessionSWR()
   const { todayStudyTime } = useTodayStudyTime()
   const [weeklyGoal] = useState(15)
   const [matchingGroup] = useState('朝活学習者')
@@ -29,11 +32,13 @@ export default function Dashboard() {
   const onNavigate = (path: string) => {
     router.push(path)
   }
-
+  if (isLoading) {
+    return 'loading...'
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <div className="container mx-auto px-4 py-6 max-w-md pb-24">
-        <DashboardHeader />
+        <DashboardHeader user={user} />
         <StudyStatus
           todayStudyTime={todayStudyTime}
           weeklyGoal={weeklyGoal}
