@@ -101,7 +101,7 @@ export const StudyStatus = ({
             </div>
             <Progress
               value={weeklyGoal > 0 ? (weeklyStudyTime / weeklyGoal) * 100 : 0}
-              className="h-3 bg-green-100"
+              className="h-3 bg-green-100 [&>div]:bg-green-600"
             />
             <p className="text-xs text-gray-500">目標まであと{remaining}時間です</p>
           </div>
