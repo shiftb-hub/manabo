@@ -22,17 +22,17 @@ export function RankingList({ users, period }: RankingListProps) {
   const { streakCount, isLoading: streakLoading } = useStreak()
 
   return (
-    <Card className="mb-6 bg-white/80 backdrop-blur-sm border-green-100 shadow-sm">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg text-gray-800 flex items-center">
-          <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
+    <Card className='mb-6 bg-white/80 backdrop-blur-sm border-green-100 shadow-sm'>
+      <CardHeader className='pb-3'>
+        <CardTitle className='text-lg text-gray-800 flex items-center'>
+          <TrendingUp className='w-5 h-5 mr-2 text-green-600' />
           学習時間ランキング
-          <Badge className="ml-2 bg-green-100 text-green-700">{periodLabel}</Badge>
+          <Badge className='ml-2 bg-green-100 text-green-700'>{periodLabel}</Badge>
         </CardTitle>
       </CardHeader>
 
       <CardContent>
-        <div className="space-y-3">
+        <div className='space-y-3'>
           {users.map((user) => {
             // 自分の行だけ最新 streak を反映（読み込み中はサーバー値を表示してチラつきを抑える）
             const displayStreak = user.isCurrentUser && !streakLoading ? streakCount : user.streak
@@ -44,12 +44,12 @@ export function RankingList({ users, period }: RankingListProps) {
                   user.isCurrentUser ? 'bg-green-50 border border-green-200' : 'bg-gray-50'
                 }`}
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 flex items-center justify-center">
+                <div className='flex items-center space-x-3'>
+                  <div className='w-8 h-8 flex items-center justify-center'>
                     {getRankIcon(user.rank)}
                   </div>
 
-                  <Avatar className="w-10 h-10">
+                  <Avatar className='w-10 h-10'>
                     <AvatarImage src={`/placeholder.svg?query=${user.avatar}`} />
                     <AvatarFallback
                       className={`text-sm font-medium ${
@@ -71,10 +71,10 @@ export function RankingList({ users, period }: RankingListProps) {
                       {user.name}
                     </p>
 
-                    <div className="flex items-center space-x-2">
+                    <div className='flex items-center space-x-2'>
                       <Badge
-                        variant="outline"
-                        className="text-xs border-yellow-200 text-yellow-600"
+                        variant='outline'
+                        className='text-xs border-yellow-200 text-yellow-600'
                       >
                         {displayStreak}日連続
                       </Badge>
@@ -85,7 +85,7 @@ export function RankingList({ users, period }: RankingListProps) {
                   </div>
                 </div>
 
-                <div className="text-right">
+                <div className='text-right'>
                   <p
                     className={`text-lg font-bold ${
                       user.isCurrentUser ? 'text-green-700' : 'text-gray-800'
