@@ -2,28 +2,20 @@
 
 import useSWR from 'swr'
 
+import type { WeeklyProgressResponse } from '@/app/_types/dashboard'
 import { fetcher } from '@/app/_utils/fetcher'
 
-interface WeeklyStudyTimeResponse {
-  currentHours: number
-  goalHours: number
-  percentage: number
-  remainingHours: number
-}
-
 export const useWeeklyStudyTime = () => {
-  const { data, error, isLoading } = useSWR<WeeklyStudyTimeResponse>(
+  const { data, error, isLoading } = useSWR<WeeklyProgressResponse>(
     '/api/dashboard/weekly-progress',
     fetcher,
   )
-  const remaining =
-    data?.remainingHours ?? Math.max((data?.goalHours ?? 0) - (data?.currentHours ?? 0), 0)
 
   return {
     weeklyStudyTime: data?.currentHours ?? 0,
     weeklyGoal: data?.goalHours ?? 0,
     weeklyPercentage: data?.percentage ?? 0,
-    remaining,
+    remaining: data?.remainingHours ?? 0,
     error,
     isLoading,
   }
