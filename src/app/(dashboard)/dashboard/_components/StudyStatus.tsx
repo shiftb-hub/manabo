@@ -7,7 +7,10 @@ import { useStreak } from '../_hooks/useStreak'
 
 interface StudyStatusProps {
   todayStudyTime: number
+  weeklyStudyTime: number
+  weeklyPercentage: number
   weeklyGoal: number
+  remaining: number
   matchingGroup: string
   onlineGroupMembers: number
   currentMessage: string
@@ -16,11 +19,15 @@ interface StudyStatusProps {
 export const StudyStatus = ({
   todayStudyTime,
   weeklyGoal,
+  weeklyStudyTime,
+  weeklyPercentage,
+  remaining,
   matchingGroup,
   onlineGroupMembers,
   currentMessage,
 }: StudyStatusProps) => {
   const { streakCount, isLoading: isStreakLoading } = useStreak()
+
   return (
     <>
       <Card className="mb-6 bg-gradient-to-r from-green-500 to-emerald-600 border-0 text-white shadow-lg">
@@ -73,9 +80,7 @@ export const StudyStatus = ({
               </div>
               <div>
                 <p className="text-xs text-gray-600">週間目標</p>
-                <p className="text-xl font-bold text-gray-800">
-                  {Math.round((todayStudyTime / weeklyGoal) * 100)}%
-                </p>
+                <p className="text-xl font-bold text-gray-800">{weeklyPercentage}%</p>
               </div>
             </div>
           </CardContent>
@@ -91,13 +96,14 @@ export const StudyStatus = ({
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">目標達成率</span>
               <span className="font-medium text-gray-800">
-                {todayStudyTime}/{weeklyGoal}時間
+                {weeklyStudyTime}/{weeklyGoal}時間
               </span>
             </div>
-            <Progress value={(todayStudyTime / weeklyGoal) * 100} className="h-3 bg-green-100" />
-            <p className="text-xs text-gray-500">
-              目標まであと{weeklyGoal - todayStudyTime}時間です
-            </p>
+            <Progress
+              value={weeklyGoal > 0 ? (weeklyStudyTime / weeklyGoal) * 100 : 0}
+              className="h-3 bg-green-100 [&>div]:bg-green-600"
+            />
+            <p className="text-xs text-gray-500">目標まであと{remaining}時間です</p>
           </div>
         </CardContent>
       </Card>

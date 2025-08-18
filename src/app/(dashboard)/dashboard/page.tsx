@@ -10,11 +10,12 @@ import { DashboardHeader } from './_components/DashboardHeader'
 import { StudyStatus } from './_components/StudyStatus'
 import { SummaryBoard } from './_components/SummaryBoard'
 import { useTodayStudyTime } from './_hooks/useTodayStudyTime'
+import { useWeeklyStudyTime } from './_hooks/useWeeklyStudyTime'
 
 export default function Dashboard() {
   const { user, isLoading } = useSessionSWR()
   const { todayStudyTime } = useTodayStudyTime()
-  const [weeklyGoal] = useState(15)
+  const { weeklyStudyTime, weeklyGoal, weeklyPercentage, remaining } = useWeeklyStudyTime()
   const [matchingGroup] = useState('朝活学習者')
   const [onlineGroupMembers] = useState(3)
   const [weeklyDaysCount] = useState(7)
@@ -42,6 +43,9 @@ export default function Dashboard() {
         <StudyStatus
           todayStudyTime={todayStudyTime}
           weeklyGoal={weeklyGoal}
+          weeklyStudyTime={weeklyStudyTime}
+          weeklyPercentage={weeklyPercentage}
+          remaining={remaining}
           matchingGroup={matchingGroup}
           onlineGroupMembers={onlineGroupMembers}
           currentMessage={currentMessage}
