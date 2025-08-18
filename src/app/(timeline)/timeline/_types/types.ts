@@ -1,5 +1,6 @@
-export interface TimelinePost {
-  id: number
+// src/app/(timeline)/timeline/_types/types.ts
+export type TimelinePost = {
+  id: number | string
   user: {
     name: string
     avatar: string
@@ -14,3 +15,5 @@ export interface TimelinePost {
   comments: number
   isFollowing: boolean
 }
+
+export type TimelineResponse = { items: TimelinePost[] }
