@@ -1,4 +1,4 @@
-import { addDays, addMonths, addWeeks, startOfMonth, startOfWeek } from 'date-fns'
+import { addDays, addMonths, addWeeks, startOfDay, startOfMonth, startOfWeek } from 'date-fns'
 import { fromZonedTime, toZonedTime } from 'date-fns-tz'
 
 import type { DayWindow, MonthWindow, WeekWindow } from './_types'
@@ -14,16 +14,8 @@ const TZ = 'Asia/Tokyo' as const
 function jstStartOfDayUTC(base: Date): Date {
   // 1) base(UTC) -> JSTの壁時計
   const jstWall = toZonedTime(base, TZ)
-  // 2) JST壁時計で日付の 00:00 に正規化
-  const jstMidnight = new Date(
-    jstWall.getFullYear(),
-    jstWall.getMonth(),
-    jstWall.getDate(),
-    0,
-    0,
-    0,
-    0,
-  )
+  // 2) JST壁時計で日付の 00:00 に正規化（date-fns）
+  const jstMidnight = startOfDay(jstWall)
   // 3) JST壁時計の 00:00 を UTC に戻す
   return fromZonedTime(jstMidnight, TZ)
 }
