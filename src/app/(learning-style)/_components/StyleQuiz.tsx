@@ -12,9 +12,11 @@ import {
 
 import { Question } from '../_types/question'
 
+type StyleType = 'forest' | 'meadow' | 'bamboo'
+
 interface Props {
   current: Question
-  handleAnswer: () => void
+  handleAnswer: (type: StyleType) => void
 }
 
 export const StyleQuiz: React.FC<Props> = ({ current, handleAnswer }) => {
@@ -38,7 +40,7 @@ export const StyleQuiz: React.FC<Props> = ({ current, handleAnswer }) => {
             <Button
               type="button"
               key={option.id}
-              onClick={() => handleAnswer()}
+              onClick={() => handleAnswer(option.type)}
               className="w-full justify-start gap-6 text-left border border-green-300 bg-white rounded-xl px-6 py-7 hover:bg-green-100 transition-colors text-gray-700"
             >
               <div className="flex items-center justify-center bg-green-100 py-1 px-2 aspect-square rounded-full">
