@@ -4,5 +4,6 @@ export interface Question  {
   options: {
     id: string
     label: string
+    type: string
   }[]
 }
