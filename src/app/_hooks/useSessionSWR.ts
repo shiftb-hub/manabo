@@ -1,6 +1,4 @@
 'use clients'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
 import useSWR from 'swr'
 
 import type { AppUser } from '@/app/_types/user'
@@ -27,17 +25,10 @@ const fetcher = async (url: string): Promise<AppUser> => {
 }
 
 export const useSessionSWR = (initialUser?: AppUser | null) => {
-  const router = useRouter()
-
   const { data, error, isLoading, mutate } = useSWR<AppUser>('/api/session', fetcher, {
     fallbackData: initialUser || undefined, // 初期データとして設定
   })
   const isUnauthorized = error?.message.includes('Unauthorized')
-  useEffect(() => {
-    if (isUnauthorized) {
-      router.push('/login')
-    }
-  }, [isUnauthorized, router])
 
   return {
     user: isUnauthorized ? null : data || null,
