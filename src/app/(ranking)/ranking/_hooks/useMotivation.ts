@@ -29,8 +29,6 @@ export function useMotivation() {
   // 期間キーは 'day' | 'week' | 'month' を自動推論
   const getMessage = (p: keyof MotivationMap): string => data[p] ?? ''
 
-  console.debug('messages', data, 'loading', isLoading, 'error', error)
-
   return {
     messages: data,
     getMessage,
