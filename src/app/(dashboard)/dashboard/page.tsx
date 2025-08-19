@@ -10,6 +10,7 @@ import { DashboardHeader } from './_components/DashboardHeader'
 import { StudyStatus } from './_components/StudyStatus'
 import { SummaryBoard } from './_components/SummaryBoard'
 import { useTodayStudyTime } from './_hooks/useTodayStudyTime'
+import { useWeeklyDaysCount } from './_hooks/useWeeklyDaysCount'
 import { useWeeklyStudyTime } from './_hooks/useWeeklyStudyTime'
 
 export default function Dashboard() {
@@ -18,7 +19,7 @@ export default function Dashboard() {
   const { weeklyStudyTime, weeklyGoal, weeklyPercentage, remaining } = useWeeklyStudyTime()
   const [matchingGroup] = useState('朝活学習者')
   const [onlineGroupMembers] = useState(3)
-  const [weeklyDaysCount] = useState(7)
+  const { weeklyDaysCount } = useWeeklyDaysCount()
   const [followingCount] = useState(24)
   const [newNotificationsCount] = useState(3)
 
