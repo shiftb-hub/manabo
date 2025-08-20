@@ -1,29 +1,11 @@
-// src/app/api/timeline/route.ts
 import { NextResponse } from 'next/server'
 
+import type { TimelinePost, TimelineResponse } from '@/app/(timeline)/timeline/_types/types'
 import { prisma } from '@/app/_lib/prisma'
 import { getCurrentStreaksForUsers } from '@/app/_server/streak'
 import { requireUser } from '@/app/_utils/api/requireUser'
 
 export const dynamic = 'force-dynamic'
-
-type TimelinePost = {
-  id: number | string
-  user: {
-    name: string
-    avatar: string
-    studyStreak: number
-    learningStyle: string
-  }
-  category: string
-  time: number
-  content: string
-  timestamp: string
-  likes: number
-  comments: number
-  isFollowing: boolean
-}
-type TimelineResponse = { items: TimelinePost[] }
 
 const TAKE = 10
 
@@ -102,7 +84,7 @@ export async function GET() {
       const content = r.content ?? ''
 
       return {
-        id: r.id,
+        id: Number(r.id),
         user: { name, avatar, studyStreak, learningStyle: '' },
         category,
         time,

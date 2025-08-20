@@ -1,6 +1,5 @@
-// src/app/(timeline)/timeline/_types/types.ts
 export type TimelinePost = {
-  id: number | string
+  id: number
   user: {
     name: string
     avatar: string
