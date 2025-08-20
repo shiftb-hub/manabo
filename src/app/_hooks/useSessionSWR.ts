@@ -1,4 +1,4 @@
-'use clients'
+'use client'
 import useSWR from 'swr'
 
 import type { AppUser } from '@/app/_types/user'
