@@ -13,13 +13,7 @@ interface Props {
   onBookmark: (id: number) => void
 }
 
-export function PostList({
-  posts,
-  likedPosts,
-  bookmarkedPosts,
-  onLike,
-  onBookmark,
-}: Props) {
+export function PostList({ posts, likedPosts, bookmarkedPosts, onLike, onBookmark }: Props) {
   if (posts.length === 0) {
     return (
       <Card className='bg-white/80 backdrop-blur-sm border-green-100 shadow-sm'>
@@ -28,9 +22,7 @@ export function PostList({
             <Search className='w-8 h-8 text-green-600' />
           </div>
           <p className='text-gray-600 mb-2'>検索結果が見つかりませんでした</p>
-          <p className='text-sm text-gray-500'>
-            別のキーワードで検索してみてください
-          </p>
+          <p className='text-sm text-gray-500'>別のキーワードで検索してみてください</p>
         </CardContent>
       </Card>
     )
@@ -38,16 +30,19 @@ export function PostList({
 
   return (
     <div className='space-y-4'>
-      {posts.map(post => (
-        <PostCard
-          key={post.id}
-          post={post}
-          isLiked={likedPosts.includes(post.id)}
-          isBookmarked={bookmarkedPosts.includes(post.id)}
-          onLike={() => onLike(post.id)}
-          onBookmark={() => onBookmark(post.id)}
-        />
-      ))}
+      {posts.map((post) => {
+        const id = typeof post.id === 'string' ? Number(post.id) : post.id
+        return (
+          <PostCard
+            key={id}
+            post={post}
+            isLiked={likedPosts.includes(id)}
+            isBookmarked={bookmarkedPosts.includes(id)}
+            onLike={() => onLike(id)}
+            onBookmark={() => onBookmark(id)}
+          />
+        )
+      })}
     </div>
   )
 }
