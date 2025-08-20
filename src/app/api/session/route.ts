@@ -1,15 +1,13 @@
-// SSOTの窓口（Prisma版）
 import { NextResponse } from 'next/server'
-
-import { getCurrentUser } from '@/app/_utils/user/getCurrentUser'
+import { getAuthUser } from '@/app/_utils/api/requireUser'
 
 export const GET = async () => {
   try {
-    const user = await getCurrentUser()
+    const user = await getAuthUser()
 
     if (!user) {
       return NextResponse.json(
-        { error: 'Unauthorized' },
+        { message: 'Unauthorized' },
         { status: 401, headers: { 'Cache-Control': 'no-store', Vary: 'Cookie' } },
       )
     }
@@ -21,7 +19,7 @@ export const GET = async () => {
   } catch (error) {
     console.error('Session API error:', error)
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to get session' },
+      { message: error instanceof Error ? error.message : 'Failed to get session' },
       { status: 500, headers: { 'Cache-Control': 'no-store', Vary: 'Cookie' } },
     )
   }

@@ -1,32 +1,42 @@
 'use client'
-import React, { createContext, useCallback, useContext } from 'react'
+import React, { createContext, useContext, useMemo, type ReactNode } from 'react'
 
 import { useSessionSWR } from '@/app/_hooks/useSessionSWR'
 import type { AppUser } from '@/app/_types/user'
 
+type Session = AppUser | null
+
 type UserContextValue = {
-  user: AppUser | null
-  refreshFromServer: () => void
+  user: Session
+  loading: boolean
+  error: string | null
+  refresh: () => void
 }
 
 const UserContext = createContext<UserContextValue | undefined>(undefined)
 
 export function UserProvider({
-  initialUser,
   children,
+  initialUser,
 }: {
-  initialUser: AppUser | null
-  children: React.ReactNode
+  children: ReactNode
+  initialUser?: Session
 }) {
-  
-  const { user, mutate } = useSessionSWR(initialUser)
- 
-  const refreshFromServer = useCallback(() => {
-    
-    mutate()
-  }, [mutate])
+  const { user, loading, error, refresh } = useSessionSWR(initialUser)
 
-  return <UserContext.Provider value={{ user, refreshFromServer }}>{children}</UserContext.Provider>
+  const value = useMemo<UserContextValue>(
+    () => ({
+      user,
+      loading,
+      error,
+      refresh: () => {
+        void refresh()
+      },
+    }),
+    [user, loading, error, refresh],
+  )
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
 export function useSession() {

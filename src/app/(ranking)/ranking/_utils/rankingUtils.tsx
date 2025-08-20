@@ -44,14 +44,3 @@ export const getPeriodLabel = (period: 'day' | 'week' | 'month'): string => {
       return ''
   }
 }
-
-export const getMotivationMessage = (
-  period: 'day' | 'week' | 'month'
-): string => {
-  const messages: Record<typeof period, string> = {
-    day: '今日は3位にランクイン！この調子で頑張りましょう。',
-    week: '今週は3位をキープ中！継続的な努力が実を結んでいます。',
-    month: '今月は4位！上位を目指して頑張りましょう。',
-  }
-  return messages[period] ?? ''
-}

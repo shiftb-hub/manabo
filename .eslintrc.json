@@ -19,32 +19,28 @@
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
+    "ecmaFeatures": { "jsx": true }
   },
   "plugins": ["@typescript-eslint", "react", "jsx-a11y", "import"],
   "rules": {
-    "quotes": ["error", "single"],
-    "semi": ["error", "never"],
-    "indent": ["error", 2],
-    "react/jsx-indent": ["error", 2],
-    "react/jsx-indent-props": ["error", 2],
+    // --- 整形は Prettier に任せる（競合しやすいルールは無効化）---
+    "indent": "off",
+    "react/jsx-indent": "off",
+    "react/jsx-indent-props": "off",
+    "semi": "off",
+    "quotes": "off",
+
+    // --- お好みの品質ルールは維持 ---
     "no-console": "warn",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      { "argsIgnorePattern": "^_" }
-    ],
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+
+    // --- import 整理 ---
     "import/order": [
       "warn",
       {
-        "groups": [
-          ["builtin", "external"],
-          "internal",
-          ["parent", "sibling", "index"]
-        ],
+        "groups": [["builtin", "external"], "internal", ["parent", "sibling", "index"]],
         "newlines-between": "always",
         "alphabetize": { "order": "asc", "caseInsensitive": true }
       }
@@ -58,8 +54,6 @@
     ]
   },
   "settings": {
-    "react": {
-      "version": "detect"
-    }
+    "react": { "version": "detect" }
   }
 }
