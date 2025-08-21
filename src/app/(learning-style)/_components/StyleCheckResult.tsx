@@ -5,10 +5,10 @@ import { Button } from '@/app/_components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/_components/ui/card'
 import { useNavigation } from '@/app/_hooks/useNavigation'
 
-import { LearningType } from '../_types/learningType'
+import { LearningTypeResult } from '../_types/learningTypeResult'
 
 interface StyleCheckResultProps {
-  result: LearningType | null
+  result: LearningTypeResult | null
 }
 
 export const StyleCheckResult = ({ result }: StyleCheckResultProps) => {

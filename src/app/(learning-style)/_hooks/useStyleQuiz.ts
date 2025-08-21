@@ -2,9 +2,8 @@ import { useState } from 'react'
 
 import { LEARNING_STYLE_QUESTIONS } from '../_constants/learning-style-questions'
 import { LEARNING_TYPES } from '../_constants/learning-style-type'
-import { LearningType } from '../_types/learningType'
-
-type StyleType = 'forest' | 'meadow' | 'bamboo'
+import { StyleType } from '../_types/learningType'
+import { LearningTypeResult } from '../_types/learningTypeResult'
 
 export const useStyleQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -12,7 +11,7 @@ export const useStyleQuiz = () => {
   const progress = ((currentIndex + 1) / (LEARNING_STYLE_QUESTIONS.length)) * 100
   const [answers, setAnswers] = useState<StyleType[]>([])
   const [showResult, setShowResult] = useState(false)
-  const [result, setResult] = useState<LearningType | null>(null)
+  const [result, setResult] = useState<LearningTypeResult | null>(null)
 
   const handleAnswer = (type: StyleType) => {
     // 選んだ選択肢のtypeを取得して、回答リストに追加する。

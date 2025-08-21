@@ -10,9 +10,8 @@ import {
   CardTitle,
 } from '@/app/_components/ui/card'
 
+import { StyleType } from '../_types/learningType'
 import { Question } from '../_types/question'
-
-type StyleType = 'forest' | 'meadow' | 'bamboo'
 
 interface Props {
   current: Question

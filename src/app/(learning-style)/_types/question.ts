@@ -1,5 +1,4 @@
-type StyleType = 'forest' | 'meadow' | 'bamboo'
-
+import { StyleType } from "./learningType"
 export interface Question  {
   id: number
   text: string
