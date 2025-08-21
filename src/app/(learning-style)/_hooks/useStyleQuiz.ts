@@ -1,26 +1,26 @@
 import { useState } from 'react'
 
-import { learningStyleQuestions } from '../_constants/learningStyleQuestions'
-import { learningTypes } from '../_constants/learningStyleType'
+import { LEARNING_STYLE_QUESTIONS } from '../_constants/learning-style-questions'
+import { LEARNING_TYPES } from '../_constants/learning-style-type'
 import { LearningType } from '../_types/learningType'
 
 type StyleType = 'forest' | 'meadow' | 'bamboo'
 
 export const useStyleQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const current = learningStyleQuestions[currentIndex]
-  const progress = (currentIndex/ (learningStyleQuestions.length)) * 100
-  const [answers, setAnswers] = useState<string[]>([])
+  const current = LEARNING_STYLE_QUESTIONS[currentIndex]
+  const progress = ((currentIndex + 1) / (LEARNING_STYLE_QUESTIONS.length)) * 100
+  const [answers, setAnswers] = useState<StyleType[]>([])
   const [showResult, setShowResult] = useState(false)
   const [result, setResult] = useState<LearningType | null>(null)
 
-  const handleAnswer = (type: string) => {
+  const handleAnswer = (type: StyleType) => {
     // 選んだ選択肢のtypeを取得して、回答リストに追加する。
     const newAnswers = [...answers, type]
     setAnswers(newAnswers)
 
-    // 現在の問題番号が10よりも少ない場合)はcurrentIndexに+1、そうでなければスタイル診断処理を行う
-    if (current.id < learningStyleQuestions.length) {
+    // 現在の問題番号が問題数のindex番号よりも少ない場合はcurrentIndexに+1、そうでなければスタイル診断処理を行う
+    if (currentIndex < LEARNING_STYLE_QUESTIONS.length - 1) {
       setCurrentIndex((prev) => prev + 1)
     } else {
       // answersの中から「forest, meadow, bamboo」の数をそれぞれカウントする
@@ -34,7 +34,7 @@ export const useStyleQuiz = () => {
         counts[a] > counts[b] ? a : b
       )
 
-      setResult(learningTypes[maxType])
+      setResult(LEARNING_TYPES[maxType])
       setShowResult(true)
     }
   }
@@ -42,7 +42,7 @@ export const useStyleQuiz = () => {
     currentIndex, 
     current, 
     progress, 
-    learningStyleQuestions, 
+    LEARNING_STYLE_QUESTIONS, 
     answers, 
     showResult, 
     result, 

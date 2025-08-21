@@ -10,7 +10,7 @@ import { useStyleQuiz } from '../_hooks/useStyleQuiz'
 const Page = () => {
   const { 
     current, 
-    learningStyleQuestions, 
+    LEARNING_STYLE_QUESTIONS, 
     handleAnswer, 
     currentIndex, 
     progress, 
@@ -30,7 +30,7 @@ const Page = () => {
           {/* 質問番号 + プログレスバー */}
           <StyleProgress
             currentIndex={currentIndex}
-            learningStyleQuestions={learningStyleQuestions}
+            learningStyleQuestions={LEARNING_STYLE_QUESTIONS}
             progress={progress}
           />
           {/* 質問カード */}

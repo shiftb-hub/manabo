@@ -1,6 +1,6 @@
 import { LearningType } from '@/app/(learning-style)/_types/learningType'
 
-export const learningTypes: Record<string, LearningType> = {
+export const LEARNING_TYPES: Record<string, LearningType> = {
   forest: {
     type: 'forest',
     name: '🌲 森グループ',
