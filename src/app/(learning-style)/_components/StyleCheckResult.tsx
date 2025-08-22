@@ -9,9 +9,10 @@ import { LearningTypeResult } from '../_types/learningTypeResult'
 
 interface StyleCheckResultProps {
   result: LearningTypeResult | null
+  resetResult: () => void
 }
 
-export const StyleCheckResult = ({ result }: StyleCheckResultProps) => {
+export const StyleCheckResult = ({ result, resetResult }: StyleCheckResultProps) => {
   const { onBack } = useNavigation()
 
   return(
@@ -108,7 +109,7 @@ export const StyleCheckResult = ({ result }: StyleCheckResultProps) => {
                   仲間を探す
                 </Button>
                 <Button
-                  // onClick={resetDiagnosis}
+                  onClick={resetResult}
                   variant="outline"
                   className="w-full text-green-600 border-green-200 hover:bg-green-50"
                 >

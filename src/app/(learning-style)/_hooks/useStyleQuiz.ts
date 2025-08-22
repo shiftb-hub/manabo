@@ -37,6 +37,14 @@ export const useStyleQuiz = () => {
       setShowResult(true)
     }
   }
+
+  const resetResult = () => {
+    setCurrentIndex(0)
+    setAnswers([])
+    setShowResult(false)
+    setResult(null)
+  }
+
   return {
     currentIndex, 
     current, 
@@ -45,6 +53,7 @@ export const useStyleQuiz = () => {
     answers, 
     showResult, 
     result, 
-    handleAnswer
+    handleAnswer,
+    resetResult
   }
 }
