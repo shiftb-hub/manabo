@@ -27,7 +27,7 @@ export const StyleProgress = ({
       </div>
       <Progress
         value={progress}
-        className="relative overflow-hidden bg-green-100 rounded-full w-full h-2"
+        className="relative overflow-hidden bg-green-100 [&>div]:bg-green-600 rounded-full w-full h-2"
       ></Progress>
     </div>
   )
