@@ -4,5 +4,9 @@
   "files.eol": "\n",
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "postman.settings.dotenv-detection-notification-visibility": false
+  "postman.settings.dotenv-detection-notification-visibility": false,
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "html.completion.attributeDefaultValue": "singlequotes",
+  "prettier.singleAttributePerLine": true
 }

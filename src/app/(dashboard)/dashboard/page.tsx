@@ -14,7 +14,7 @@ import { useWeeklyDaysCount } from './_hooks/useWeeklyDaysCount'
 import { useWeeklyStudyTime } from './_hooks/useWeeklyStudyTime'
 
 export default function Dashboard() {
-  const { user, isLoading } = useSessionSWR()
+  const { user, loading } = useSessionSWR()
   const { todayStudyTime } = useTodayStudyTime()
   const { weeklyStudyTime, weeklyGoal, weeklyPercentage, remaining } = useWeeklyStudyTime()
   const [matchingGroup] = useState('朝活学習者')
@@ -34,7 +34,7 @@ export default function Dashboard() {
   const onNavigate = (path: string) => {
     router.push(path)
   }
-  if (isLoading) {
+  if (loading) {
     return 'loading...'
   }
   return (
