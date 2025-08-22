@@ -23,9 +23,7 @@ export const PostActions = ({
   <div className='flex items-center justify-between pt-3 border-t border-gray-100'>
     <div className='flex items-center space-x-4'>
       <ActionButton
-        icon={
-          <Heart className={`w-4 h-4 mr-1 ${isLiked ? 'fill-current' : ''}`} />
-        }
+        icon={<Heart className={`w-4 h-4 mr-1 ${isLiked ? 'fill-current' : ''}`} />}
         label={`${likes + (isLiked ? 1 : 0)}`}
         active={isLiked}
         activeColor='text-red-500'
@@ -39,9 +37,7 @@ export const PostActions = ({
       />
     </div>
     <ActionButton
-      icon={
-        <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />
-      }
+      icon={<Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />}
       label=''
       active={isBookmarked}
       activeColor='text-yellow-500'

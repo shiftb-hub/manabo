@@ -14,18 +14,13 @@ import {
   CreateLearningRecordRequestBody,
   CreateLearningRecordResponseBody,
 } from '../_types/learningRecords'
-import {
-  LearningRecord,
-  learningRecordSchema,
-} from '../_utils/learningRecordSchema'
+import { LearningRecord, learningRecordSchema } from '../_utils/learningRecordSchema'
 
 interface LearningRecordFormProps {
   categories: Category[]
 }
 
-export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
-  categories,
-}) => {
+export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({ categories }) => {
   const router = useRouter()
   const [learningTime, setLearningTime] = useState<number>(0)
 
@@ -45,7 +40,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
     learningStartDate: string,
     startTime: string,
     learningEndDate: string,
-    endTime: string
+    endTime: string,
   ): number => {
     const start = new Date(`${learningStartDate}T${startTime}`)
     const end = new Date(`${learningEndDate}T${endTime}`)
@@ -69,7 +64,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
       learningStartDate,
       startTime,
       learningEndDate,
-      endTime
+      endTime,
     )
     setLearningTime(duration)
   }, [learningStartDate, startTime, learningEndDate, endTime])
@@ -80,7 +75,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
     return `${hours}時間${mins}分`
   }
 
-  const onSubmit: SubmitHandler<LearningRecord> = async data => {
+  const onSubmit: SubmitHandler<LearningRecord> = async (data) => {
     const {
       data: { user },
     } = await supabase.auth.getUser()
@@ -103,10 +98,10 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
         learningDate: new Date(data.learningStartDate),
       }
 
-      await api.post<
-        CreateLearningRecordRequestBody,
-        CreateLearningRecordResponseBody
-      >('/api/learning_records', requestBody)
+      await api.post<CreateLearningRecordRequestBody, CreateLearningRecordResponseBody>(
+        '/api/learning_records',
+        requestBody,
+      )
       toast.success('学習記録を保存しました！🎉')
       reset()
 
@@ -175,11 +170,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
             </div>
             <div className='p-6 pt-0 space-y-4'>
               <div>
-                <CategorySelect
-                  categories={categories}
-                  register={register}
-                  errors={errors}
-                />
+                <CategorySelect categories={categories} register={register} errors={errors} />
               </div>
               <div>
                 <label htmlFor='title'>タイトル</label>
@@ -189,9 +180,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                   {...register('title')}
                   className='h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl'
                 />
-                <p className='text-red-500 pt-1 pl-4 text-sm'>
-                  {errors.title?.message}
-                </p>
+                <p className='text-red-500 pt-1 pl-4 text-sm'>{errors.title?.message}</p>
               </div>
               <div>
                 <label htmlFor='learningStartDate'>学習開始日</label>
@@ -216,9 +205,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                     className='h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl'
                   />
                 </div>
-                <p className='text-red-500 pt-1 pl-4 text-sm'>
-                  {errors.startTime?.message}
-                </p>
+                <p className='text-red-500 pt-1 pl-4 text-sm'>{errors.startTime?.message}</p>
               </div>
               <div>
                 <label htmlFor='learningEndDate '>学習終了日</label>
@@ -228,9 +215,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                   {...register('learningEndDate')}
                   className='h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl'
                 />
-                <p className='text-red-500 pt-1 pl-4 text-sm'>
-                  {errors.learningEndDate?.message}
-                </p>
+                <p className='text-red-500 pt-1 pl-4 text-sm'>{errors.learningEndDate?.message}</p>
               </div>
 
               <div>
@@ -243,9 +228,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                     className='h-10 w-full border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl'
                   />
                 </div>
-                <p className='text-red-500 pt-1 pl-4 text-sm'>
-                  {errors.endTime?.message}
-                </p>
+                <p className='text-red-500 pt-1 pl-4 text-sm'>{errors.endTime?.message}</p>
               </div>
 
               <div>
@@ -261,9 +244,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
                   className='flex w-full border bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1 border-green-200 focus:border-green-400 rounded-2xl min-h-[120px] placeholder:text-gray-400'
                   placeholder='今日学んだことや感想を記録しましょう 例：新しい漢字を10個覚えました。読み方が難しかったですが、繰り返し練習して覚えることができました。'
                 ></textarea>
-                <p className='text-red-500 pt-1 pl-4 text-sm'>
-                  {errors.content?.message}
-                </p>
+                <p className='text-red-500 pt-1 pl-4 text-sm'>{errors.content?.message}</p>
               </div>
             </div>
           </div>
@@ -343,9 +324,7 @@ export const LearningRecordForm: React.FC<LearningRecordFormProps> = ({
           </div>
           <div className='rounded-lg border bg-card text-card-foreground shadow-sm bg-gradient-to-r from-teal-50 to-emerald-50 border-teal-200'>
             <section className='p-4'>
-              <h3 className='text-sm font-medium text-teal-800 mb-2'>
-                💡 学習記録のコツ
-              </h3>
+              <h3 className='text-sm font-medium text-teal-800 mb-2'>💡 学習記録のコツ</h3>
               <ul className='text-sm text-teal-700 space-y-1'>
                 <li>• 具体的な学習内容を記録すると振り返りに役立ちます</li>
                 <li>• 感想や気づきも一緒に記録しましょう</li>

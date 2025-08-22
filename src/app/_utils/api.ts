@@ -18,10 +18,7 @@ export const api = {
     }
   },
 
-  post: async <ResponseType, RequestType>(
-    endpoint: string,
-    payload: RequestType
-  ) => {
+  post: async <ResponseType, RequestType>(endpoint: string, payload: RequestType) => {
     try {
       const res = await fetch(endpoint, {
         method: 'POST',
@@ -43,10 +40,7 @@ export const api = {
     }
   },
 
-  put: async <RequestType, ResponseType>(
-    endpoint: string,
-    payload: RequestType
-  ) => {
+  put: async <RequestType, ResponseType>(endpoint: string, payload: RequestType) => {
     try {
       const res = await fetch(endpoint, {
         method: 'PUT',

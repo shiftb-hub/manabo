@@ -1,8 +1,7 @@
 'use client'
+import React, { createContext, useContext, useMemo, type ReactNode } from 'react'
 
-import { type ReactNode, createContext, useContext, useMemo } from 'react'
-import useSWR from 'swr'
-
+import { useSessionSWR } from '@/app/_hooks/useSessionSWR'
 import type { AppUser } from '@/app/_types/user'
 
 type Session = AppUser | null
@@ -16,12 +15,6 @@ type UserContextValue = {
 
 const UserContext = createContext<UserContextValue | undefined>(undefined)
 
-const fetcher = async (url: string): Promise<Session> => {
-  const res = await fetch(url, { credentials: 'include', cache: 'no-store' })
-  if (!res.ok) throw new Error(`HTTP ${res.status}`)
-  return (await res.json()) as Session
-}
-
 export function UserProvider({
   children,
   initialUser,
@@ -29,29 +22,25 @@ export function UserProvider({
   children: ReactNode
   initialUser?: Session
 }) {
-  const { data, error, isLoading, mutate } = useSWR<Session>('/api/session', fetcher, {
-    fallbackData: initialUser ?? null,
-    revalidateOnMount: true,
-    revalidateOnFocus: false,
-  })
+  const { user, loading, error, refresh } = useSessionSWR(initialUser)
 
   const value = useMemo<UserContextValue>(
     () => ({
-      user: data ?? null,
-      loading: isLoading,
-      error: error ? 'セッションの取得に失敗しました' : null,
+      user,
+      loading,
+      error,
       refresh: () => {
-        void mutate()
+        void refresh()
       },
     }),
-    [data, isLoading, error, mutate],
+    [user, loading, error, refresh],
   )
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
-export function useUser() {
+export function useSession() {
   const ctx = useContext(UserContext)
-  if (!ctx) throw new Error('useUser must be used within <UserProvider>')
+  if (!ctx) throw new Error('useSession must be used within UserProvider')
   return ctx
 }

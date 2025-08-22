@@ -15,10 +15,7 @@ export async function POST(req: NextRequest) {
     } = await supabase.auth.getUser()
 
     if (authError || !user) {
-      return NextResponse.json(
-        { error: authError?.message || 'Unauthorized' },
-        { status: 401 }
-      )
+      return NextResponse.json({ error: authError?.message || 'Unauthorized' }, { status: 401 })
     }
 
     const userRecord = await prisma.user.findUnique({
@@ -26,31 +23,18 @@ export async function POST(req: NextRequest) {
     })
 
     if (!userRecord) {
-      return NextResponse.json(
-        { error: 'ユーザー情報が見つかりません' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'ユーザー情報が見つかりません' }, { status: 404 })
     }
     const body = await req.json()
     const parseResult = learningRecordDbSchema.safeParse(body)
 
     if (!parseResult.success) {
       const formattedErrors = parseResult.error.message
-      return NextResponse.json(
-        { error: 'バリデーションエラー', formattedErrors },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'バリデーションエラー', formattedErrors }, { status: 400 })
     }
 
-    const {
-      categoryId,
-      title,
-      content,
-      startTime,
-      endTime,
-      duration,
-      learningDate,
-    } = parseResult.data as CreateLearningRecordRequestBody
+    const { categoryId, title, content, startTime, endTime, duration, learningDate } =
+      parseResult.data as CreateLearningRecordRequestBody
 
     // Prismaを使ってデータベースに学習記録を作成
     await prisma.learningRecord.create({
@@ -69,9 +53,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'success' }, { status: 200 })
   } catch (error) {
     console.error('学習記録の作成中にエラーが発生しました:', error)
-    return NextResponse.json(
-      { error: 'サーバー内部でエラーが発生しました' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'サーバー内部でエラーが発生しました' }, { status: 500 })
   }
 }
