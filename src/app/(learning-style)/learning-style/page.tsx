@@ -7,7 +7,7 @@ import { StyleProgress } from '../_components/StyleProgress'
 import { StyleQuiz } from '../_components/StyleQuiz'
 import { useStyleQuiz } from '../_hooks/useStyleQuiz'
 
-const Page = () => {
+export default function LearningStylePage() {
   const { 
     current, 
     LEARNING_STYLE_QUESTIONS, 
@@ -48,5 +48,3 @@ const Page = () => {
     )
   )
 }
-
-export default Page
