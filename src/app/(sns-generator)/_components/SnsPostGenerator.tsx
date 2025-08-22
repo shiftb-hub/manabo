@@ -7,15 +7,14 @@ import { TipsCard } from './TipsCard'
 import { ToneSelector } from './ToneSelector'
 import { useCopyToClipboard } from '../_hooks/useCopyToClipboard'
 import { usePostGenerator } from '../_hooks/usePostGenerator'
-import type { SnsPostGeneratorProps } from '../_types'
 
-export const SnsPostGenerator = ({ onNavigate }: SnsPostGeneratorProps) => {
+export const SnsPostGenerator = () => {
   const { selectedTone, setSelectedTone, posts } = usePostGenerator()
   const { copiedIndex, copyToClipboard } = useCopyToClipboard()
 
   return (
     <div className='container mx-auto px-4 py-6 max-w-md pb-24'>
-      <Header onNavigate={onNavigate} />
+      <Header />
       <StudySummaryCard />
       <ToneSelector selectedTone={selectedTone} onToneChange={setSelectedTone} />
       <PostList
@@ -28,4 +27,3 @@ export const SnsPostGenerator = ({ onNavigate }: SnsPostGeneratorProps) => {
     </div>
   )
 }
-

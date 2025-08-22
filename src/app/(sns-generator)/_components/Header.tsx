@@ -1,18 +1,16 @@
 import { ArrowLeft } from 'lucide-react'
 
 import { Button } from '@/app/_components/ui/button'
+import { useNavigation } from '@/app/_hooks/useNavigation'
 
-interface HeaderProps {
-  onNavigate: (screen: string) => void
-}
-
-export const Header = ({ onNavigate }: HeaderProps) => {
+export const Header = () => {
+  const { onNavigateToDashboard } = useNavigation()
   return (
     <div className='flex items-center mb-6'>
       <Button
         variant='ghost'
         size='sm'
-        onClick={() => onNavigate('dashboard')}
+        onClick={onNavigateToDashboard}
         className='mr-3 p-2'
       >
         <ArrowLeft className='w-5 h-5 text-black' />

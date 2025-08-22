@@ -1,7 +1,3 @@
-export interface SnsPostGeneratorProps {
-  onNavigate: (screen: string) => void
-}
-
 export type Tone = 'カジュアル' | '真面目' | 'ポジティブ'
 
 export interface PostData {
