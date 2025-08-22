@@ -11,12 +11,9 @@ export const getPasswordStrength = (password?: string) => {
     special: /[!@#$%^&*(),.?":{}|<>]/.test(safePassword),
   }
 
-  const varietyCount = [
-    checks.uppercase,
-    checks.lowercase,
-    checks.number,
-    checks.special,
-  ].filter(Boolean).length
+  const varietyCount = [checks.uppercase, checks.lowercase, checks.number, checks.special].filter(
+    Boolean,
+  ).length
 
   let score = 0
   if (checks.length && varietyCount >= 2) score++

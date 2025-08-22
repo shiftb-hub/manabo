@@ -38,8 +38,8 @@ export default function Dashboard() {
     return 'loading...'
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
-      <div className="container mx-auto px-4 py-6 max-w-md pb-24">
+    <div className='min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50'>
+      <div className='container mx-auto px-4 py-6 max-w-md pb-24'>
         <DashboardHeader user={user} />
         <StudyStatus
           todayStudyTime={todayStudyTime}

@@ -5,7 +5,6 @@ export type AppUser = {
   roleId?: number
 }
 
-
 type Session = AppUser | null
 
 export type UserContextValue = {

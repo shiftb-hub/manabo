@@ -17,14 +17,12 @@ interface NavigatorFilterReturn {
  * @returns フィルタリング状態と操作関数
  */
 
-export const useNavigatorFilter = (
-  screens: NavigatorItem[]
-): NavigatorFilterReturn => {
+export const useNavigatorFilter = (screens: NavigatorItem[]): NavigatorFilterReturn => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>('all')
 
   const filteredScreens = useMemo(() => {
-    return screens.filter(screen => {
+    return screens.filter((screen) => {
       const matchesSearch =
         screen.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         screen.description.toLowerCase().includes(searchQuery.toLowerCase())

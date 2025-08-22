@@ -10,8 +10,8 @@ const Page = () => {
   const { current, learningStyleQuestions, handleAnswer, currentIndex, progress } = useStyleQuiz()
   return (
     <>
-      <div className="min-h-screen bg-green-50 p-4 flex flex-col items-center">
-        <div className="container max-auto px-4 py-3 max-w-md pb-24">
+      <div className='min-h-screen bg-green-50 p-4 flex flex-col items-center'>
+        <div className='container max-auto px-4 py-3 max-w-md pb-24'>
           <LearningTypeHeader />
           {/* 質問番号 + プログレスバー */}
           <StyleProgress
@@ -21,7 +21,7 @@ const Page = () => {
           />
           {/* 質問カード */}
           <StyleQuiz current={current} handleAnswer={handleAnswer} />
-          <div className="text-center text-green-700 text-sm mt-6">
+          <div className='text-center text-green-700 text-sm mt-6'>
             あなたに最適な学習スタイルを診断します
             <br />
             直感で答えてください

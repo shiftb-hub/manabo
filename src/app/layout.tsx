@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const user = await getCurrentUser()
 
   return (
-    <html lang="ja">
+    <html lang='ja'>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <UserProvider initialUser={user}>
           {children}

@@ -20,11 +20,9 @@ export const signupSchema = baseAuthSchema
     path: ['confirmPassword'],
   })
 
-export type SignupFormValues = z.infer<typeof signupSchema>;
+export type SignupFormValues = z.infer<typeof signupSchema>
 
-export function useSignupForm(
-  onNavigateToEmailVerification: (email: string) => void
-) {
+export function useSignupForm(onNavigateToEmailVerification: (email: string) => void) {
   const methods = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     mode: 'onChange',

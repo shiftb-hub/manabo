@@ -16,18 +16,16 @@ export const StyleProgress: React.FC<Props> = ({
   progress,
 }) => {
   return (
-    <div className="mb-6">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-green-600">
+    <div className='mb-6'>
+      <div className='flex justify-between items-center mb-2'>
+        <span className='text-sm text-green-600'>
           質問 {currentIndex + 1} / {learningStyleQuestions.length}
         </span>
-        <span className="text-sm text-green-600">
-          {progress} %
-        </span>
+        <span className='text-sm text-green-600'>{progress} %</span>
       </div>
       <Progress
         value={progress}
-        className="relative overflow-hidden bg-green-100 rounded-full w-full h-2"
+        className='relative overflow-hidden bg-green-100 rounded-full w-full h-2'
       ></Progress>
     </div>
   )

@@ -33,7 +33,7 @@ export const NavigatorContent = () => {
           <Input
             placeholder='画面を検索...'
             value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className='pl-10 border-green-200 focus:border-green-400 rounded-xl'
           />
         </div>
@@ -67,32 +67,24 @@ export const NavigatorContent = () => {
 
         {filteredScreens.length > 0 && (
           <div className='mt-4 space-y-4'>
-            {filteredScreens.map(screen => (
+            {filteredScreens.map((screen) => (
               <NavigatorCard key={screen.id} screen={screen} />
             ))}
           </div>
         )}
       </div>
 
-      {filteredScreens.length === 0 && (
-        <NoResultsCard onResetFilters={clearFilters} />
-      )}
+      {filteredScreens.length === 0 && <NoResultsCard onResetFilters={clearFilters} />}
 
       <Card className='mt-6 bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200'>
         <CardContent className='p-4'>
           <div className='flex items-center justify-between'>
             <div>
-              <p className='text-sm font-medium text-emerald-800'>
-                Manaboの機能
-              </p>
-              <p className='text-xs text-emerald-600'>
-                すべての画面を体験してみましょう
-              </p>
+              <p className='text-sm font-medium text-emerald-800'>Manaboの機能</p>
+              <p className='text-xs text-emerald-600'>すべての画面を体験してみましょう</p>
             </div>
             <div className='text-right'>
-              <p className='text-2xl font-bold text-emerald-700'>
-                {screens.length}
-              </p>
+              <p className='text-2xl font-bold text-emerald-700'>{screens.length}</p>
               <p className='text-xs text-emerald-600'>画面</p>
             </div>
           </div>

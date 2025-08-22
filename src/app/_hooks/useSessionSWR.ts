@@ -6,7 +6,7 @@ import type { AppUser } from '@/app/_types/user'
 const fetcher = async (url: string): Promise<AppUser> => {
   try {
     const res = await fetch(url, {
-      credentials: 'include',   
+      credentials: 'include',
       cache: 'no-store', // キャッシュ制御を追加
       // Cookie送信
     })
@@ -45,7 +45,7 @@ export const useSessionSWR = (initialUser?: AppUser | null): UseSessionSWRReturn
   return {
     user: isUnauthorized ? null : data || null,
     loading: isLoading,
-    error: isUnauthorized ? null : (error ? 'セッションの取得に失敗しました' : null),
+    error: isUnauthorized ? null : error ? 'セッションの取得に失敗しました' : null,
     refresh: () => mutate(), // 関数として返す
   }
 }
