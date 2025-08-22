@@ -18,7 +18,7 @@ interface Props {
   handleAnswer: (type: StyleType) => void
 }
 
-export const StyleQuiz: React.FC<Props> = ({ current, handleAnswer }) => {
+export const StyleQuiz  = ({ current, handleAnswer }: Props) => {
   return (
     <Card className="bg-white/80 backdrop-blur-sm border-green-100 rounded-xl">
       <CardHeader className="pt-2 pb-6">
