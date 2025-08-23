@@ -13,10 +13,10 @@ export default function TimelinePage() {
   const [bookmarkedPosts, setBookmarkedPosts] = useState<number[]>([])
 
   const filteredPosts = timelinePosts.filter(
-    post =>
+    (post) =>
       post.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.content.toLowerCase().includes(searchQuery.toLowerCase())
+      post.content.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   return (
@@ -28,13 +28,13 @@ export default function TimelinePage() {
         likedPosts={likedPosts}
         bookmarkedPosts={bookmarkedPosts}
         onLike={(id: number) => {
-          setLikedPosts(prev =>
-            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+          setLikedPosts((prev) =>
+            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
           )
         }}
         onBookmark={(id: number) => {
-          setBookmarkedPosts(prev =>
-            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+          setBookmarkedPosts((prev) =>
+            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
           )
         }}
       />

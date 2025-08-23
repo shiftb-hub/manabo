@@ -15,11 +15,7 @@ import {
 } from 'lucide-react'
 
 import { PATHS } from '../../_constants/paths'
-import type {
-  Category,
-  NavigatorData,
-  NavigatorItem,
-} from '../_types/navigatorTypes'
+import type { Category, NavigatorData, NavigatorItem } from '../_types/navigatorTypes'
 
 export const screens: NavigatorItem[] = [
   {

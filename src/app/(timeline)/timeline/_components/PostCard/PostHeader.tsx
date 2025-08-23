@@ -12,10 +12,7 @@ export const PostHeader = ({ post }: { post: TimelinePost }) => (
       <p className='font-medium text-gray-800'>{post.user.name}</p>
       <div className='flex items-center space-x-2'>
         <p className='text-xs text-gray-500'>{post.timestamp}</p>
-        <Badge
-          variant='outline'
-          className='text-xs border-green-200 text-green-600'
-        >
+        <Badge variant='outline' className='text-xs border-green-200 text-green-600'>
           {post.user.learningStyle}
         </Badge>
       </div>

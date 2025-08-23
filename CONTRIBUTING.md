@@ -110,24 +110,22 @@ manabo/
 - **クォート**：シングルクォート（`'`）を使用
 - **関数定義**：アロー関数式（`const foo = () => {}`）を基本とする
 - **React コンポーネント**：
-
   - `FC`（`FunctionComponent`）は使わず、Props を明示的に型定義する
     例：
 
   ```tsx
   type Props = {
-    title: string;
-  };
+    title: string
+  }
 
   const Header = ({ title }: Props) => {
-    return <h1>{title}</h1>;
-  };
+    return <h1>{title}</h1>
+  }
   ```
 
 ### 🚚 エクスポートルール
 
 - **基本ルール：名前付きエクスポート（named export）を推奨**
-
   - 理由：
     - リファクタやツールの自動補完に強い
     - 明示的なインポートができるため保守性が高まる
@@ -136,10 +134,10 @@ manabo/
 
   ```ts
   // ❌ default export（非推奨）
-  export default Button;
+  export default Button
 
   // ✅ named export（推奨）
-  export const Button = () => {};
+  export const Button = () => {}
   ```
 
 ---
@@ -162,7 +160,7 @@ Next.js の App Router では、特定のファイルにおいて `export defaul
 ```tsx
 // ✅ App Router における default export（例外として許可）
 export default function Page() {
-  return <div>ページ内容</div>;
+  return <div>ページ内容</div>
 }
 ```
 
@@ -171,7 +169,6 @@ export default function Page() {
 ### 🧱 コンポーネント設計指針
 
 - **Atomic Design を参考に粒度ごとに分離**
-
   - `ui/`: 汎用的な UI コンポーネント（ボタン、入力欄など）
     - 例: `<Button />`, `<Input />`, `<Alert />` は `_components/ui/` に配置
   - `layout/`: アプリ全体やセクションのレイアウトを構成するコンポーネント（ヘッダー、サイドバーなど）
@@ -179,19 +176,16 @@ export default function Page() {
   - `icons/`: SVG やカスタムアイコンコンポーネントを管理
 
 - **命名規則**
-
   - ディレクトリ名・ファイル名：`kebab-case` を使用
     - 例: `input-field.tsx`, `side-bar.tsx`
   - コンポーネント名：`PascalCase`
     - 例: `InputField`, `SideBar`
 
 - **責務を明確にする**
-
   - 単一責任の原則に従い、複雑なコンポーネントは責務ごとに分割
   - 共通化できるロジックはカスタムフックへ切り出す（例: `useForm`, `useTimer`）
 
 - **スタイリング**
-
   - `Tailwind CSS` を使用
   - 複雑なスタイルはユーティリティクラスで構成、必要に応じてカスタムクラスへ分離
 
@@ -225,7 +219,6 @@ export default function Page() {
 ### 🚚 エクスポートルール
 
 - **named export（名前付きエクスポート）を推奨**
-
   - ✅ `export const`, `export function`, `export type`
   - ❌ `export default`（明示性が低いため）
 
@@ -248,17 +241,17 @@ export default function Page() {
 ```tsx
 // ✅ Good Example
 type Props = {
-  title: string;
-};
+  title: string
+}
 
 const MyComponent = ({ title }: Props) => {
-  return <h1>{title}</h1>;
-};
+  return <h1>{title}</h1>
+}
 
 // ❌ Bad Example
 const MyComponent: FC<{ title: string }> = ({ title }) => {
-  return <h1>{title}</h1>;
-};
+  return <h1>{title}</h1>
+}
 ```
 
 ---
@@ -342,41 +335,37 @@ const MyComponent: FC<{ title: string }> = ({ title }) => {
 // .eslintrc.js
 module.exports = {
   root: true,
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "react", "import", "jsx-a11y"],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'react', 'import', 'jsx-a11y'],
   extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-    "next/core-web-vitals",
-    "prettier",
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
+    'next/core-web-vitals',
+    'prettier',
   ],
   rules: {
-    semi: ["error", "never"], // セミコロンなし
-    quotes: ["error", "single"], // シングルクォート
-    indent: ["error", 2], // インデント2スペース
-    "react/react-in-jsx-scope": "off", // Next.jsでは不要
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }], // _付き引数は無視
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "warn", // 本番ログ制限
-    "import/order": [
-      "warn",
+    semi: ['error', 'never'], // セミコロンなし
+    quotes: ['error', 'single'], // シングルクォート
+    indent: ['error', 2], // インデント2スペース
+    'react/react-in-jsx-scope': 'off', // Next.jsでは不要
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // _付き引数は無視
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn', // 本番ログ制限
+    'import/order': [
+      'warn',
       {
-        groups: [
-          ["builtin", "external"],
-          "internal",
-          ["parent", "sibling", "index"],
-        ],
-        "newlines-between": "always",
-        alphabetize: { order: "asc", caseInsensitive: true },
+        groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
       },
     ],
-    "sort-imports": [
-      "warn",
+    'sort-imports': [
+      'warn',
       {
         ignoreDeclarationSort: true,
         ignoreMemberSort: false,
@@ -385,10 +374,10 @@ module.exports = {
   },
   settings: {
     react: {
-      version: "detect",
+      version: 'detect',
     },
   },
-};
+}
 ```
 
 補足：
