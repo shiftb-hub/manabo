@@ -10,14 +10,15 @@ import {
   CardTitle,
 } from '@/app/_components/ui/card'
 
+import { StyleType } from '../_types/learningType'
 import { Question } from '../_types/question'
 
 interface Props {
   current: Question
-  handleAnswer: () => void
+  handleAnswer: (type: StyleType) => void
 }
 
-export const StyleQuiz: React.FC<Props> = ({ current, handleAnswer }) => {
+export const StyleQuiz  = ({ current, handleAnswer }: Props) => {
   return (
     <Card className='bg-white/80 backdrop-blur-sm border-green-100 rounded-xl'>
       <CardHeader className='pt-2 pb-6'>
@@ -38,8 +39,8 @@ export const StyleQuiz: React.FC<Props> = ({ current, handleAnswer }) => {
             <Button
               type='button'
               key={option.id}
-              onClick={() => handleAnswer()}
-              className='w-full justify-start gap-6 text-left border border-green-300 bg-white rounded-xl px-6 py-7 hover:bg-green-100 transition-colors text-gray-700'
+              onClick={() => handleAnswer(option.type)}
+              className="w-full justify-start gap-6 text-left border border-green-300 bg-white rounded-xl px-6 py-7 hover:bg-green-100 transition-colors text-gray-700"
             >
               <div className='flex items-center justify-center bg-green-100 py-1 px-2 aspect-square rounded-full'>
                 <span className='font-bold text-green-600'>{option.id}</span>
