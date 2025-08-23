@@ -20,6 +20,7 @@ export const StyleCheckResult = ({ result, resetResult }: StyleCheckResultProps)
       <div className="max-w-md mx-auto px-4 py-6 pb-24">
         <div className="flex items-center justify-between mb-6">
           <Button
+            type="button"
             variant="ghost"
             size="sm"
             onClick={onBack}
@@ -91,7 +92,12 @@ export const StyleCheckResult = ({ result, resetResult }: StyleCheckResultProps)
                             </p>
                           </div>
                         </div>
-                        <Button size="sm" variant="outline" className="text-green-600 border-green-200">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="text-green-600 border-green-200"
+                        >
                           フォロー
                         </Button>
                       </div>
@@ -103,12 +109,14 @@ export const StyleCheckResult = ({ result, resetResult }: StyleCheckResultProps)
               {/* アクションボタン */}
               <div className="space-y-3">
                 <Button
+                  type="button"
                   className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white"
                 >
                   <Users className="w-4 h-4 mr-2" />
                   仲間を探す
                 </Button>
                 <Button
+                  type="button"
                   onClick={resetResult}
                   variant="outline"
                   className="w-full text-green-600 border-green-200 hover:bg-green-50"
