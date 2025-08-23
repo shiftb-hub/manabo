@@ -11,11 +11,7 @@ interface CategorySelectProps {
   errors: FieldErrors<LearningRecord>
 }
 
-export const CategorySelect: React.FC<CategorySelectProps> = ({
-  categories,
-  register,
-  errors,
-}) => {
+export const CategorySelect: React.FC<CategorySelectProps> = ({ categories, register, errors }) => {
   return (
     <div>
       <label
@@ -33,7 +29,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
         <option value='' disabled>
           カテゴリを選択してください
         </option>
-        {categories.map(category => (
+        {categories.map((category) => (
           <option key={category.id} value={category.id}>
             {/* 出力はcategoryName */}
             {category.categoryName}
@@ -41,9 +37,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
         ))}
       </select>
       {errors.categoryId?.message && (
-        <p className='text-red-500 pt-1 pl-4 text-sm'>
-          {errors.categoryId.message}
-        </p>
+        <p className='text-red-500 pt-1 pl-4 text-sm'>{errors.categoryId.message}</p>
       )}
     </div>
   )

@@ -10,15 +10,11 @@ interface Props {
   onCategoryChange: (categoryId: string | null) => void
 }
 
-export const TagFilter = ({
-  categories,
-  selectedCategory,
-  onCategoryChange,
-}: Props) => {
+export const TagFilter = ({ categories, selectedCategory, onCategoryChange }: Props) => {
   return (
     <div className='mb-6'>
       <div className='flex flex-wrap gap-2'>
-        {categories.map(category => {
+        {categories.map((category) => {
           const Icon = category.icon
           const isActive = selectedCategory === category.id
           return (

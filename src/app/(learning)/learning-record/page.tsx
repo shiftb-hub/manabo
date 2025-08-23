@@ -4,29 +4,27 @@
 import { prisma } from '@/app/_lib/prisma'
 // import { createClient } from '@/app/_utils/supabase/server'
 
-import{ LearningRecordForm }from './_components/LearningRecordForm'
-
+import { LearningRecordForm } from './_components/LearningRecordForm'
 
 type Category = {
-  id: number;
-  categoryName: string; 
-  parentId: number | null;
-};
+  id: number
+  categoryName: string
+  parentId: number | null
+}
 
-const Page = async() => {
+const Page = async () => {
   // サインインしているか確認
   // const supabase = await createClient()
   // const { data, error } = await supabase.auth.getUser()
   // if (error || !data?.user) {
   //   redirect('/login')
   // }
-  
-  
+
   // カテゴリを取得
   const categories: Category[] = await prisma.category.findMany({
     orderBy: {
-      id: 'asc'
-    }
+      id: 'asc',
+    },
   })
   return <LearningRecordForm categories={categories} />
 }

@@ -19,13 +19,7 @@ interface Props {
   onBookmark: () => void
 }
 
-export function PostCard({
-  post,
-  isLiked,
-  isBookmarked,
-  onLike,
-  onBookmark,
-}: Props) {
+export function PostCard({ post, isLiked, isBookmarked, onLike, onBookmark }: Props) {
   return (
     <Card className='bg-white/80 backdrop-blur-sm border-green-100 shadow-sm'>
       <CardContent className='p-4'>

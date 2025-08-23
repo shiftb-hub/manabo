@@ -18,9 +18,7 @@ export const NoResultsCard = ({ onResetFilters }: Props) => {
         </div>
 
         <p className='text-gray-600 mb-2'>該当する画面が見つかりませんでした</p>
-        <p className='text-sm text-gray-500 mb-4'>
-          別のキーワードで検索してみてください
-        </p>
+        <p className='text-sm text-gray-500 mb-4'>別のキーワードで検索してみてください</p>
 
         <Button
           type='button'

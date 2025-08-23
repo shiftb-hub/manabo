@@ -16,21 +16,22 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll() // リクエストから現在のCookie一覧を取得
         },
-        setAll(cookiesToSet) { // supabaseが新規のCookieを発行した際の処理。レスポンスに更新したCookieをセット。
+        setAll(cookiesToSet) {
+          // supabaseが新規のCookieを発行した際の処理。レスポンスに更新したCookieをセット。
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           supabaseResponse = NextResponse.next({
             request,
           })
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+            supabaseResponse.cookies.set(name, value, options),
           )
         },
       },
-    }
+    },
   )
 
   // Cookieをもとに最新のユーザー情報を取得
-  await supabase.auth.getUser()  
+  await supabase.auth.getUser()
 
   return supabaseResponse
 }

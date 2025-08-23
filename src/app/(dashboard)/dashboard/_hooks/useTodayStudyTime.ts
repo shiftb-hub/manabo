@@ -13,6 +13,6 @@ export const useTodayStudyTime = () => {
   return {
     todayStudyTime: data?.totalStudyHours ?? 0,
     error,
-    isLoading
+    isLoading,
   }
 }

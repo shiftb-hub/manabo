@@ -18,11 +18,11 @@ export function ManaboIcon({ size = 'md', showBadge = true, className = '' }: Ma
       <div
         className={`${sizeClasses[size]} bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg`}
       >
-        <span className="text-white font-bold text-xl">M</span>
+        <span className='text-white font-bold text-xl'>M</span>
       </div>
       {showBadge && (
-        <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
-          <span className="text-xs">✨</span>
+        <div className='absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center'>
+          <span className='text-xs'>✨</span>
         </div>
       )}
     </div>

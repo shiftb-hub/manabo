@@ -27,7 +27,7 @@ export const learningRecordSchema = z
       .min(1, '開始時間を入力してください。')
       .regex(
         /^([01]\d|2[0-3]):[0-5]\d$/, // input[type=time]は秒を返さないため、秒部分を削除
-        '時刻はHH:mm形式で入力してください。'
+        '時刻はHH:mm形式で入力してください。',
       ),
 
     endTime: z
@@ -35,7 +35,7 @@ export const learningRecordSchema = z
       .min(1, '終了時間を入力してください。')
       .regex(
         /^([01]\d|2[0-3]):[0-5]\d$/, // input[type=time]は秒を返さないため、秒部分を削除
-        '時刻はHH:mm形式で入力してください。'
+        '時刻はHH:mm形式で入力してください。',
       ),
   })
   .refine(
@@ -47,7 +47,7 @@ export const learningRecordSchema = z
     {
       message: '終了日時は開始日時より後の時間を入力してください',
       path: ['endTime'],
-    }
+    },
   )
 
 export type LearningRecord = z.infer<typeof learningRecordSchema>
