@@ -11,11 +11,7 @@ interface PeriodTabsProps {
 
 export function PeriodTabs({ value, onChange }: PeriodTabsProps) {
   return (
-    <Tabs
-      value={value}
-      onValueChange={val => onChange(val as RankingPeriod)}
-      className='w-full'
-    >
+    <Tabs value={value} onValueChange={(val) => onChange(val as RankingPeriod)} className='w-full'>
       <TabsList className='grid grid-cols-3 w-full rounded-xl border border-green-100 bg-white dark:bg-white p-1'>
         <TabsTrigger
           value='day'

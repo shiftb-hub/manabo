@@ -16,24 +16,24 @@ export default function BottomNavigation() {
   ]
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-green-100 px-4 py-2 safe-area-pb z-50">
-      <div className="flex justify-around max-w-md mx-auto">
+    <div className='fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-green-100 px-4 py-2 safe-area-pb z-50'>
+      <div className='flex justify-around max-w-md mx-auto'>
         {navItems.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href
 
           return (
             <button
-              type="button"
+              type='button'
               key={href}
               onClick={() => {
                 router.push(href)
               }}
               className={`group flex flex-col items-center justify-center gap-1 rounded-md px-3 py-2 text-xs transform transition-all duration-300 ease-out
                 ${
-            isActive
-              ? 'bg-gradient-to-t from-green-400 to-green-100 text-green-900 scale-105 shadow-lg'
-              : 'text-gray-400 hover:bg-gray-100 hover:scale-100'
-            }`}
+                  isActive
+                    ? 'bg-gradient-to-t from-green-400 to-green-100 text-green-900 scale-105 shadow-lg'
+                    : 'text-gray-400 hover:bg-gray-100 hover:scale-100'
+                }`}
             >
               <Icon
                 className={`w-6 h-6 transition-all duration-300 ease-out ${

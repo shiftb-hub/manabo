@@ -1,12 +1,11 @@
 import { useRouter } from 'next/navigation'
 
 type NavigationFunctions = {
-  onNavigateToSignup: () => void;
-  onNavigateToPasswordReset: () => void;
-  onNavigateToDashboard: () => void;
-  onBack: () => void;
-};
-
+  onNavigateToSignup: () => void
+  onNavigateToPasswordReset: () => void
+  onNavigateToDashboard: () => void
+  onBack: () => void
+}
 
 export const useNavigation = (): NavigationFunctions => {
   const router = useRouter()
@@ -31,6 +30,6 @@ export const useNavigation = (): NavigationFunctions => {
     onNavigateToSignup,
     onNavigateToPasswordReset,
     onNavigateToDashboard,
-    onBack
+    onBack,
   }
 }

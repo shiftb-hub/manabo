@@ -7,17 +7,14 @@ export async function POST(request: Request) {
     const { email, password, nickname } = await request.json()
 
     if (!email || !password || !nickname) {
-      return new Response(
-        JSON.stringify({ message: '必要な情報が不足しています' }),
-        {
-          status: 400,
-        }
-      )
+      return new Response(JSON.stringify({ message: '必要な情報が不足しています' }), {
+        status: 400,
+      })
     }
 
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     )
 
     // ✅ Supabaseでユーザー登録
@@ -31,12 +28,9 @@ export async function POST(request: Request) {
 
     if (error || !data.user) {
       console.error('❌ Supabase登録エラー:', error)
-      return new Response(
-        JSON.stringify({ message: error?.message ?? '登録に失敗しました' }),
-        {
-          status: 500,
-        }
-      )
+      return new Response(JSON.stringify({ message: error?.message ?? '登録に失敗しました' }), {
+        status: 500,
+      })
     }
 
     const supabaseUserId = data.user.id
@@ -56,11 +50,8 @@ export async function POST(request: Request) {
     })
   } catch (error) {
     console.error('❌ エラー:', error)
-    return new Response(
-      JSON.stringify({ message: 'サインアップ処理に失敗しました' }),
-      {
-        status: 500,
-      }
-    )
+    return new Response(JSON.stringify({ message: 'サインアップ処理に失敗しました' }), {
+      status: 500,
+    })
   }
 }

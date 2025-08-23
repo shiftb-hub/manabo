@@ -10,10 +10,7 @@ interface RankingToggleCardProps {
   onToggle: (checked: boolean) => void
 }
 
-export function RankingToggleCard({
-  checked,
-  onToggle,
-}: RankingToggleCardProps) {
+export function RankingToggleCard({ checked, onToggle }: RankingToggleCardProps) {
   return (
     <Card className='mb-6 bg-white/80 backdrop-blur-sm border-green-100 shadow-sm'>
       <CardContent className='p-4'>
@@ -23,12 +20,8 @@ export function RankingToggleCard({
               <Trophy className='w-5 h-5 text-yellow-600' />
             </div>
             <div>
-              <p className='text-sm font-medium text-gray-800'>
-                ランキング表示
-              </p>
-              <p className='text-xs text-gray-500'>
-                他のユーザーとの比較を表示
-              </p>
+              <p className='text-sm font-medium text-gray-800'>ランキング表示</p>
+              <p className='text-xs text-gray-500'>他のユーザーとの比較を表示</p>
             </div>
           </div>
           <Switch checked={checked} onCheckedChange={onToggle} />

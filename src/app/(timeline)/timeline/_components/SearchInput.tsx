@@ -14,7 +14,7 @@ export function SearchInput({ value, onChange }: Props) {
       <Input
         placeholder='ユーザーや学習内容を検索...'
         value={value}
-        onChange={e => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         className='text-gray-500 pl-10 border-green-200 focus:border-green-400 rounded-xl placeholder-gray-600'
       />
     </div>
