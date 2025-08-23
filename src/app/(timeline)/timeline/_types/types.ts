@@ -1,4 +1,4 @@
-export interface TimelinePost {
+export type TimelinePost = {
   id: number
   user: {
     name: string
@@ -14,3 +14,5 @@ export interface TimelinePost {
   comments: number
   isFollowing: boolean
 }
+
+export type TimelineResponse = { items: TimelinePost[] }
