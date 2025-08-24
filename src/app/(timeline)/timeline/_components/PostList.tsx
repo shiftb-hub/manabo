@@ -2,6 +2,7 @@ import { Search } from 'lucide-react'
 
 import { Card, CardContent } from '@/app/_components/ui/card'
 
+import { planned } from './plannedNotice'
 import { PostCard } from './PostCard'
 import { TimelinePost } from '../_types/types'
 
@@ -13,7 +14,7 @@ interface Props {
   onBookmark: (id: number) => void
 }
 
-export function PostList({ posts, likedPosts, bookmarkedPosts, onLike, onBookmark }: Props) {
+export function PostList({ posts, likedPosts, bookmarkedPosts }: Props) {
   if (posts.length === 0) {
     return (
       <Card className='bg-white/80 backdrop-blur-sm border-green-100 shadow-sm'>
@@ -30,16 +31,19 @@ export function PostList({ posts, likedPosts, bookmarkedPosts, onLike, onBookmar
 
   return (
     <div className='space-y-4'>
-      {posts.map((post) => (
-        <PostCard
-          key={post.id}
-          post={post}
-          isLiked={likedPosts.includes(post.id)}
-          isBookmarked={bookmarkedPosts.includes(post.id)}
-          onLike={() => onLike(post.id)}
-          onBookmark={() => onBookmark(post.id)}
-        />
-      ))}
+      {posts.map((post) => {
+        const id = typeof post.id === 'string' ? Number(post.id) : post.id
+        return (
+          <PostCard
+            key={id}
+            post={post}
+            isLiked={likedPosts.includes(id)}
+            isBookmarked={bookmarkedPosts.includes(id)}
+            onLike={() => planned('いいね')}
+            onBookmark={() => planned('ブックマーク')}
+          />
+        )
+      })}
     </div>
   )
 }

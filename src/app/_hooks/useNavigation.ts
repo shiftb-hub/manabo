@@ -17,6 +17,10 @@ export const useNavigation = (): NavigationFunctions => {
     // パスワードリセットのページに遷移
   }
 
+  const onNavigateToDashboard = () => {
+    router.push('/dashboard') // ダッシュボードページに遷移
+  }
+
   const onBack = () => {
     router.back() // 前のページに戻る
   }

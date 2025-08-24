@@ -10,11 +10,11 @@ interface Props {
   progress: number
 }
 
-export const StyleProgress: React.FC<Props> = ({
+export const StyleProgress = ({
   currentIndex,
   learningStyleQuestions,
   progress,
-}) => {
+}: Props ) => {
   return (
     <div className='mb-6'>
       <div className='flex justify-between items-center mb-2'>
@@ -25,7 +25,7 @@ export const StyleProgress: React.FC<Props> = ({
       </div>
       <Progress
         value={progress}
-        className='relative overflow-hidden bg-green-100 rounded-full w-full h-2'
+        className="relative overflow-hidden bg-green-100 [&>div]:bg-green-600 rounded-full w-full h-2"
       ></Progress>
     </div>
   )
