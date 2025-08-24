@@ -2,8 +2,10 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
+  
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
@@ -14,6 +16,20 @@
     "plugin:import/typescript",
     "eslint:recommended",
     "prettier"
+  ],
+  //test ファイルに jest 環境を適用
+    "overrides": [
+    {
+      "files": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/__tests__/**/*.ts",
+        "**/__tests__/**/*.tsx"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
