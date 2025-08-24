@@ -40,15 +40,23 @@ const rangeMessages = [
   { min: 7, template: (count: number) => `${count}日連続！1週間を超えました🎉` },
   { min: 4, template: (count: number) => `${count}日連続！良いペースですね😊` },
 ]
-export const StreakMessage = ({streakCount,isLoading}:Props) => {
-
-  if(isLoading){
-    return <div>...</div>}
+// メッセージを取得するロジック関数
+const getStreakMessage = (streakCount: number, isLoading: boolean): string => {
+  if (isLoading) {
+    return '...'
+  }
 
   if (mileStoneMessages[streakCount]) {
     return mileStoneMessages[streakCount]
   }
-  
+
+  // 範囲に基づいたメッセージを取得
   const rangeMessage = rangeMessages.find(range => streakCount >= range.min)
-  return rangeMessage?.template(streakCount) ?? '頑張っていきましょう！'
+  return rangeMessage?.template(streakCount) ?? '素晴らしい継続力！'
+}
+
+// JSXを返す
+export const StreakMessage = ({ streakCount, isLoading }: Props) => {
+  const message = getStreakMessage(streakCount, isLoading)
+  return <span>{message}</span>
 }
