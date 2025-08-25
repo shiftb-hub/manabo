@@ -1,8 +1,8 @@
 import React from 'react'
 
-interface Props{
-streakCount:number,
-isLoading:boolean
+interface Props {
+  streakCount: number
+  isLoading: boolean
 }
 
 const mileStoneMessages: Record<number, string> = {
@@ -23,7 +23,7 @@ const mileStoneMessages: Record<number, string> = {
   300: '300日達成！1年が見えてきましたね🌏',
   365: '1年間継続！これはもう偉業です🏆',
   500: '500日連続！あなたの物語はまだ続きます📖',
-  1000: '1000日達成！伝説級の継続力です🔥'
+  1000: '1000日達成！伝説級の継続力です🔥',
 }
 // 範囲に対するメッセージ（降順で定義することで最初にマッチしたものが使われる）
 const rangeMessages = [
@@ -39,6 +39,7 @@ const rangeMessages = [
   { min: 14, template: (count: number) => `${count}日連続！2週間を超えました✨` },
   { min: 7, template: (count: number) => `${count}日連続！1週間を超えました🎉` },
   { min: 4, template: (count: number) => `${count}日連続！良いペースですね😊` },
+  { min: 0, template: () => 'これからがんばっていきましょう💪' },
 ]
 // メッセージを取得するロジック関数
 const getStreakMessage = (streakCount: number, isLoading: boolean): string => {
@@ -51,8 +52,8 @@ const getStreakMessage = (streakCount: number, isLoading: boolean): string => {
   }
 
   // 範囲に基づいたメッセージを取得
-  const rangeMessage = rangeMessages.find(range => streakCount >= range.min)
-  return rangeMessage?.template(streakCount) ?? '素晴らしい継続力！'
+  const rangeMessage = rangeMessages.find((range) => streakCount >= range.min)
+  return rangeMessage?.template(streakCount) ?? 'これからがんばっていきましょう💪'
 }
 
 // JSXを返す
