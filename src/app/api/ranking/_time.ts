@@ -1,6 +1,8 @@
 import { addDays, addMonths, addWeeks, startOfDay, startOfMonth, startOfWeek } from 'date-fns'
 import { fromZonedTime, toZonedTime } from 'date-fns-tz'
 
+import { TZ } from '@/app/_utils/tz'
+
 import type { DayWindow, MonthWindow, WeekWindow } from './_types'
 
 /**
@@ -8,7 +10,6 @@ import type { DayWindow, MonthWindow, WeekWindow } from './_types'
  * すべて UTC を基準に計算し、JST の日/週/月の境界を UTC 時刻として返します。
  * 半開区間 [start, end) 前提。
  */
-const TZ = 'Asia/Tokyo' as const
 
 /** JST の「その日の 00:00(JST)」を UTC へ変換して返す */
 function jstStartOfDayUTC(base: Date): Date {

@@ -1,10 +1,8 @@
-// src/app/_server/streak.ts
 'use server'
-
-import { TZDateMini } from '@date-fns/tz'
 
 import { prisma } from '@/app/_lib/prisma'
 import { calculateStreak } from '@/app/_utils/streakCalculator'
+import { TZ, TZDate } from '@/app/_utils/tz'
 
 /**
  * 指定ユーザー集合の “直近 daysWindow 日” に基づく連続学習日数（JST基準）を返す。
@@ -20,14 +18,13 @@ export async function getCurrentStreaksForUsers(
 ): Promise<Map<number, number>> {
   if (!userIds?.length) return new Map<number, number>()
 
-  const ZONE = 'Asia/Tokyo' as const
   const DAY_MS = 86_400_000
 
   // JST の“その日 00:00”に相当する実UTC時刻を返す
   const jstMidnightUtc = (base: Date) => {
-    const t = new TZDateMini(base, ZONE)
-    const m = new TZDateMini(t.getFullYear(), t.getMonth(), t.getDate(), 0, 0, 0, 0, ZONE)
-    return new Date(m.getTime())
+    const t = new TZDate(base, TZ) // JST の壁時計
+    const m = new TZDate(t.getFullYear(), t.getMonth(), t.getDate(), 0, 0, 0, 0, TZ)
+    return new Date(m.getTime()) // JST 00:00 に対応する実 UTC
   }
 
   // 直近 daysWindow 日の下限（JSTの今日00:00から daysWindow-1 日さかのぼる）
@@ -44,7 +41,7 @@ export async function getCurrentStreaksForUsers(
   // JST “YYYY-MM-DD” 文字列に正規化して日重複を排除
   const pad2 = (n: number) => String(n).padStart(2, '0')
   const toJstYmd = (utc: Date) => {
-    const t = new TZDateMini(utc, ZONE)
+    const t = new TZDate(utc, TZ)
     return `${t.getFullYear()}-${pad2(t.getMonth() + 1)}-${pad2(t.getDate())}`
   }
 

@@ -1,9 +1,8 @@
 'use server'
 
-import { TZDateMini } from '@date-fns/tz'
-
 import { prisma } from '@/app/_lib/prisma'
 import { calculateStreak } from '@/app/_utils/streakCalculator'
+import { TZ, TZDate } from '@/app/_utils/tz'
 
 /**
  * ランキング用：指定 userIds の “現在の連続日数（current streak）” を一括算出
@@ -18,12 +17,11 @@ export async function getCurrentStreaksForUsers(
   if (!userIds || userIds.length === 0) return new Map<number, number>()
 
   // === JST の “今日 00:00” を UTC で求め、daysWindow 分さかのぼって下限を作る ===
-  const ZONE = 'Asia/Tokyo' as const
   const DAY_MS = 86_400_000
   const jstMidnightUtc = (utc: Date) => {
-    const t = new TZDateMini(utc, ZONE)
-    const m = new TZDateMini(t.getFullYear(), t.getMonth(), t.getDate(), 0, 0, 0, 0, ZONE)
-    return new Date(m.getTime())
+    const t = new TZDate(utc, TZ) // JSTの壁時計
+    const m = new TZDate(t.getFullYear(), t.getMonth(), t.getDate(), 0, 0, 0, 0, TZ)
+    return new Date(m.getTime()) // JST 00:00 に対応する実 UTC
   }
   const todayJstStartUtc = jstMidnightUtc(new Date())
   const sinceUtc = new Date(todayJstStartUtc.getTime() - (daysWindow - 1) * DAY_MS)

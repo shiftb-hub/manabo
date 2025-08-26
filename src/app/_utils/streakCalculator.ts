@@ -2,13 +2,16 @@
  * 学習記録の連続日数を計算するユーティリティ関数
  */
 
-import { TZDate } from '@date-fns/tz'
 import { startOfDay, subDays } from 'date-fns'
+
+import { TZ, TZDate } from '@/app/_utils/tz' // ← ラッパー経由に変更
 
 const normalizeDate = (date: Date): Date => {
   // 日本時間（JST）で日付の開始時刻に正規化
-  const jstDate = new TZDate(date, 'Asia/Tokyo')
-  return startOfDay(jstDate)
+  const jstDate = new TZDate(date, TZ)
+  const start = startOfDay(jstDate)
+  // UTC の epoch を保持したまま通常の Date に戻す
+  return new Date(start.getTime())
 }
 
 const deduplicateAndSortDates = (dates: Date[]): Date[] => {
@@ -37,13 +40,14 @@ export const calculateStreak = (learningDates: Date[]): number => {
   )
   if (daysDiff > 1) return 0
 
-  let currentDate = new TZDate(latestRecordDate, 'Asia/Tokyo')
+  // JST の日付で1日ずつ遡るために TZDate を利用
+  let currentDate = new TZDate(latestRecordDate, TZ)
   let streakCount = 0
 
   for (let i = 0; i < uniqueDates.length; i++) {
     if (uniqueDates[i].getTime() === currentDate.getTime()) {
       streakCount++
-      currentDate = new TZDate(subDays(currentDate, 1), 'Asia/Tokyo')
+      currentDate = new TZDate(subDays(currentDate, 1), TZ)
     } else {
       break
     }
