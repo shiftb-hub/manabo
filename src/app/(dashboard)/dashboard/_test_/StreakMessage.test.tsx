@@ -35,14 +35,15 @@ describe('StreakMessage', () => {
       render(<StreakMessage streakCount={22} isLoading={false} />)
       expect(screen.getByText('22日連続！習慣化できていますね👏')).toBeInTheDocument()
     })
-    it('99日目は範囲メッセージを表示', () => {
-      render(<StreakMessage streakCount={100} isLoading={false} />)
-      expect(screen.getByText('100日達成！三桁クラブ入りおめでとう🎖️')).toBeInTheDocument()
+    it('99日目は50日以上の範囲メッセージを表示する', () => {
+      render(<StreakMessage streakCount={99} isLoading={false} />)
+      expect(screen.getByText('99日連続！順調に継続中です💪')).toBeInTheDocument()
     })
-    it('1000日目はマイルストーンメッセージを表示', () => {
-      render(<StreakMessage streakCount={1000} isLoading={false} />)
-      expect(screen.getByText('1000日達成！伝説級の継続力です🔥')).toBeInTheDocument()
+    it('101日目は100日以上の範囲メッセージを表示する（境界値+1）', () => {
+      render(<StreakMessage streakCount={101} isLoading={false} />)
+      expect(screen.getByText('101日連続！三桁継続中です🔥')).toBeInTheDocument()
     })
+
   })
   // 4. フォールバック（0・負値）
   describe('フォールバック（0・負値）', () => {
