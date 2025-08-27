@@ -1,15 +1,13 @@
-// src/app/_utils/studyTimeHelpers.ts
-import { TZDateMini } from '@date-fns/tz'
+import { TZ, TZDate, toUTCDate } from '@/app/_utils/tz'
 
-const ZONE = 'Asia/Tokyo' as const
 const DAY_MS = 86_400_000
 
 /**
  * JST の“今日 00:00”を UTC の Date で返す
  */
 function jstMidnightUtc(base: Date = new Date()): Date {
-  const wall = new TZDateMini(base, ZONE) // JSTの壁時計
-  const jstMidnight = new TZDateMini(
+  const wall = new TZDate(base, TZ) // JST の壁時計
+  const jstMidnight = new TZDate(
     wall.getFullYear(),
     wall.getMonth(),
     wall.getDate(),
@@ -17,10 +15,10 @@ function jstMidnightUtc(base: Date = new Date()): Date {
     0,
     0,
     0,
-    ZONE,
+    TZ,
   )
-  // TZDateMiniのgetTime()は、そのJST壁時計時刻が実際に対応するUTCのエポックms
-  return new Date(jstMidnight.getTime())
+  // JST 壁時計の 00:00 に対応する実 UTC を返す
+  return toUTCDate(jstMidnight)
 }
 
 /**
@@ -41,7 +39,7 @@ export function getWeekUtcRange(base: Date = new Date()): { start: Date; end: Da
 export function getStartOfWeek(date: Date = new Date()): Date {
   // 今日(JST)の00:00(UTC)を起点に、JSTの曜日(0:日〜6:土)だけ戻る
   const todayJstStartUtc = jstMidnightUtc(date)
-  const dow = new TZDateMini(todayJstStartUtc, ZONE).getDay() // JSTの曜日
+  const dow = new TZDate(todayJstStartUtc, TZ).getDay() // JSTの曜日
   const weekStartUtc = new Date(todayJstStartUtc.getTime() - dow * DAY_MS)
   return weekStartUtc
 }
