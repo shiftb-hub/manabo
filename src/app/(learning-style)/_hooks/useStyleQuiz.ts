@@ -6,6 +6,7 @@ import { api } from '@/app/_utils/api'
 import { LEARNING_STYLE_QUESTIONS } from '../_constants/learning-style-questions'
 import { LEARNING_TYPES } from '../_constants/learning-style-type'
 import { LearningStyleRequest } from '../_types/learningStyleRequest'
+import { LearningStyleResponse } from '../_types/learningStyleResponse'
 import { StyleType } from '../_types/learningType'
 import { LearningTypeResult } from '../_types/learningTypeResult'
 
@@ -17,7 +18,7 @@ export const useStyleQuiz = () => {
   const [showResult, setShowResult] = useState(false)
   const [result, setResult] = useState<LearningTypeResult | null>(null)
 
-  const handleAnswer = (type: StyleType) => {
+  const handleAnswer = async(type: StyleType) => {
     // 選んだ選択肢のtypeを取得して、回答リストに追加する。
     const newAnswers = [...answers, type]
     setAnswers(newAnswers)
@@ -37,8 +38,11 @@ export const useStyleQuiz = () => {
         counts[a] > counts[b] ? a : b
       )
 
-      setResult(LEARNING_TYPES[maxType])
+      const finalResult = LEARNING_TYPES[maxType]
+      setResult(finalResult)
       setShowResult(true)
+
+      void saveResult(finalResult.type)
     }
   }
 
@@ -49,19 +53,18 @@ export const useStyleQuiz = () => {
     setResult(null)
   }
 
-  const saveResult = async() => {
+  const saveResult = async(type: StyleType) => {
     try { 
-      if (!result?.type) { 
+      if (!type) { 
         toast.error('診断結果の取得ができませんでした。') 
         return 
       }
-      const requestBody:LearningStyleRequest = { type: result.type }
-
-      const res = await api.post<{ message: string }, LearningStyleRequest>(
+      const requestBody:LearningStyleRequest = { type }
+      // 10問設問に解答した後は自動でPOSTリクエストを送る。
+      await api.post<LearningStyleResponse, LearningStyleRequest>(
         'api/learning-styles', 
         requestBody,
       ) 
-      toast.success(res.message) 
     } catch(error) { 
       if(error instanceof Error) { 
         toast.error(`診断結果の保存に失敗しました。`) 
@@ -80,6 +83,5 @@ export const useStyleQuiz = () => {
     result, 
     handleAnswer,
     resetResult,
-    saveResult
   }
 }

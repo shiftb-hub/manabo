@@ -10,10 +10,9 @@ import { LearningTypeResult } from '../_types/learningTypeResult'
 interface StyleCheckResultProps {
   result: LearningTypeResult | null
   resetResult: () => void
-  saveResult: () => void
 }
 
-export const StyleCheckResult = ({ result, resetResult, saveResult }: StyleCheckResultProps) => {
+export const StyleCheckResult = ({ result, resetResult }: StyleCheckResultProps) => {
   const { onBack } = useNavigation()
 
   return(
@@ -123,14 +122,6 @@ export const StyleCheckResult = ({ result, resetResult, saveResult }: StyleCheck
                   className="w-full text-green-600 border-green-200 hover:bg-green-50"
                 >
                   もう一度診断する
-                </Button>
-                <Button
-                  type="button"
-                  onClick={saveResult}
-                  variant="outline"
-                  className="w-full text-green-600 border-green-200 hover:bg-green-50"
-                >
-                  診断結果を保存する
                 </Button>
               </div>
             </>
