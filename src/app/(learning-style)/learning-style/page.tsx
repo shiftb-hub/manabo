@@ -16,7 +16,8 @@ export default function LearningStylePage() {
     progress, 
     showResult, 
     result,
-    resetResult
+    resetResult,
+    saveResult
   } = useStyleQuiz()
 
   return (
@@ -24,6 +25,7 @@ export default function LearningStylePage() {
       <StyleCheckResult 
         result={result}
         resetResult={resetResult}
+        saveResult={saveResult}
       />
     ) : (
       <div className="min-h-screen bg-green-50 p-4 flex flex-col items-center">

@@ -1,7 +1,11 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
+
+import { api } from '@/app/_utils/api'
 
 import { LEARNING_STYLE_QUESTIONS } from '../_constants/learning-style-questions'
 import { LEARNING_TYPES } from '../_constants/learning-style-type'
+import { LearningStyleRequest } from '../_types/learningStyleRequest'
 import { StyleType } from '../_types/learningType'
 import { LearningTypeResult } from '../_types/learningTypeResult'
 
@@ -45,6 +49,27 @@ export const useStyleQuiz = () => {
     setResult(null)
   }
 
+  const saveResult = async() => {
+    try { 
+      if (!result?.type) { 
+        toast.error('診断結果の取得ができませんでした。') 
+        return 
+      }
+      const requestBody:LearningStyleRequest = { type: result.type }
+
+      const res = await api.post<{ message: string }, LearningStyleRequest>(
+        'api/learning-styles', 
+        requestBody,
+      ) 
+      toast.success(res.message) 
+    } catch(error) { 
+      if(error instanceof Error) { 
+        toast.error(`診断結果の保存に失敗しました。`) 
+      } else { 
+        toast.error(`予期せぬエラーが発生しました。もう一度やり直してください。`) } 
+    } 
+  }
+  
   return {
     currentIndex, 
     current, 
@@ -54,6 +79,7 @@ export const useStyleQuiz = () => {
     showResult, 
     result, 
     handleAnswer,
-    resetResult
+    resetResult,
+    saveResult
   }
 }
