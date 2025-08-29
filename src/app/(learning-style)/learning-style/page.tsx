@@ -17,12 +17,14 @@ export default function LearningStylePage() {
     showResult, 
     result,
     resetResult,
+    compatibleUsers
   } = useStyleQuiz()
 
   return (
     showResult && result ? (
       <StyleCheckResult 
         result={result}
+        compatibleUsers={compatibleUsers}
         resetResult={resetResult}
       />
     ) : (

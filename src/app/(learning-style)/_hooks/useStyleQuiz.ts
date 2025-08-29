@@ -3,12 +3,13 @@ import { toast } from 'react-toastify'
 
 import { api } from '@/app/_utils/api'
 
+import { useFetchLearningLists } from './useFetchStyleLists'
 import { LEARNING_STYLE_QUESTIONS } from '../_constants/learning-style-questions'
-import { LEARNING_TYPES } from '../_constants/learning-style-type'
+import { CompatibleUser } from '../_types/compatibleUser'
+import { LearningStyleLists } from '../_types/learningStyleLists'
 import { LearningStyleRequest } from '../_types/learningStyleRequest'
 import { LearningStyleResponse } from '../_types/learningStyleResponse'
 import { StyleType } from '../_types/learningType'
-import { LearningTypeResult } from '../_types/learningTypeResult'
 
 export const useStyleQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -16,7 +17,9 @@ export const useStyleQuiz = () => {
   const progress = ((currentIndex + 1) / (LEARNING_STYLE_QUESTIONS.length)) * 100
   const [answers, setAnswers] = useState<StyleType[]>([])
   const [showResult, setShowResult] = useState(false)
-  const [result, setResult] = useState<LearningTypeResult | null>(null)
+  const [result, setResult] = useState<LearningStyleLists | null>(null)
+  const { learningStyleLists, compatibleUsersMap } = useFetchLearningLists()
+  const [compatibleUsers, setCompatibleUsers] = useState<CompatibleUser[]>([])
 
   const handleAnswer = async(type: StyleType) => {
     // 選んだ選択肢のtypeを取得して、回答リストに追加する。
@@ -38,7 +41,14 @@ export const useStyleQuiz = () => {
         counts[a] > counts[b] ? a : b
       )
 
-      const finalResult = LEARNING_TYPES[maxType]
+      const finalResult = learningStyleLists?.find(list => list.type === maxType) 
+      if (!finalResult) {
+        toast.error('学習スタイルが見つかりませんでした')
+        return
+      }
+      const compatibleUsersList = compatibleUsersMap[finalResult.type] || []
+      setCompatibleUsers(compatibleUsersList)
+      
       setResult(finalResult)
       setShowResult(true)
 
@@ -53,7 +63,7 @@ export const useStyleQuiz = () => {
     setResult(null)
   }
 
-  const saveResult = async(type: StyleType) => {
+  const saveResult = async(type: string) => {
     try { 
       if (!type) { 
         toast.error('診断結果の取得ができませんでした。') 
@@ -83,5 +93,6 @@ export const useStyleQuiz = () => {
     result, 
     handleAnswer,
     resetResult,
+    compatibleUsers
   }
 }
