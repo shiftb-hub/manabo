@@ -9,5 +9,8 @@ export interface CompatibleUser {
       name: string
       icon: string
     }
+  },
+  profile: {
+    profilePicture: string | null
   }
 }

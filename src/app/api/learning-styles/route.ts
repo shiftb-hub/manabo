@@ -62,9 +62,14 @@ export const GET = async() => {
               },
             },
           },
+          profile: {
+            select: {
+              profilePicture: true,
+            }
+          }
         },
       })
-
+      
       // 各タイプごとに相性の良いユーザーをランダムで3人取得
       const shuffled = users.sort(() => 0.5 - Math.random())
       compatibleUsersMap[type] = shuffled.slice(0, 3) as CompatibleUser[]
