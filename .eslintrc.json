@@ -67,8 +67,30 @@
         "ignoreDeclarationSort": true,
         "ignoreMemberSort": false
       }
+    ],
+
+    // --- TZDate/TZDateMini の直 import を禁止（ラッパー経由に統一） ---
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "@date-fns/tz",
+            "message": "TZDate / TZDateMini は '@/app/_utils/tz' からのみ import してください。"
+          }
+        ]
+      }
     ]
   },
+  "overrides": [
+    {
+      // ラッパー自身は例外にする
+      "files": ["**/src/app/_utils/tz.ts"],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
   "settings": {
     "react": { "version": "detect" }
   }
