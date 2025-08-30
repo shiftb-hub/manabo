@@ -3,6 +3,7 @@ import { BookOpen, Clock, Sparkles, Target, TrendingUp, Users } from 'lucide-rea
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/_components/ui/card'
 import { Progress } from '@/app/_components/ui/progress'
 
+import { StreakMessage } from './StreakMessage'
 import { useStreak } from '../_hooks/useStreak'
 
 interface StudyStatusProps {
@@ -46,7 +47,7 @@ export const StudyStatus = ({
               <div className='flex items-center'>
                 <TrendingUp className='w-4 h-4 mr-1' />
                 <p className='text-sm text-green-100'>
-                  {isStreakLoading ? '読み込み中...' : '素晴らしい継続力！'}
+                  <StreakMessage streakCount={streakCount} isLoading={isStreakLoading}/>
                 </p>
               </div>
             </div>

@@ -1,8 +1,9 @@
 import { Settings } from 'lucide-react'
 import React from 'react'
 
-import { ManaboIcon } from '@/app/_components/manabo-icon'
 import { Button } from '@/app/_components/ui/button'
+import ManaboIcon from '@/app/_components/ui/ManaboIcon'
+
 
 interface Props {
   user: {
@@ -14,9 +15,9 @@ export const DashboardHeader: React.FC<Props> = ({ user }) => {
   return (
     <div className='flex items-center justify-between mb-8'>
       <div className='flex items-center space-x-3'>
-        <ManaboIcon size='md' />
+        <ManaboIcon size='md' className='mb-2'/>
         <div>
-          <h1 className='text-xl font-bold text-gray-800'>
+          <h1 className='text-xl font-bold text-green-600'>
             {user && `おはよう、${user.nickName}さん！`}
           </h1>
           <p className='text-sm text-gray-600'>今日も学習を頑張りましょう</p>
