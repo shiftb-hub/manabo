@@ -88,7 +88,7 @@ export default function LoginScreen() {
             <ArrowLeft className='w-5 h-5 text-green-600' />
           </Button>
           <div className='flex items-center'>
-            <ManaboIcon size='sm' className='mr-3' />
+            <ManaboIcon size='sm' className='mr-3 mb-2' />
             <h1 className='text-2xl font-bold text-gray-800'>ログイン</h1>
           </div>
         </div>
