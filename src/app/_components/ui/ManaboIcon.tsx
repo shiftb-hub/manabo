@@ -17,7 +17,7 @@ export function ManaboIcon({ size = 'sm', className = '' }: ManaboIconProps) {
     <div className={`relative ${className}`}>
       <Image
         src='/logo.png' // publicフォルダ内の画像ならこの書き方
-        alt='ロゴ炎のみ'
+        alt='炎のみのロゴ'
         width={imageSize}
         height={imageSize}
       />
