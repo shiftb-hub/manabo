@@ -23,12 +23,12 @@ export default function Dashboard() {
   const [followingCount] = useState(24)
   const [newNotificationsCount] = useState(3)
 
-  const motivationalMessages = [
-    '今日も素晴らしい一日にしましょう！継続は力なりです。',
-    '12日連続の学習、本当に素晴らしいです！この調子で頑張りましょう。',
-    '朝活学習者の仲間たちも頑張っています。一緒に成長しましょう！',
-  ]
-  const [currentMessage] = useState(motivationalMessages[1])
+  // const motivationalMessages = [
+  //   '今日も素晴らしい一日にしましょう！継続は力なりです。',
+  //   '12日連続の学習、本当に素晴らしいです！この調子で頑張りましょう。',
+  //   '朝活学習者の仲間たちも頑張っています。一緒に成長しましょう！',
+  // ]
+  // const [currentMessage] = useState(motivationalMessages[0])
 
   const router = useRouter()
   const onNavigate = (path: string) => {
@@ -49,7 +49,7 @@ export default function Dashboard() {
           remaining={remaining}
           matchingGroup={matchingGroup}
           onlineGroupMembers={onlineGroupMembers}
-          currentMessage={currentMessage}
+          // currentMessage={currentMessage}
         />
         <ActionButton onNavigate={onNavigate} />
         <SummaryBoard

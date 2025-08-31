@@ -1,9 +1,10 @@
-import { BookOpen, Clock, Sparkles, Target, TrendingUp, Users } from 'lucide-react'
+import { BookOpen, Clock,  Target, TrendingUp, Users } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/_components/ui/card'
 import { Progress } from '@/app/_components/ui/progress'
 
 import { StreakMessage } from './StreakMessage'
+import SupportMessage from './SupportMessage'
 import { useStreak } from '../_hooks/useStreak'
 
 interface StudyStatusProps {
@@ -14,7 +15,7 @@ interface StudyStatusProps {
   remaining: number
   matchingGroup: string
   onlineGroupMembers: number
-  currentMessage: string
+  // currentMessage: string
 }
 
 export const StudyStatus = ({
@@ -25,7 +26,7 @@ export const StudyStatus = ({
   remaining,
   matchingGroup,
   onlineGroupMembers,
-  currentMessage,
+  // currentMessage,
 }: StudyStatusProps) => {
   const { streakCount, isLoading: isStreakLoading } = useStreak()
 
@@ -110,7 +111,8 @@ export const StudyStatus = ({
       </Card>
 
       {/* AI Motivational Message */}
-      <Card className='mb-6 bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200'>
+      <SupportMessage/>
+      {/* <Card className='mb-6 bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200'>
         <CardContent className='p-4'>
           <div className='flex items-start space-x-3'>
             <div className='w-10 h-10 bg-emerald-500 rounded-2xl flex items-center justify-center flex-shrink-0'>
@@ -122,7 +124,7 @@ export const StudyStatus = ({
             </div>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Matching Group Status */}
       <Card className='mb-6 bg-gradient-to-r from-teal-50 to-emerald-50 border-teal-200'>
