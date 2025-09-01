@@ -19,7 +19,7 @@ export const callOpenAI = async ({
 - 学習連続日数: ${streakCount}日
 - 今日の学習時間: ${todayHours}時間
 - 今週の進捗: ${weeklyProgress}%
-必ずポジティブでやる気が出る短めの励まし文章にしてください。今週の進捗は参考にする程度であまり触れなくて良い。文字数は50文字程度にしてください。`
+必ずポジティブでやる気が出る短めの文章にしてください。今週の進捗は参考にする程度であまり触れなくて良い。文字数は50文字程度にしてください。`
 
   const res = await openai.chat.completions.create({
     model: 'gpt-5-nano',
