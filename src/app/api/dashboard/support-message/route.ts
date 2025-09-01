@@ -58,8 +58,13 @@ export const GET = async () => {
     const llmCtx = { streakCount, todayHours, weeklyProgress }
     const message = await callOpenAI(llmCtx)
 
-    return NextResponse.json({ message }, { status: 200 })
+    const res = NextResponse.json({ message }, { status: 200 })
+    res.headers.set('Cache-Control', 'private, max-age=3600')// 1時間キャッシュ
+    return res
   } catch (e) {
-    return NextResponse.json({ message: e instanceof Error ? e.message : String(e) },  { status: 500 })
+    return NextResponse.json(
+      { message: e instanceof Error ? e.message : String(e) },
+      { status: 500 },
+    )
   }
 }
