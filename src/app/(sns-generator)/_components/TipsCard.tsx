@@ -6,7 +6,7 @@ import { POSTING_TIPS } from '../_constants'
 
 export const TipsCard = () => {
   return (
-    <Card className='bg-gradient-to-br from-green-50/70 to-emerald-50/70 backdrop-blur-sm border-green-200 rounded-lg shadow-sm'>
+    <Card className='bg-gradient-to-br from-green-50/70 to-emerald-50/70 backdrop-blur-sm border-green-200 rounded-xl shadow-sm'>
       <CardContent className='p-4'>
         <div className='flex items-center mb-3'>
           <div className='w-8 h-8 bg-emerald-500 rounded-xl flex items-center justify-center mr-3'>
