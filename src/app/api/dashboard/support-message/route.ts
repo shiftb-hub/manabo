@@ -7,6 +7,7 @@ import { jstToUtcRange } from '@/app/_utils/jstToUtcRange'
 import { calculateStreak } from '@/app/_utils/streakCalculator'
 import { calculateTotalHours, getWeekUtcRange } from '@/app/_utils/studyTimeHelpers'
 
+import { CACHE_CONTROL } from './_constants'
 import { callOpenAI } from './_services/openai'
 
 type TodayStudyRecord = { duration: number }
@@ -59,7 +60,7 @@ export const GET = async () => {
     const message = await callOpenAI(llmCtx)
 
     const res = NextResponse.json({ message }, { status: 200 })
-    res.headers.set('Cache-Control', 'private, max-age=3600')// 1時間キャッシュ
+    res.headers.set('Cache-Control', CACHE_CONTROL )
     return res
   } catch (e) {
     return NextResponse.json(

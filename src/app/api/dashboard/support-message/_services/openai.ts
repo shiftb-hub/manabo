@@ -1,5 +1,7 @@
 import OpenAI from 'openai'
 
+import { OPENAI_MODEL } from '../_constants'
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
@@ -22,7 +24,7 @@ export const callOpenAI = async ({
 必ずポジティブでやる気が出る短めの文章にしてください。今週の進捗は参考にする程度であまり触れなくて良い。文字数は50文字程度にしてください。`
 
   const res = await openai.chat.completions.create({
-    model: 'gpt-5-nano',
+    model: OPENAI_MODEL,
     messages: [{ role: 'user', content: prompt }],
   })
   return res.choices[0]?.message?.content ?? '今日も素晴らしい一日にしましょう！継続は力なりです。'
