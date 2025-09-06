@@ -12,6 +12,12 @@ import { callOpenAI } from './_services/openai'
 
 type TodayStudyRecord = { duration: number | null }
 
+// TODO: 仮のhandleApiError。ダッシュボード：AIメッセージの実装#83 マージ後に差し替える
+const handleApiError = (e: unknown) => {
+  console.error(e)
+  return NextResponse.json({ message: '仮のエラー処理です' }, { status: 500 })
+} //仮ここまで
+
 export const GET = async () => {
   const guard = await requireUser()
   if (!guard.ok) return guard.response
@@ -23,7 +29,7 @@ export const GET = async () => {
       where: { userId: user.id },
       select: { learningDate: true },
       orderBy: { learningDate: 'desc' },
-      distinct: ['learningDate']//日付の重複分排除
+      distinct: ['learningDate'], //日付の重複分排除
     })
 
     const learningDates = learningRecords.map((r) => r.learningDate)
@@ -61,12 +67,9 @@ export const GET = async () => {
     const message = await callOpenAI(llmCtx)
 
     const res = NextResponse.json({ message }, { status: 200 })
-    res.headers.set('Cache-Control', CACHE_CONTROL )
+    res.headers.set('Cache-Control', CACHE_CONTROL)
     return res
   } catch (e) {
-    return NextResponse.json(
-      { message: e instanceof Error ? e.message : String(e) },
-      { status: 500 },
-    )
+    return handleApiError(e)
   }
 }
