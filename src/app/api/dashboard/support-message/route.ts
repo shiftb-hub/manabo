@@ -23,6 +23,7 @@ export const GET = async () => {
       where: { userId: user.id },
       select: { learningDate: true },
       orderBy: { learningDate: 'desc' },
+      distinct: ['learningDate']//日付の重複分排除
     })
 
     const learningDates = learningRecords.map((r) => r.learningDate)
