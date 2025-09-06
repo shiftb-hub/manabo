@@ -10,7 +10,7 @@ import { calculateTotalHours, getWeekUtcRange } from '@/app/_utils/studyTimeHelp
 import { CACHE_CONTROL } from './_constants'
 import { callOpenAI } from './_services/openai'
 
-type TodayStudyRecord = { duration: number }
+type TodayStudyRecord = { duration: number | null }
 
 export const GET = async () => {
   const guard = await requireUser()
