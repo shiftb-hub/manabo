@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+
 import { getAuthUser } from '@/app/_utils/api/requireUser'
 
 export const GET = async () => {
