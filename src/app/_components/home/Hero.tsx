@@ -1,6 +1,7 @@
 'use client'
 
 import { ArrowRight, BookOpen, Sparkles } from 'lucide-react'
+import Link from 'next/link'
 
 import { Button } from '@/app/_components/ui/button'
 
@@ -26,9 +27,14 @@ export const Hero = () => (
       </div>
     </div>
 
-    <Button className='bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-3 text-lg'>
-      無料で始める
-      <ArrowRight className='w-5 h-5 ml-2' />
+    <Button
+      asChild
+      className='bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-3 text-lg'
+    >
+      <Link href='/dashboard'>
+        無料で始める
+        <ArrowRight className='w-5 h-5 ml-2' aria-hidden />
+      </Link>
     </Button>
   </section>
 )
