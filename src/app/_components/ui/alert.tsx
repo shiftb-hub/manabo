@@ -34,7 +34,7 @@ const AlertTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTM
       className={cn('mb-1 font-medium leading-none tracking-tight', className)}
       {...props}
     >
-      {children ?? <span className='sr-only'>アラート見出し</span>}
+      {children ?? <span className='sr-only'>エラーが発生しました</span>}
     </h5>
   ),
 )
