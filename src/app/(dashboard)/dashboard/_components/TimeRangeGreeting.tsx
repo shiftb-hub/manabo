@@ -7,17 +7,16 @@ interface Props {
 }
 
 const Greetings = [
-  { start: 3, end: 11, greeting: 'おはよう' },
-  { start: 11, end: 14, greeting: 'こんにちは' },
-  { start: 14, end: 18, greeting: 'お疲れさま' },
-  { start: 18, end: 22, greeting: 'お疲れさまでした' },
-  { start: 22, end: 24, greeting: '夜更かしですね' }, // 深夜前半
-  { start: 0, end: 3, greeting: '夜更かしですね' }, // 深夜後半
-] as const
-
+  { start: 3, end: 10, greeting: 'おはよう' },   
+  { start: 11, end: 13, greeting: 'こんにちは' }, 
+  { start: 14, end: 17, greeting: 'お疲れさま' },
+  { start: 18, end: 21, greeting: 'お疲れさまでした' },
+  { start: 22, end: 24, greeting: '夜更かしですね' },
+  { start: 0, end: 3, greeting: '夜更かしですね' },
+]
 // ロジックを修正
 const getGreetingByHour = (hour: number): string => {
-  const found = Greetings.find((t) => hour >= t.start && hour < t.end)
+  const found = Greetings.find((t) => hour >= t.start && hour <= t.end)
   return found ? found.greeting : 'お疲れさま'
 }
 
@@ -27,17 +26,19 @@ const getJapanHour = (): number => {
   const japanTime = new TZDateMini(now, 'Asia/Tokyo')
   return japanTime.getHours()
 }
+
 //判定
 const useGreeting = () => getGreetingByHour(getJapanHour())
 
-
 // メインコンポ
-const TimeRangeGreeting = ({ className, children }: Props) => {
+const TimeRangeGreeting = ({ className }: Props) => {
   const greetingMessage = useGreeting()
-  if (children) {
-    return <>{children(greetingMessage)}</>
-  }
-  return <span className={className}>{greetingMessage}</span>
+
+  return (
+    <>
+      <span className={className}>{greetingMessage}</span>
+    </>
+  )
 }
 
 export default TimeRangeGreeting
