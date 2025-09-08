@@ -61,6 +61,7 @@ export const useStyleQuiz = () => {
     setAnswers([])
     setShowResult(false)
     setResult(null)
+    setCompatibleUsers([])
   }
 
   const saveResult = async(type: string) => {
