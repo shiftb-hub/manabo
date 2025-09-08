@@ -1,29 +1,28 @@
+import Image from 'next/image'
+
 type ManaboIconProps = {
   size?: 'sm' | 'md' | 'lg' | 'xl'
-  showBadge?: boolean
   className?: string
 }
 
-export function ManaboIcon({ size = 'md', showBadge = true, className = '' }: ManaboIconProps) {
+export function ManaboIcon({ size = 'lg', className = '' }: ManaboIconProps) {
   const sizeClasses = {
-    sm: 'w-8 h-8',
-    md: 'w-12 h-12',
-    lg: 'w-16 h-16',
-    xl: 'w-20 h-20',
+    sm: 50,
+    md: 100,
+    lg: 150,
+    xl: 200,
   }
-
+  const imageSize = sizeClasses[size]
   return (
     <div className={`relative ${className}`}>
-      <div
-        className={`${sizeClasses[size]} bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg`}
-      >
-        <span className='text-white font-bold text-xl'>M</span>
+      <div className={` flex items-center justify-center `}>
+        <Image
+          src='/logo02.png' // publicフォルダ内の画像ならこの書き方
+          alt='ロゴ炎と文字'
+          width={imageSize}
+          height={imageSize}
+        />
       </div>
-      {showBadge && (
-        <div className='absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center'>
-          <span className='text-xs'>✨</span>
-        </div>
-      )}
     </div>
   )
 }

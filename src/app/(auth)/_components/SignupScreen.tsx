@@ -46,12 +46,12 @@ export default function SignupScreen({
   return (
     <div className='min-h-screen bg-[#f4fbf7] flex items-center justify-center p-4'>
       <div className='w-full max-w-md'>
-        <div className='flex items-center mb-8'>
+        <div className='flex items-center mb-4'>
           <Button variant='ghost' size='icon' onClick={onBack} className='mr-4'>
             <ArrowLeft className='w-5 h-5 text-green-600' />
           </Button>
           <div className='flex items-center'>
-            <ManaboIcon size='sm' className='mr-3' />
+            <ManaboIcon size='md' className='mr-3 mb-1' />
             <h1 className='text-2xl font-bold text-gray-800'>新規登録</h1>
           </div>
         </div>

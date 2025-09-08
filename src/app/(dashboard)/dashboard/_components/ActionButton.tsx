@@ -18,7 +18,7 @@ export const ActionButton = ({ onNavigate }: ActionButtonProps) => {
       </Button>
 
       <Button
-        // onClick={() => onNavigate("SNS投稿の遷移先を指定")}
+        onClick={() => onNavigate('/sns-generator')}
         variant='outline'
         className='w-full border-green-200 text-green-700 hover:bg-green-50 py-6 rounded-2xl'
       >

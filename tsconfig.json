@@ -20,8 +20,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "target": "ES2017"
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    "target": "ES2017",
+"types": ["jest", "@testing-library/jest-dom", "node"]  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.js"],
   "exclude": ["node_modules"]
 }

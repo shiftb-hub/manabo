@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -53,6 +55,11 @@
     "zod": "^4.0.5"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20.19.9",
     "@types/react": "18.3.23",
     "@types/react-dom": "^18",
@@ -60,6 +67,8 @@
     "eslint-config-next": "14.2.30",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
     "postcss": "^8",
     "prettier": "^3.6.2",
     "prisma": "^6.11.1",
