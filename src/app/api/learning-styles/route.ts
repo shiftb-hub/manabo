@@ -45,7 +45,11 @@ export const GET = async() => {
       const users = await prisma.user.findMany({
         where: {
           userLearningStyle: {
-            learningStyle: { type: { in: targetTypes} },
+            is: {
+              learningStyle: { 
+                type: { in: targetTypes} 
+              },
+            },
           },
         },
         select: {
