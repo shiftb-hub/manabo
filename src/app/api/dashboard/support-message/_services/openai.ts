@@ -24,9 +24,9 @@ const createPrompt = ({ streakCount, todayHours, weeklyProgress }: Props) => `
 `
 
 export const callOpenAI = async (props: Props): Promise<string> => {
-  //ハング対策 タイムアウト設定（例: 15秒）
+  //ハング対策 タイムアウト設定（例: 21秒）
   const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), 15_000)
+  const timeout = setTimeout(() => controller.abort(), 21_000)
 
   try {
     const res = await openai.chat.completions.create(
