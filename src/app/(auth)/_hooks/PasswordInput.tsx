@@ -1,6 +1,6 @@
 'use client'
-
 import { Eye, EyeOff } from 'lucide-react'
+import * as React from 'react'
 import { useState } from 'react'
 
 import { Button } from '@/app/_components/ui/button'
