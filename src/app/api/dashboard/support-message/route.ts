@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { prisma } from '@/app/_lib/prisma'
+import { handleApiError } from '@/app/_utils/api/errorHandler'
 import { requireUser } from '@/app/_utils/api/requireUser'
 import { getWeeklyGoalHours } from '@/app/_utils/goalHelpers'
 import { jstToUtcRange } from '@/app/_utils/jstToUtcRange'
@@ -11,12 +12,6 @@ import { CACHE_CONTROL } from './_constants'
 import { callOpenAI } from './_services/openai'
 
 type TodayStudyRecord = { duration: number | null }
-
-// TODO: 仮のhandleApiError。ダッシュボード：AIメッセージの実装#83 マージ後に差し替える
-const handleApiError = (e: unknown) => {
-  console.error(e)
-  return NextResponse.json({ message: '仮のエラー処理です' }, { status: 500 })
-} //仮ここまで
 
 export const GET = async () => {
   const guard = await requireUser()
