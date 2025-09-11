@@ -4,7 +4,7 @@ import React from 'react'
 import { Button } from '@/app/_components/ui/button'
 import { ManaboIcon } from '@/app/_components/ui/ManaboIcon'
 
-import  { useGreeting } from './TimeRangeGreeting'
+import TimeRangeGreeting from './TimeRangeGreeting'
 
 interface Props {
   user: {
@@ -13,15 +13,13 @@ interface Props {
 }
 
 export const DashboardHeader = ({ user }: Props) => {
-
   return (
     <div className='flex items-center justify-between mb-8'>
       <div className='flex items-center space-x-3'>
         <ManaboIcon size='md' className='mb-2' />
         <div>
           <h1 className='text-xl font-bold text-green-600'>
-            {/* {user && `${useGreeting}、${user.nickName}さん！`} */}
-              {useGreeting()}、{user?.nickName}さん！
+            <TimeRangeGreeting className='mr-2' />、{user?.nickName}さん！
           </h1>
           <p className='text-sm text-gray-600'>今日も学習を頑張りましょう</p>
         </div>
