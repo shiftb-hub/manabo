@@ -10,6 +10,9 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
     "@date-fns/tz": "^1.3.1",
     "@hookform/resolvers": "^5.1.1",
@@ -74,7 +77,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "20.19.9",
+    "@types/node": "^20.19.9",
     "@types/react": "18.3.23",
     "@types/react-dom": "^18",
     "eslint": "^8.57.1",
@@ -89,6 +92,7 @@
     "prettier": "^3.6.2",
     "prisma": "^6.11.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "5.8.3"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
