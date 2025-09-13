@@ -4,7 +4,6 @@ type NavigationFunctions = {
   onNavigateToDashboard: () => void
   onNavigateToSignup: () => void
   onNavigateToPasswordReset: () => void
-  onNavigateToDashboard: () => void
   onBack: () => void
 }
 
@@ -31,7 +30,6 @@ export const useNavigation = (): NavigationFunctions => {
     onNavigateToDashboard,
     onNavigateToSignup,
     onNavigateToPasswordReset,
-    onNavigateToDashboard,
     onBack,
   }
 }
