@@ -7,7 +7,7 @@ export interface PostData {
 export interface StudySummary {
   subject: string
   duration: string
-  streak: string
+  streak: number
 }
 
 export interface PostingTip {

@@ -28,18 +28,18 @@ export const GeneratedPost = ({
           <Badge variant='outline' className='border-green-200 text-green-600'>
             案{index + 1}
           </Badge>
-          <Badge className='bg-green-100 text-green-700'>{selectedTone}</Badge>
+          <Badge className='bg-green-100 text-green-700 font-semibold'>{selectedTone}</Badge>
         </div>
       </CardHeader>
       <CardContent>
         <div className='bg-gray-50 rounded-xl p-4 mb-4'>
-          <p className='text-sm text-gray-800 whitespace-pre-line'>{post}</p>
+          <p className='text-sm font-medium text-gray-900 whitespace-pre-line'>{post}</p>
         </div>
         <div className='flex space-x-2'>
           <Button
             variant='outline'
             size='sm'
-            className='flex-1 rounded-lg border-green-200 text-green-700 hover:bg-green-50'
+            className='flex-1 rounded-xl border-green-200 text-green-700 hover:bg-green-50'
             onClick={() => onCopy(post, index)}
           >
             <Copy className='w-4 h-4 mr-1' />
@@ -47,7 +47,7 @@ export const GeneratedPost = ({
           </Button>
           <Button
             size='sm'
-            className='flex-1 rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white'
+            className='flex-1 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white'
           >
             <Share className='w-4 h-4 mr-1' />
             シェア

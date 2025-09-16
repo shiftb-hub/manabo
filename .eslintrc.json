@@ -39,20 +39,17 @@
   },
   "plugins": ["@typescript-eslint", "react", "jsx-a11y", "import"],
   "rules": {
-    // --- 整形は Prettier に任せる（競合しやすいルールは無効化）---
     "indent": "off",
     "react/jsx-indent": "off",
     "react/jsx-indent-props": "off",
     "semi": "off",
     "quotes": "off",
 
-    // --- お好みの品質ルールは維持 ---
     "no-console": "warn",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
 
-    // --- import 整理 ---
     "import/order": [
       "warn",
       {
@@ -92,6 +89,13 @@
     }
   ],
   "settings": {
-    "react": { "version": "detect" }
+    "react": { "version": "detect" },
+    "import/resolver": {
+      "node": { "extensions": [".js", ".jsx", ".ts", ".tsx"] },
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": ["./tsconfig.json"]
+      }
+    }
   }
 }

@@ -18,7 +18,7 @@ import {
 } from '@/app/_components/ui/tooltip'
 import { cn } from '@/app/_lib/utils'
 
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from './use-mobile'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -27,7 +27,7 @@ const SIDEBAR_WIDTH_MOBILE = '18rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
 
-type SidebarContext = {
+type SidebarContextValue = {
   state: 'expanded' | 'collapsed'
   open: boolean
   setOpen: (open: boolean) => void
@@ -37,7 +37,7 @@ type SidebarContext = {
   toggleSidebar: () => void
 }
 
-const SidebarContext = React.createContext<SidebarContext | null>(null)
+const SidebarContext = React.createContext<SidebarContextValue | null>(null)
 
 function useSidebar() {
   const context = React.useContext(SidebarContext)
@@ -112,7 +112,7 @@ const SidebarProvider = React.forwardRef<
     // This makes it easier to style the sidebar with Tailwind classes.
     const state = open ? 'expanded' : 'collapsed'
 
-    const contextValue = React.useMemo<SidebarContext>(
+    const contextValue = React.useMemo<SidebarContextValue>(
       () => ({
         state,
         open,

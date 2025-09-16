@@ -1,4 +1,4 @@
-import type { PostData, PostingTip, StudySummary, Tone } from '../_types'
+import type { PostData, PostingTip, Tone } from '../_types'
 
 export const TONES: Tone[] = ['カジュアル', '真面目', 'ポジティブ']
 
@@ -20,15 +20,8 @@ export const BASE_POSTS: PostData = {
   ],
 }
 
-export const STUDY_SUMMARY: StudySummary = {
-  subject: 'プログラミング',
-  duration: '2時間',
-  streak: '継続15日目',
-}
-
 export const POSTING_TIPS: PostingTip[] = [
   { text: 'ハッシュタグを活用して多くの人に見てもらいましょう' },
   { text: '学習内容を具体的に書くと共感を得やすくなります' },
   { text: '継続日数を入れるとモチベーションアップにつながります' },
 ]
-
