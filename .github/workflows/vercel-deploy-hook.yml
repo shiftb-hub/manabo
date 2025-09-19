@@ -1,0 +1,18 @@
+name: Trigger Vercel Deploy Hook
+
+on:
+  push:
+    branches:
+      - develop # ← 監視したいブランチ（複数OK）
+    # （必要ならパスフィルタでモノレポ最適化）
+    # paths:
+    #   - 'apps/web/**'
+    #   - '!docs/**'
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Vercel Deploy Hook
+        run: |
+          curl -X POST -fsS "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}" -H 'Content-Type: application/json' -d '{}' || exit 1
