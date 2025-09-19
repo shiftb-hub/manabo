@@ -8,7 +8,7 @@ const Greetings = [
   { start: 11, end: 13, greeting: 'こんにちは' }, 
   { start: 14, end: 17, greeting: 'お疲れさま' },
   { start: 18, end: 21, greeting: 'お疲れさまでした' },
-  { start: 22, end:24, greeting: '夜更かしですね' },// 実質的に end: 24 は使われない（23 までで十分）
+  { start: 22, end:23, greeting: '夜更かしですね' },// 実質的に end: 24 は使われない（23 までで十分）
   { start: 0, end: 2, greeting: '夜更かしですね' },
 ]
 // ロジックを修正
