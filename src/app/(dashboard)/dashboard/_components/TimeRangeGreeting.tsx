@@ -1,9 +1,7 @@
 import { TZDateMini } from '@date-fns/tz/date/mini'
 import React from 'react'
 
-interface Props {
-  className?: string
-}
+
 
 const Greetings = [
   { start: 3, end: 10, greeting: 'おはよう' },   
@@ -27,12 +25,12 @@ const getJapanHour = (): number => {
 }
 
 // メインコンポ
-const TimeRangeGreeting = ({ className }: Props) => {
+const TimeRangeGreeting = () => {
   const greetingMessage = getGreetingByHour(getJapanHour())
 
   return (
     <>
-      <span className={className}>{greetingMessage}</span>
+      <span className="mr-2">{greetingMessage}</span>
     </>
   )
 }

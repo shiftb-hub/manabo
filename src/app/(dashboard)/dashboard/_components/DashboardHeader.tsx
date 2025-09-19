@@ -19,7 +19,7 @@ export const DashboardHeader = ({ user }: Props) => {
         <ManaboIcon size='md' className='mb-2' />
         <div>
           <h1 className='text-xl font-bold text-green-600'>
-            <TimeRangeGreeting className='mr-2' />、{user?.nickName}さん！
+            <TimeRangeGreeting/>、{user?.nickName}さん！
           </h1>
           <p className='text-sm text-gray-600'>今日も学習を頑張りましょう</p>
         </div>
