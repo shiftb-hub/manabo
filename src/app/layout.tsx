@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import './globals.css'
 import { ToastContainer } from 'react-toastify'
 
@@ -26,15 +26,23 @@ export const metadata: Metadata = {
     'manaboは、学習の記録・可視化・共有を通じて、あなたのモチベーション維持と成長をサポートします。',
 }
 
+type BodyStyle = CSSProperties & { '--bottom-nav-h': string }
+
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   const user = await getCurrentUser()
 
+  const bodyStyle: BodyStyle = { '--bottom-nav-h': '56px' }
+
   return (
     <html lang='ja'>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} style={bodyStyle}>
         <UserProvider initialUser={user}>
-          {children}
-          <ToastContainer closeOnClick />
+          <main className='min-h-[100dvh] pb-[calc(var(--bottom-nav-h)+env(safe-area-inset-bottom))]'>
+            {children}
+          </main>
+
+          <ToastContainer closeOnClick newestOnTop />
+
           <BottomNavigation />
         </UserProvider>
       </body>
