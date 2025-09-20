@@ -42,10 +42,10 @@ export const callOpenAI = async (props: Props): Promise<string> => {
       return '予期せぬエラーが発生しました。今日も頑張りましょう！'
     }
     if (error.name === 'AbortError') {
-      return 'AIの応答がタイムアウトしました。${FallbackMessage}'
+      return`AIの応答がタイムアウトしました。${FallbackMessage}`
     }
     console.error(error.message)
-    return 'AIの応答を取得できませんでした。${FallbackMessage}'
+    return `AIの応答を取得できませんでした。${FallbackMessage}`
   } finally {
     clearTimeout(timeout)
   }
