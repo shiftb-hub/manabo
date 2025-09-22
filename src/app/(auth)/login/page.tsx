@@ -4,7 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft, Eye, EyeOff, Lock, Mail } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import type { SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Alert, AlertDescription } from '@/app/_components/ui/alert'
@@ -18,62 +19,60 @@ import { useNavigation } from '@/app/_hooks/useNavigation'
 const schema = z.object({
   email: z
     .string()
-    .nonempty({ error: 'メールアドレスは必須です' })
-    .refine((val: string) => val.includes('@'), {
-      error: '有効なメールアドレスを入力してください',
-    }),
+    .min(1, { message: 'メールアドレスは必須です' })
+    .email({ message: '有効なメールアドレスを入力してください' }),
   password: z
     .string()
-    .nonempty({ error: 'パスワードは必須です' })
-    .min(8, { error: 'パスワードは8文字以上で入力してください' }),
+    .min(1, { message: 'パスワードは必須です' })
+    .min(8, { message: 'パスワードは8文字以上で入力してください' }),
 })
 
-type loginForm = z.infer<typeof schema>
+type LoginForm = z.infer<typeof schema>
+
+// ← 必要に応じて '/api/auth/login' に変更
+const LOGIN_API = '/api/login'
 
 export default function LoginScreen() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<loginForm>({
-    resolver: zodResolver(schema),
-  })
+  } = useForm<LoginForm>({ resolver: zodResolver(schema) })
 
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [loginError, setLoginError] = useState('')
   const router = useRouter()
-  const hasDisplayError = errors.email || errors.password || loginError
+  const hasDisplayError = Boolean(errors.email || errors.password || loginError)
   const { onNavigateToPasswordReset, onNavigateToSignup, onBack } = useNavigation()
 
-  const onSubmit: SubmitHandler<loginForm> = async (data) => {
+  const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     setIsLoading(true)
     setLoginError('')
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch(LOGIN_API, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        // same-origin なので Cookie は送受信されます（Set-Cookie も反映されます）
+        body: JSON.stringify({ email: data.email, password: data.password }),
       })
 
       if (!response.ok) {
-        const { error } = await response.json()
-        throw new Error(error)
+        // レスポンスボディが無い/JSONでない場合も安全に処理
+        let message = 'ログインに失敗しました'
+        const json = (await response.json().catch(() => null)) as {
+          error?: string
+          message?: string
+        } | null
+        if (json) message = json.error ?? json.message ?? message
+        throw new Error(message)
       }
 
+      // ログイン成功 → ダッシュボードへ
       router.push('/dashboard')
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setLoginError(err.message)
-      } else {
-        setLoginError('ログインに失敗しました')
-      }
+      setLoginError(err instanceof Error ? err.message : 'ログインに失敗しました')
     } finally {
       setIsLoading(false)
     }
@@ -98,7 +97,7 @@ export default function LoginScreen() {
             <CardTitle className='text-center text-gray-800'>アカウントにログイン</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+            <form onSubmit={handleSubmit(onSubmit)} className='space-y-4' noValidate>
               {hasDisplayError && (
                 <Alert className='border-red-200 bg-red-50'>
                   <AlertDescription className='text-red-700'>
@@ -114,12 +113,13 @@ export default function LoginScreen() {
                   メールアドレス
                 </Label>
                 <div className='relative'>
-                  <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400' />
+                  <Mail className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400' />
                   <Input
                     id='email'
                     type='email'
                     placeholder='example@email.com'
                     {...register('email')}
+                    aria-invalid={Boolean(errors.email) || undefined}
                     className='pl-10 border-green-200 focus:border-green-400 rounded-xl'
                   />
                 </div>
@@ -130,20 +130,22 @@ export default function LoginScreen() {
                   パスワード
                 </Label>
                 <div className='relative'>
-                  <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400' />
+                  <Lock className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400' />
                   <Input
                     id='password'
                     type={showPassword ? 'text' : 'password'}
                     placeholder='パスワードを入力'
                     {...register('password')}
+                    aria-invalid={Boolean(errors.password) || undefined}
                     className='pl-10 pr-10 border-green-200 focus:border-green-400 rounded-xl'
                   />
                   <Button
                     type='button'
                     variant='ghost'
                     size='icon'
-                    className='absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 hover:bg-transparent'
-                    onClick={() => setShowPassword(!showPassword)}
+                    className='absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 hover:bg-transparent'
+                    onClick={() => setShowPassword((v) => !v)}
+                    aria-label={showPassword ? 'パスワードを隠す' : 'パスワードを表示'}
                   >
                     {showPassword ? (
                       <EyeOff className='w-4 h-4 text-gray-400' />
