@@ -18,14 +18,9 @@ import { useNavigation } from '@/app/_hooks/useNavigation'
 const schema = z.object({
   email: z
     .string()
-    .nonempty({ error: 'メールアドレスは必須です' })
-    .refine((val: string) => val.includes('@'), {
-      error: '有効なメールアドレスを入力してください',
-    }),
-  password: z
-    .string()
-    .nonempty({ error: 'パスワードは必須です' })
-    .min(8, { error: 'パスワードは8文字以上で入力してください' }),
+    .min(1, { message: 'メールアドレスは必須です' })
+    .email({ message: '有効なメールアドレスを入力してください' }),
+  password: z.string().min(8, { message: 'パスワードは8文字以上で入力してください' }),
 })
 
 type loginForm = z.infer<typeof schema>
